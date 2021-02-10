@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import {StyleSheet, Image,ImageBackground} from 'react-native';
 
-import bgSrc from '../images/wallpaper.png';
+import bgSrc from '../images/test.jpg';
 
 export default class Wallpaper extends Component {
   render() {

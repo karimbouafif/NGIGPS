@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
     height: 50,
   },
   logoText: {
-    color: '#FFF',
+    color: '#FFFFFF',
     fontFamily: 'GoogleSans-Bold',
     fontSize: 30,
     marginTop: 29.1,
