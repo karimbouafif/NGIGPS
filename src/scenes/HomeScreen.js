@@ -2,7 +2,12 @@ import React, {Component} from 'react';
 import {View, Text, Button, StyleSheet, StatusBar, TextInput, Image, Dimensions} from 'react-native';
 import  {Card} from "react-native-paper";
 import {FlatList} from 'react-native-gesture-handler';
+import DetailsScreen from '../scenes/DetailsScreen'
+import {navigate} from "@react-navigation/routers/src/CommonActions";
+
 const {width, height} = Dimensions.get('window');
+
+
 
 export default class HomeScreen extends Component{
 
@@ -17,47 +22,59 @@ export default class HomeScreen extends Component{
 
     componentDidMount() {
         var data = [
-            {
+            {   id:'1',
                 status: 'EN COURS',
-                author: 'Suzanne Collins',
+                typemission: 'high',
 
-                description:
-                    'The Ballad of Songbirds and Snakes is an upcoming science fiction novel by American author Suzanne Collins.',
+                datedebut:
+                    '16-02-2021',
+                datefin:
+                    '20-02-2021',
             },
-            {
+            { id:'2',
                 status: 'TERMINER',
-                author: 'Stephen King',
+                typemission: 'low',
 
-                description:
-                    'From #1 New York Times bestselling author, legendary storyteller, and master of short fiction Stephen King comes an extraordinary collection of four new and compelling novellas—Mr. Harrigan’s Phone, ',
+                datedebut:
+                    '16-02-2021',
+                datefin:
+                    '20-02-2021',
             },
-            {
+            { id:'3',
                 status: 'REPORTER',
-                author: 'Sue Monk Kidd',
+                typemission: 'medium',
 
-                description:
-                    'Named a Most Anticipated Book of 2020 by O, the Oprah Magazine, Good Morning America/ABC-TV, Good Housekeeping, Bustle, TIME,',
+                datedebut:
+                    '16-02-2021',
+                datefin:
+                    '20-02-2021',
             },
-            {
+            { id:'4',
                 status: 'ANNULER',
-                author: 'John Sandford',
+                typemission: 'high',
 
-                description:
-                    'Lucas Davenport investigates a vitriolic blog that seems to be targeting the children of U.S. politicians in the latest thriller by #1 New York Times-bestselling author John Sandford.',
+                datedebut:
+                    '16-02-2021',
+                datefin:
+                    '20-02-2021',
             },
-            {
+            { id:'5',
                 status: 'ANNULER',
-                author: 'James Patterson',
+                typemission: 'low',
 
-                description:
-                    'The Kennedys have always been a family of charismatic adventurers, raised to take risks and excel, living by the dual family mottos: To whom much is given,',
+                datedebut:
+                    '16-02-2021',
+                datefin:
+                    '20-02-2021',
             },
-            {
+            {   id:'6',
                 status: 'ANNULER',
-                author: 'Robert Kolker',
+                typemission: 'high',
 
-                description:
-                    'Hidden Valley Road: Inside the Mind of an American Family is a 2020 non-fiction book by Robert Kolker.',
+                datedebut:
+                    '16-02-2021',
+                datefin:
+                    '20-02-2021',
             },
         ];
 
@@ -93,45 +110,74 @@ export default class HomeScreen extends Component{
         );
     };
 
+ getMissionData=(item)=>{
+     var id=item.id;
+    var status= item.status;
+    var typemission =item.typemission;
+
+    alert(id+"\n"+status+"\n"+typemission);
+ }
+
+
     render() {
-        console.disableYellowBox = true;
+
         return (
             <View style={styles.container}>
                 <StatusBar barStyle="light-content" backgroundColor="#009299" />
                 <View style={styles.header}>
                     <TextInput
-                        placeholder="Enter Text..."
+                        placeholder="Rechercher par Status..."
                         placeholderTextColor="gray"
                         value={this.state.query}
                         onChange={this.filterItem.bind(this)}
                         style={styles.input}
                     />
                 </View>
+                <View style={{flex:1,padding:5}}>
                 <FlatList
                     data={this.state.dataSource}
                     ItemSeparatorComponent={() => this.separator()}
                     renderItem={({item, index}) => {
                         return (
-                            <Card  style={{flex:1,backgroundColor:'#FFF', borderRadius: 10}}>
 
+                            <Card style={{flex: 1, backgroundColor: '#fff', borderRadius: 10}}
+                                  >
 
 
                                 <View style={styles.dataContainer}>
-                                    <Text style={{flex:1,fontSize:15}}>Status :</Text>
-                                    <Text style={{flex:1,fontSize:15}}>{item.status}</Text>
+                                    <Text style={{flex: 1, fontSize: 15}}>Status :</Text>
+                                    <Text style={{flex: 1, fontSize: 15}}>{item.status}</Text>
                                 </View>
                                 <View style={styles.dataContainer}>
-                                    <Text style={{flex:1,fontSize:15}}>Status :</Text>
-                                    <Text style={{flex:1,fontSize:15}}>{item.status}</Text>
+                                    <Text style={{flex: 1, fontSize: 15}}>Typemission :</Text>
+                                    <Text style={{flex: 1, fontSize: 15}}>{item.typemission}</Text>
+                                </View>
+                                <View style={styles.dataContainer}>
+                                    <Text style={{flex: 1, fontSize: 15}}>Date Début :</Text>
+                                    <Text style={{flex: 1, fontSize: 15}}>{item.datedebut}</Text>
+                                </View>
+                                <View style={styles.dataContainer}>
+                                    <Text style={{flex: 1, fontSize: 15}}>Date Fin :</Text>
+                                    <Text style={{flex: 1, fontSize: 15}}>{item.datefin}</Text>
                                 </View>
 
 
                             </Card>
                         );
-                    }}
+
+                    }
+
+                    }
+
+                    keyExtractor={item=>item.id}
+
                 />
+
+                </View>
             </View>
+
         );
+
     }
 
 }
@@ -183,7 +229,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         color: 'gray',
     },
-    author: {
+    typemission: {
         fontSize: 16,
     },
 });

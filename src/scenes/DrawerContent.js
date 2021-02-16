@@ -77,7 +77,7 @@ export function DrawerContent(props) {
                         <DrawerItem
                             icon={({color, size}) => (
                                 <Icon
-                                    name="account-outline"
+                                    name="account-check-outline"
                                     color={color}
                                     size={size}
                                 />
@@ -88,7 +88,7 @@ export function DrawerContent(props) {
                         <DrawerItem
                             icon={({color, size}) => (
                                 <Icon
-                                    name="account-outline   "
+                                    name="account-check-outline"
                                     color={color}
                                     size={size}
                                 />
@@ -113,7 +113,7 @@ export function DrawerContent(props) {
                             <View style={styles.notifications}>
                                 <Text>Notification</Text>
                                 <View pointerEvents="none">
-
+                                 
                                 </View>
                             </View>
                         </TouchableRipple>
