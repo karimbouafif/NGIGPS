@@ -1,106 +1,121 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {
   View,
-  Image,
   Text,
+  TouchableOpacity,
+  Dimensions,
   StyleSheet,
-  Animated,
-  ActivityIndicator,
+  StatusBar,
+  Image
 } from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import LinearGradient from 'react-native-linear-gradient';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import {Actions} from 'react-native-router-flux';
+import { useTheme } from '@react-navigation/native';
 
-import Logo from '../images/shipped.png';
+const SplashScreen = ({navigation}) => {
+  const { colors } = useTheme();
 
-const switchtoAuth = () => {
-  Actions.replace('login');
+  return (
+      <View style={styles.container}>
+        <StatusBar backgroundColor='#009387' barStyle="light-content"/>
+        <View style={styles.header}>
+          <Animatable.Image
+              animation="bounceIn"
+              duraton="1500"
+              source={require('../images/logo.png')}
+              style={styles.logo}
+              resizeMode="stretch"
+          />
+
+
+        </View>
+        <Animatable.View
+            style={[styles.footer, {
+              backgroundColor: colors.background
+            }]}
+            animation="fadeInUpBig"
+        >
+          <Text style={[styles.title, {
+            color: colors.text
+          }]}>
+            Restez connecté avec tout le monde!</Text>
+          <Text style={styles.text}>
+            Connectez-vous avec votre compte</Text>
+          <View style={styles.button}>
+            <TouchableOpacity onPress={()=>navigation.navigate('LoginScene')}>
+              <LinearGradient
+                  colors={['#009299', '#009299']}
+                  style={styles.signIn}
+              >
+                <Text style={styles.textSign}>
+                  Commencer</Text>
+                <MaterialIcons
+                    name="navigate-next"
+                    color="#fff"
+                    size={20}
+                />
+              </LinearGradient>
+            </TouchableOpacity>
+          </View>
+        </Animatable.View>
+      </View>
+  );
 };
 
-class LoadingScene extends Component {
-  state = {
-    LogoAnime: new Animated.Value(0),
-    LogoText: new Animated.Value(0),
-    loadingSpinner: false,
-  };
+export default SplashScreen;
 
-  componentDidMount() {
-    const {LogoAnime, LogoText} = this.state;
-    Animated.parallel([
-      Animated.spring(LogoAnime, {
-        toValue: 1,
-        tension: 10,
-        friction: 2,
-        duration: 5000,
-      }).start(),
-
-      Animated.timing(LogoText, {
-        toValue: 1,
-        duration: 1200,
-      }),
-    ]).start(() => {
-      this.setState({
-        loadingSpinner: true,
-      });
-
-      setTimeout(switchtoAuth, 1200);
-    });
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <Animated.View
-          style={{
-            opacity: this.state.LogoAnime,
-            top: this.state.LogoAnime.interpolate({
-              inputRange: [0, 1],
-              outputRange: [80, 0],
-            }),
-          }}>
-          <Image source={Logo} style={styles.tinyLogo} />
-
-          {this.state.loadingSpinner ? (
-            <ActivityIndicator
-              style={{
-                position: 'absolute',
-                left: 0,
-                right: 0,
-                top: 0,
-                bottom: 0,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              size="large"
-              color="#5257f2"
-            />
-          ) : null}
-        </Animated.View>
-        <Animated.View style={{opacity: this.state.LogoText}}>
-          <Text style={styles.logoText}>NGI GPS</Text>
-        </Animated.View>
-      </View>
-    );
-  }
-}
-
-export default LoadingScene;
+const {height} = Dimensions.get("screen");
+const height_logo = height * 0.28;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#7EBEFF',
+    backgroundColor: '#009299'
+  },
+  header: {
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  footer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingVertical: 50,
+    paddingHorizontal: 30
+  },
+  logo: {
+    width: 183,
+    height: 40,
+  },
+
+  title: {
+    color: '#05375a',
+    fontSize: 30,
+    fontWeight: 'bold'
+  },
+  text: {
+    color: 'grey',
+    marginTop:5
+  },
+  button: {
+    alignItems: 'flex-end',
+    marginTop: 30
+  },
+  signIn: {
+    width: 150,
+    height: 40,
     justifyContent: 'center',
     alignItems: 'center',
+    borderRadius: 50,
+    flexDirection: 'row'
   },
-  tinyLogo: {
-    width: 50,
-    height: 50,
-  },
-  logoText: {
-    color: '#FFFFFF',
-    fontFamily: 'GoogleSans-Bold',
-    fontSize: 30,
-    marginTop: 29.1,
-    fontWeight: '300',
-  },
+  textSign: {
+    color: 'white',
+    fontWeight: 'bold'
+  }
 });
+
