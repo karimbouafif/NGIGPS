@@ -8,7 +8,7 @@ import Auth from '../Containers/Auth';
 import { createStackNavigator } from 'react-navigation-stack';
 import LaunchScreen from '../Containers/LaunchScreen'
 import styles from './Styles/NavigationStyles'
-
+import Map from '../Containers/Map'
 import Menu from "./Menu";
 import {
   createDrawerNavigator,
@@ -88,7 +88,15 @@ const HomeStack = createStackNavigator(
         header: <Header search options title="Home" navigation={navigation} />
       })
     },
-
+    Map: {
+      screen: Map,
+      navigationOptions: ({ navigation }) => ({
+        header: (
+          <Header left={<Block />} white transparent title="" navigation={navigation} />
+        ),
+        headerTransparent: true
+      })
+    },
   },
   {
     cardStyle: {

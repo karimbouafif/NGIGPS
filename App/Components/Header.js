@@ -20,8 +20,8 @@ const BellButton = ({isWhite, style, navigation}) => (
 );
 
 const BasketButton = ({isWhite, style, navigation}) => (
-  <TouchableOpacity style={[styles.button, style]} >
-    <Icon name="address-card" size={30} color="#0859B3" />
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Map')}>
+    <Icon name="map" size={30} color="#0859B3" />
   </TouchableOpacity>
 );
 
@@ -51,6 +51,7 @@ class Header extends React.Component {
       case 'Home':
         return ([
 
+          <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
         ]);
       case 'ShareBikeMap':
         return ([
@@ -116,7 +117,7 @@ class Header extends React.Component {
         right
         color="black"
         style={styles.search}
-        placeholder="Rechercher par Status..."
+        placeholder="Chercher par Status ..."
         placeholderTextColor={'#8898AA'}
         onFocus={() => navigation.navigate('ShareBikeMapScreen')}
         onChangeText={text => {console.log("yo")}}
