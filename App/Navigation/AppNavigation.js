@@ -7,10 +7,9 @@ import { createAppContainer } from 'react-navigation'
 import Auth from '../Containers/Auth';
 import { createStackNavigator } from 'react-navigation-stack';
 import LaunchScreen from '../Containers/LaunchScreen'
-import Onboarding from "../Containers/Onboarding";
 import styles from './Styles/NavigationStyles'
 
-
+import Menu from "./Menu";
 import {
   createDrawerNavigator,
 } from "react-navigation";
@@ -25,6 +24,7 @@ import DrawerItem from "../Components/DrawerItem";
 
 // header for screens
 import Header from "../Components/Header";
+import Home from '../Containers/Home'
 
 // Manifest of possible screens
 const PrimaryNav = createStackNavigator({
@@ -80,8 +80,23 @@ const transitionConfig = (transitionProps, prevTransitionProps) => ({
 
 
 
+const HomeStack = createStackNavigator(
+  {
+    Home: {
+      screen: Home,
+      navigationOptions: ({ navigation }) => ({
+        header: <Header search options title="Home" navigation={navigation} />
+      })
+    },
 
-
+  },
+  {
+    cardStyle: {
+      backgroundColor: "#F8F9FE"
+    },
+    transitionConfig
+  }
+);
 
 
 
@@ -119,11 +134,13 @@ const AppStack = createDrawerNavigator(
         drawerLabel: () => {}
       }
     },
-    Onboarding: {
-      screen: Onboarding,
-      navigationOptions: {
-        drawerLabel: () => {}
-      }
+    Home: {
+      screen: HomeStack,
+      navigationOptions: navOpt => ({
+        drawerLabel: ({ focused }) => (
+          <DrawerItem focused={focused} title="Home" />
+        )
+      })
     },
 
 
@@ -132,7 +149,7 @@ const AppStack = createDrawerNavigator(
 
 
   },
-
+  Menu
 );
 
 export default createAppContainer(AppStack)

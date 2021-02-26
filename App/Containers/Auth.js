@@ -73,7 +73,7 @@ export default class Auth extends Component {
   };
 
   _onSigninPress = () => {
-    this.props.navigation.navigate('Onboarding',{ item: this.state })
+    this.props.navigation.navigate('Home',{ item: this.state })
     /*userLogin({
       number: this.state.login,
       password: this.state.password,

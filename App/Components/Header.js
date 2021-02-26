@@ -50,8 +50,7 @@ class Header extends React.Component {
     switch (routeName) {
       case 'Home':
         return ([
-          <BellButton key='chat-home' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
+
         ]);
       case 'ShareBikeMap':
         return ([
@@ -117,7 +116,7 @@ class Header extends React.Component {
         right
         color="black"
         style={styles.search}
-        placeholder="Are you looking for a certain station ?"
+        placeholder="Rechercher par Status..."
         placeholderTextColor={'#8898AA'}
         onFocus={() => navigation.navigate('ShareBikeMapScreen')}
         onChangeText={text => {console.log("yo")}}
