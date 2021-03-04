@@ -18,13 +18,16 @@ import { Block } from "galio-framework";
 
 // screens
 import Splash from '../Containers/Splash';
-
+import GererMesMissions from '../Containers/GererMesMissions'
+import AjouterMission from '../Containers/AjouterMission'
 // drawer
 import DrawerItem from "../Components/DrawerItem";
 
 // header for screens
 import Header from "../Components/Header";
 import Home from '../Containers/Home'
+
+
 
 // Manifest of possible screens
 const PrimaryNav = createStackNavigator({
@@ -132,8 +135,31 @@ const authStack = createStackNavigator(
   }
 );
 
+const gerermissionStack = createStackNavigator(
+  {
+    GererMesMissions: {
+      screen: GererMesMissions,
+      navigationOptions: ({ navigation }) => ({
+        header: <Header search options title="GererMesMissions" navigation={navigation} />
+      })
+    },
+    AjouterMission: {
+      screen: AjouterMission,
+      navigationOptions: ({ navigation }) => ({
+        header: <Header   title="AjouterMission" navigation={navigation} />
+      })
+    },
+  },
+  {
+    cardStyle: {
+      backgroundColor: "#F8F9FE"
+    },
+    transitionConfig
+  }
+);
 
-// divideru se baga ca si cum ar fi un ecrna dar nu-i nimic duh
+
+
 const AppStack = createDrawerNavigator(
   {
     Auth: {
@@ -151,7 +177,14 @@ const AppStack = createDrawerNavigator(
       })
     },
 
-
+    GererMesMissions: {
+      screen: gerermissionStack,
+      navigationOptions: navOpt => ({
+        drawerLabel: ({ focused }) => (
+          <DrawerItem focused={focused} title="GererMesMissions" />
+        )
+      })
+    },
 
 
 

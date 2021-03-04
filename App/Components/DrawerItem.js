@@ -17,11 +17,11 @@ class DrawerItem extends React.Component {
     switch (title) {
       case "Home":
         return (
-          <Icon name="home" size={30} color="#999999" />
+          <Icon name="home" size={28} color="#05375a" />
         );
-      case "Reservations":
+      case "GererMesMissions":
         return (
-          <MatIcon name="bike" size={30} color="#999999" />
+          <MatIcon name="calendar" size={28} color="#05375a" />
         );
       case "Navigation":
         return (

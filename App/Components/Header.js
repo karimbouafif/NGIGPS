@@ -24,6 +24,22 @@ const BasketButton = ({isWhite, style, navigation}) => (
     <Icon name="map" size={30} color="#0859B3" />
   </TouchableOpacity>
 );
+const MapButton = ({isWhite, style, navigation}) => (
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Map')}>
+    <Icon name="map" size={30} color="#0859B3" />
+  </TouchableOpacity>
+);
+const CalenderButton = ({isWhite, style, navigation}) => (
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('...')}>
+    <Icon name="calendar" size={30} color="#0859B3" />
+  </TouchableOpacity>
+);
+const TaskMissionButton = ({isWhite, style, navigation}) => (
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('GererMesMissions')}>
+    <Icon name="tasks" size={30} color="#0859B3" />
+  </TouchableOpacity>
+);
+
 
 const SearchButton = ({isWhite, style, navigation}) => (
   <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
@@ -51,15 +67,15 @@ class Header extends React.Component {
       case 'Home':
         return ([
 
-          <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
+          <MapButton key='basket-home' navigation={navigation} isWhite={white} />
         ]);
-      case 'ShareBikeMap':
+      case 'GererMesMissions':
         return ([
-
+          <CalenderButton key='calendar' navigation={navigation} isWhite={white} />
         ]);
-      case 'FindMyWayScreen':
+      case 'AjouterMission':
         return ([
-
+          <TaskMissionButton key='add-task' navigation={navigation} isWhite={white} />
         ]);
 
 

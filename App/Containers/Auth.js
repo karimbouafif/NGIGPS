@@ -172,7 +172,7 @@ export default class Auth extends Component {
           <InputTextField
             _onTextChange={this._onPasswordChange}
             style={{ marginTop: 20, marginBottom: 17 }}
-            placeholderText="Mot de passe "
+            placeholderText=" Votre Mot de passe "
             isSecure={this.state.passwordVisible ? false : true}
             isVisible={this.state.passwordVisible ? true : false}
             _toggleVisibility={this._togglePasswordVisibility}
