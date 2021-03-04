@@ -221,7 +221,7 @@ class Header extends React.Component {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 12,
+    padding: 8,
     position: 'relative',
   },
   title: {
@@ -277,7 +277,7 @@ const styles = StyleSheet.create({
     width: width * 0.35,
     borderRadius: 0,
     borderWidth: 0,
-    height: 24,
+    height: 18,
     elevation: 0,
   },
   tabTitle: {
