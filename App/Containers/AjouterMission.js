@@ -10,10 +10,11 @@ import {
 } from 'react-native'
 import {Picker} from '@react-native-community/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Input } from 'react-native-elements';
+import { Divider, Input } from 'react-native-elements'
 import XDate from 'xdate';
 import InputTextField from '../Components/InputTextField'
 const { width } = Dimensions.get("window");
+import * as Nominatim from 'nominatim-browser';
 
 
 
@@ -38,11 +39,20 @@ export default  class AjouterMission extends  Component<{}> {
     nom: '',
     tel:'',
     note:'',
-
+//ComboBox
+    PickerValue:''
 
   };
 
+  clickme=()=>{
+    var data = this.state.PickerValue;
+    if(data==""){
+      alert("Please Select a Option");
+    }else{
+      alert(data);
+    }
 
+  }
 
   setModalVisible = (visible) => {
 
@@ -264,7 +274,17 @@ export default  class AjouterMission extends  Component<{}> {
     defaultShiftEndDateTime.setSeconds(0);
 
     return (
-      <View>
+      <View style={styles.container}>
+        <Picker
+          style={{width:'100%'}}
+          selectedValue={this.state.PickerValue}
+          onValueChange={(itemValue,itemIndex) => this.setState({PickerValue:itemValue})}
+        >
+          <Picker.Item label="Choisir un status" value=""/>
+          <Picker.Item label="high " value="high" />
+          <Picker.Item label="Medium" value="medium"/>
+          <Picker.Item label="Low" value="low"/>
+        </Picker>
         <TouchableOpacity
           // THE FOLLOWING ARGUMENT VALUE IS THE (1st place OF 2) PLACES, WHICH DIFFERENTIATE BETWEEN THE DIFFERENT MODES (DATETIME, DATE & TIME)
           onPress={() => {
@@ -394,7 +414,10 @@ export default  class AjouterMission extends  Component<{}> {
 }
 
 const styles = StyleSheet.create({
-
+  container: {
+    flex: 1,
+    backgroundColor: '#F5FCFF',
+  },
   centeredView: {
     flex: 1,
     justifyContent: "center",

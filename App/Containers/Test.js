@@ -1,326 +1,305 @@
-import React, { Component } from 'react';
-import { TouchableOpacity, View } from 'react-native';
-import { Input } from 'react-native-elements';
+import React from 'react';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  TextInput,
+  Platform,
+  StyleSheet ,
+  StatusBar,
+  Alert
+} from 'react-native';
+import * as Animatable from 'react-native-animatable';
+import LinearGradient from 'react-native-linear-gradient';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Feather from 'react-native-vector-icons/Feather';
 
-import DateTimePicker from '@react-native-community/datetimepicker';
-import XDate from 'xdate';
+import { useTheme } from 'react-native-paper';
 
-class ShiftTimingScreen extends Component {
-  state = {
-    // The values, which we get from each of the DateTimePickers.
-    // These values can be saved into your app's state.
-    StartingDateTimeValue: null,
-    ToDateValue: null,
-    ToTimeValue: null,
+import { AuthContext } from '../components/context';
 
-    // for iOS & Android: When this flag is true, the relevant <DateTimePicker> is displayed
-    isStartingDateTimePickerVisible: false,
-    isToDatePickerVisible: false,
-    isToTimePickerVisible: false,
+import Users from '../model/users';
 
-    // The value of the <DateTimePicker> is stored in this variable, which is used to pass data between the date & time pickers
-    dateOrTimeValue: null,
+const LoginScene = ({navigation}) => {
 
-    // ONLY FOR ANDROID: note that the current version of the <DateTimePicker> does NOT support "datetime" mode on Android.
-    // So, I am using the following 2 flags (datePickerVisible & timePickerVisible) to provide this functionality.
+  const [data, setData] = React.useState({
+    username: '',
+    password: '',
+    check_textInputChange: false,
+    secureTextEntry: true,
+    isValidUser: true,
+    isValidPassword: true,
+  });
 
-    // (1) ONLY FOR ANDROID: When the datePickerVisible flag is true, the <DateTimePicker> is displayed in "date" mode
-    datePickerVisible: false,
+  const { colors } = useTheme();
 
-    // (2) ONLY FOR ANDROID: When the timePickerVisible flag is true, the <DateTimePicker> is displayed in "time" mode
-    timePickerVisible: false,
-  };
+  const { signIn } = React.useContext(AuthContext);
 
-
-  saveStartingDateTime = (value) => {
-    console.log("saveStartingDateTime - value:", value);
-    this.setState({
-      StartingDateTimeValue: value,
-    });
-  };
-
-  saveEndingDate = (value) => {
-    console.log("saveEndingDate - value:", value);
-    this.setState({
-      ToDateValue: value,
-    });
-  };
-
-  saveEndingTime = (value) => {
-    console.log("saveEndingTime - value:", value);
-    this.setState({
-      ToTimeValue: value,
-    });
-  };
-
-  fRenderDateTimePicker = (dateTimePickerVisible, visibilityVariableName, dateTimePickerMode, defaultValue, saveValueFunctionName ) => {
-    // dateTimePickerVisible:   a flag, which is used to show/hide this DateTimePicker
-    // visibilityVariableName:              the name of the state variable, which controls showing/hiding this DateTimePicker.
-    // The name of the variable is received in (visibilityVariableName), and the value of it is received in the argument (dateTimePickerVisible).
-    // dateTimePickerMode:      the mode mode of this DateTimePicker
-    // defaultValue:                the default value, which should be selected initially when the DatTimePicker is displayed
-    // saveValueFunctionName:   the function, which would be called after the user selects a value.
-    // In my case it is a Redux's action creator, which saves the selected value in the app's state.
-
-    return (
-      <View>
-        {/* A. For iOS, display the picker in "date", "time" or "datetime" mode - No need for any customisation */}
-        {Platform.OS === 'ios' && dateTimePickerVisible &&
-        (<DateTimePicker
-          mode={dateTimePickerMode}
-          value={defaultValue}
-
-          onChange={ (event, value) => {
-            this.setState({
-              dateOrTimeValue: value,
-
-              // We are done. Hide the <DatTimePicker>
-              // Technically speaking, since this part of the script is only relevant to a certain platform, I don't need to check for the platform (below).
-              // Note that [visibilityVariableName] refers to the NAME of a state variable
-              [visibilityVariableName]: Platform.OS === 'ios' ? true : false,
-            });
-
-            if (event.type === "set") {
-              saveValueFunctionName(value);
-              // console.log("visibilityVariableName:", [visibilityVariableName], " - value:", value);
-            }
-
-          }}
-        />)}
-
-        {/* B.1 For Android - "date" mode:      display the picker in "date" mode */}
-        {/*       For Android - "datetime" mode: display the picker in "date" mode (to be followed by another picker (below) in "time" mode) */}
-        {Platform.OS === 'android' && dateTimePickerVisible && this.state.datePickerVisible &&
-        (<DateTimePicker
-          mode={"date"}
-          display='default' // 'default', 'spinner', 'calendar', 'clock' // Android Only
-          value={defaultValue}
-
-          onChange={ (event, value) => {
-            this.setState({
-              // In case of (mode == datetime), the TIME part will be added to "dateOrTimeValue" using another DateTimePicker (below).
-              dateOrTimeValue: value,
-              datePickerVisible: false,
-            });
-
-            // When the mode is "datetime" & this picker was set (the user clicked on OK, rather than cancel),
-            // we need to display another DateTimePicker in TIME mode (below)
-            if (event.type === "set" && dateTimePickerMode === "datetime") {
-              this.setState({
-                timePickerVisible: true,
-              });
-            }
-
-              // When the mode is "date" & this picker was set (the user clicked on OK, rather than cancel),
-              // (1) We need to hide this picker.
-            // (2) Save the data. Otherwise, do nothing. Date will be saved after the TIME picker is launched (below).
-            else if (event.type === "set" && dateTimePickerMode === "date") {
-              // console.log("saveValueFunctionName: ", saveValueFunctionName);
-              this.setState({
-                [visibilityVariableName]: Platform.OS === 'ios' ? true : false,
-              });
-
-              saveValueFunctionName(value);
-              // console.log("visibilityVariableName:", [visibilityVariableName], " - value:", value);
-            }
-
-          }}
-        />)}
-
-        {/* B.2 For Android - "time" mode:      display the picker in "time" mode */}
-        {/*       For Android - "datetime" mode: display the picker in "time" mode (following another picker (above) in "date" mode) */}
-        {Platform.OS === 'android' && dateTimePickerVisible && this.state.timePickerVisible &&
-        (<DateTimePicker
-          mode={"time"}
-          display='spinner' // 'default', 'spinner', 'calendar', 'clock' // Android Only
-          is24Hour={false} // Android Only
-          value={defaultValue}
-
-          onChange={(event, value) => {
-            // 1. In case of (mode == "time"), (value) is assigned to (newDateTime), which will be used below (as is with no additions)
-            let newDateTime = value;
-
-            // 2. In case of (mode == "datetime"),
-            if (event.type === "set" && dateTimePickerMode === "datetime") {
-
-              // 2.1. Get the (date) part from the previously displayed DATE picker, which saved its value into (this.state.dateValue)
-              newDateTime = this.state.dateOrTimeValue;
-
-              // 2.2. Get the (hours & minutes) parts from this TIME Picker, which saved its value into (value)
-              const newHours = value.getHours();
-              const newMinutes = value.getMinutes();
-
-              // 2.3 Combine 2.1 & 2.2 (above) into (newDateTime).
-              newDateTime.setHours(newHours);
-              newDateTime.setMinutes(newMinutes);
-              newDateTime.setSeconds(0);
-            }
-
-            this.setState({
-              dateOrTimeValue: newDateTime,
-              datePickerVisible: false,
-              timePickerVisible: false,
-
-              // We are done. Hide the <DatTimePicker>
-              // Technically speaking, since this part of the script is only relevant to a certain platform, I don't need to check for the platform (below).
-              [visibilityVariableName]: Platform.OS === 'ios' ? true : false,
-            });
-
-            if (event.type === "set") {
-              saveValueFunctionName(newDateTime);
-              // console.log("visibilityVariableName:", [visibilityVariableName], " - newDateTime:", newDateTime);
-            }
-          }}
-
-        />)}
-      </View>
-    );
-  };
-
-  // This function formats date values. Obviously, using it is optional.
-  // If you decide to use it, remember that it needs the XDate library:
-  // import XDate from 'xdate';
-  fFormatDateTime = (date1, format1 = "datetime") => {
-    // date1:   the date to be formatted
-    // format1: the date mode - "datetime" , "date" OR "time"
-    if (date1 === null) {
-      return null;
-    }
-
-    // else:
-    const format2 = format1.toLowerCase();
-    let dateFormatted;
-    const date2 = new XDate(date1);
-
-    switch (format2) {
-      case "datetime": {
-        dateFormatted = date2.toString('dd/MM/yyyy - hh:mm TT');
-        return dateFormatted;
-      }
-      case "date": {
-        dateFormatted = date2.toString('dd/MM/yyyy');
-        return dateFormatted;
-      }
-      case "time": {
-        dateFormatted = date2.toString('hh:mm TT');
-        return dateFormatted;
-      }
-      default:
-        return null;
-    }
-  };
-
-  // This function shows/hides the initial DateTimePicker
-  // If the mode is "datetime", another picker will be displayed by the DATE picker
-  fRenderDatePicker = (mode, visibilityVariableName) => {
-    // mode:                        specifies the mode of the <DateTimePicker>
-    // visibilityVariableName:  the name of the state variable, which controls showing/hiding this DateTimePicker.
-    switch (mode) {
-      case "datetime":
-        return this.setState({ [visibilityVariableName]: true, datePickerVisible: true, timePickerVisible: false });
-      case "date":
-        return this.setState({ [visibilityVariableName]: true, datePickerVisible: true, timePickerVisible: false });
-      case "time":
-        return this.setState({ [visibilityVariableName]: true, datePickerVisible: false, timePickerVisible: true });
+  const textInputChange = (val) => {
+    if( val.trim().length >= 4 ) {
+      setData({
+        ...data,
+        username: val,
+        check_textInputChange: true,
+        isValidUser: true
+      });
+    } else {
+      setData({
+        ...data,
+        username: val,
+        check_textInputChange: false,
+        isValidUser: false
+      });
     }
   }
 
-  render() {
-    // 1. For the "Shift Start", Initial/Default value for the DateTimePicker
-    // // defaultShiftStartDateTime: (tomorrow's date at 9 AM)
-    let defaultShiftStartDateTime = new Date();
-    defaultShiftStartDateTime.setDate(defaultShiftStartDateTime.getDate() + 1);
-    defaultShiftStartDateTime.setHours(9);
-    defaultShiftStartDateTime.setMinutes(0);
-    defaultShiftStartDateTime.setSeconds(0);
+  const handlePasswordChange = (val) => {
+    if( val.trim().length >= 8 ) {
+      setData({
+        ...data,
+        password: val,
+        isValidPassword: true
+      });
+    } else {
+      setData({
+        ...data,
+        password: val,
+        isValidPassword: false
+      });
+    }
+  }
 
-    // 2. For the "Shift End", Initial/Default value for the DateTimePicker
-    let defaultShiftEndDateTime = new Date();
-    defaultShiftEndDateTime.setDate(defaultShiftEndDateTime.getDate() + 1);
-    defaultShiftEndDateTime.setHours(17);
-    defaultShiftEndDateTime.setMinutes(0);
-    defaultShiftEndDateTime.setSeconds(0);
+  const updateSecureTextEntry = () => {
+    setData({
+      ...data,
+      secureTextEntry: !data.secureTextEntry
+    });
+  }
 
-    return (
-      <View>
-        <TouchableOpacity
-          // THE FOLLOWING ARGUMENT VALUE IS THE (1st place OF 2) PLACES, WHICH DIFFERENTIATE BETWEEN THE DIFFERENT MODES (DATETIME, DATE & TIME)
-          onPress={() => {
-            // this.setState({ isStartingDateTimePickerVisible: true, });
-            this.fRenderDatePicker("datetime", "isStartingDateTimePickerVisible");
-          }}>
-          <Input
-            label='Starting Date & Time'
-            placeholder={"01/01/2019 - 09:00 AM"}
-            editable={false}
-            value={this.fFormatDateTime(this.state.StartingDateTimeValue)}
-          />
-        </TouchableOpacity>
+  const handleValidUser = (val) => {
+    if( val.trim().length >= 4 ) {
+      setData({
+        ...data,
+        isValidUser: true
+      });
+    } else {
+      setData({
+        ...data,
+        isValidUser: false
+      });
+    }
+  }
 
-        {// This function would render the necessary DateTimePicker only if the relevant state variable is set (above)
-          this.fRenderDateTimePicker(
-            this.state.isStartingDateTimePickerVisible,
-            "isStartingDateTimePickerVisible",
+  const loginHandle = (userName, password) => {
 
-            // THE FOLLOWING ARGUMENT VALUE IS THE (2nd place OF 2) PLACES, WHICH DIFFERENTIATE BETWEEN THE DIFFERENT MODES (DATETIME, DATE & TIME)
-            "datetime",
+    const foundUser = Users.filter( item => {
+      return userName == item.username && password == item.password;
+    } );
 
-            defaultShiftStartDateTime,
+    if ( data.username.length == 0 || data.password.length == 0 ) {
+      Alert.alert('Mauvaise entrée!', '\n' + 'Le champ du nom d\'utilisateur ou du mot de passe ne peut pas être vide.', [
+        {text: 'OK'}
+      ]);
+      return;
+    }
 
-            // This is my function, which saves the selected value to my app's state.
-            // YOU NEED TO REPLACE IT WITH SOMETHING RELEVANT TO YOUR APP.
-            this.saveStartingDateTime,
-          )}
+    if ( foundUser.length == 0 ) {
+      Alert.alert('Utilisateur invalide!', 'L\'identifiant ou le mot de passe est incorrect.', [
+        {text: 'OK'}
+      ]);
+      return;
+    }
+    signIn(foundUser);
+  }
 
-
-        <TouchableOpacity
-          onPress={() => {
-            // this.setState({ isToDatePickerVisible: true, });
-            this.fRenderDatePicker("date", "isToDatePickerVisible");
-          }}>
-          <Input
-            label='Ending Date'
-            placeholder={"01/01/2019"}
-            editable={false}
-            value={this.fFormatDateTime(this.state.ToDateValue, "date")}
-          />
-        </TouchableOpacity>
-        {this.fRenderDateTimePicker(
-          this.state.isToDatePickerVisible,
-          "isToDatePickerVisible",
-          "date",
-          defaultShiftEndDateTime,
-
-          // This is my function, which saves the selected value to my app's state.
-          // YOU NEED TO REPLACE IT WITH SOMETHING RELEVANT TO YOUR APP.
-          this.saveEndingDate,
-        )}
-
-        <TouchableOpacity
-          onPress={() => {
-            // this.setState({ isToTimePickerVisible: true, });
-            this.fRenderDatePicker("time", "isToTimePickerVisible");
-          }}>
-          <Input
-            label='Ending Time'
-            placeholder={"09:00 AM"}
-            editable={false}
-            value={this.fFormatDateTime(this.state.ToTimeValue, "time")}
-          />
-        </TouchableOpacity>
-        {this.fRenderDateTimePicker(
-          this.state.isToTimePickerVisible,
-          "isToTimePickerVisible",
-          "time",
-          defaultShiftEndDateTime,
-
-          // This is my function, which saves the selected value to my app's state.
-          // YOU NEED TO REPLACE IT WITH SOMETHING RELEVANT TO YOUR APP.
-          this.saveEndingTime,
-        )}
+  return (
+    <View style={styles.container}>
+      <StatusBar backgroundColor='#009387' barStyle="light-content"/>
+      <View style={styles.header}>
+        <Text style={styles.text_header}>Bienvenue !</Text>
       </View>
-    );
-  } // end of: render()
-} // end of: component
+      <Animatable.View
+        animation="fadeInUpBig"
+        style={[styles.footer, {
+          backgroundColor: colors.background
+        }]}
+      >
+        <Text style={[styles.text_footer, {
+          color: colors.text
+        }]}>
+          Nom d'utilisateur</Text>
+        <View style={styles.action}>
+          <FontAwesome
+            name="user-o"
+            color={colors.text}
+            size={20}
+          />
+          <TextInput
+            placeholder="Votre Nom d'utilisateur"
+            placeholderTextColor="#666666"
+            style={[styles.textInput, {
+              color: colors.text
+            }]}
+            autoCapitalize="none"
+            onChangeText={(val) => textInputChange(val)}
+            onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+          />
+          {data.check_textInputChange ?
+            <Animatable.View
+              animation="bounceIn"
+            >
+              <Feather
+                name="check-circle"
+                color="green"
+                size={20}
+              />
+            </Animatable.View>
+            : null}
+        </View>
+        { data.isValidUser ? null :
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Le nom d'utilisateur doit comporter 4 caractères.</Text>
+          </Animatable.View>
+        }
 
-export default ShiftTimingScreen;
+
+        <Text style={[styles.text_footer, {
+          color: colors.text,
+          marginTop: 35
+        }]}>Mot de passe</Text>
+        <View style={styles.action}>
+          <Feather
+            name="lock"
+            color={colors.text}
+            size={20}
+          />
+          <TextInput
+            placeholder="Votre mot de passe"
+            placeholderTextColor="#666666"
+            secureTextEntry={data.secureTextEntry ? true : false}
+            style={[styles.textInput, {
+              color: colors.text
+            }]}
+            autoCapitalize="none"
+            onChangeText={(val) => handlePasswordChange(val)}
+          />
+          <TouchableOpacity
+            onPress={updateSecureTextEntry}
+          >
+            {data.secureTextEntry ?
+              <Feather
+                name="eye-off"
+                color="grey"
+                size={20}
+              />
+              :
+              <Feather
+                name="eye"
+                color="grey"
+                size={20}
+              />
+            }
+          </TouchableOpacity>
+        </View>
+        { data.isValidPassword ? null :
+          <Animatable.View animation="fadeInLeft" duration={500}>
+            <Text style={styles.errorMsg}>Le mot de passe doit contenir 8 caractères.</Text>
+          </Animatable.View>
+        }
+
+
+        <TouchableOpacity>
+          <Text style={{color: '#009299', marginTop:15}}>Mot de passe oublier ?</Text>
+        </TouchableOpacity>
+        <View style={styles.button}>
+          <TouchableOpacity
+            style={styles.signIn}
+            onPress={() => {loginHandle( data.username, data.password )}}
+          >
+            <LinearGradient
+              colors={['#009299', '#009299']}
+              style={styles.signIn}
+            >
+              <Text style={[styles.textSign, {
+                color:'#fff'
+              }]}>Se Connecter</Text>
+            </LinearGradient>
+          </TouchableOpacity>
+
+
+        </View>
+      </Animatable.View>
+    </View>
+  );
+};
+
+export default LoginScene;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#009299'
+  },
+  header: {
+    flex: 1,
+    justifyContent: 'flex-end',
+    paddingHorizontal: 20,
+    paddingBottom: 50
+  },
+  footer: {
+    flex: 3,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 30,
+    borderTopRightRadius: 30,
+    paddingHorizontal: 20,
+    paddingVertical: 30
+  },
+  text_header: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 30
+  },
+  text_footer: {
+    color: '#05375a',
+    fontSize: 18
+  },
+  action: {
+    flexDirection: 'row',
+    marginTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f2f2f2',
+    paddingBottom: 5
+  },
+  actionError: {
+    flexDirection: 'row',
+    marginTop: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#FF0000',
+    paddingBottom: 5
+  },
+  textInput: {
+    flex: 1,
+    marginTop: Platform.OS === 'ios' ? 0 : -12,
+    paddingLeft: 10,
+    color: '#05375a',
+  },
+  errorMsg: {
+    color: '#FF0000',
+    fontSize: 14,
+  },
+  button: {
+    alignItems: 'center',
+    marginTop: 50
+  },
+  signIn: {
+    width: '100%',
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10
+  },
+  textSign: {
+    fontSize: 18,
+    fontWeight: 'bold'
+  }
+});
