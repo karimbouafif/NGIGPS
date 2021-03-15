@@ -30,6 +30,7 @@ import Home from '../Containers/Home'
 
 
 
+
 // Manifest of possible screens
 const PrimaryNav = createStackNavigator({
 
@@ -92,17 +93,9 @@ const HomeStack = createStackNavigator(
         header: <Header search options title="Home" navigation={navigation} />
       })
     },
-    /*
-    Map: {
-      screen: Map,
-      navigationOptions: ({ navigation }) => ({
-        header: (
-          <Header left={<Block />} white transparent title="" navigation={navigation} />
-        ),
-        headerTransparent: true
-      })
-    },
-    */
+
+
+
 
   },
   {
@@ -189,7 +182,6 @@ const AppStack = createDrawerNavigator(
         )
       })
     },
-
 
 
 

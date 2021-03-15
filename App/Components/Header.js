@@ -25,7 +25,7 @@ const BasketButton = ({isWhite, style, navigation}) => (
   </TouchableOpacity>
 );
 const MapButton = ({isWhite, style, navigation}) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Map')}>
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('')}>
     <Icon name="map" size={30} color="#0859B3" />
   </TouchableOpacity>
 );
@@ -79,7 +79,10 @@ class Header extends React.Component {
         ]);
 
 
+      case 'MissionMap':
+        return ([
 
+        ]);
       case 'Billing':
         return ([
 
