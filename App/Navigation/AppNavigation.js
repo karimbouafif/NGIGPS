@@ -20,6 +20,7 @@ import { Block } from "galio-framework";
 import Splash from '../Containers/Splash';
 import GererMesMissions from '../Containers/GererMesMissions'
 import AjouterMission from '../Containers/AjouterMission'
+import Logout from "../Containers/Logout";
 // drawer
 import DrawerItem from "../Components/DrawerItem";
 
@@ -83,7 +84,23 @@ const transitionConfig = (transitionProps, prevTransitionProps) => ({
 });
 
 
-
+const LogoutStack = createStackNavigator(
+  {
+    Logout: {
+      screen: Logout,
+      navigationOptions: ({ navigation }) => ({
+        header: (
+          <Header white transparent title="Logout" iconColor={'#FFF'} navigation={navigation} />
+        ),
+        headerTransparent: true
+      })
+    }
+  },
+  {
+    cardStyle: { backgroundColor: "#FFFFFF" },
+    transitionConfig
+  }
+);
 
 const HomeStack = createStackNavigator(
   {
@@ -182,7 +199,14 @@ const AppStack = createDrawerNavigator(
         )
       })
     },
-
+    Logout: {
+      screen: LogoutStack,
+      navigationOptions: navOpt => ({
+        drawerLabel: ({ focused }) => (
+          <DrawerItem focused={focused} screen="Logout" title="Logout" />
+        )
+      })
+    },
 
 
   },

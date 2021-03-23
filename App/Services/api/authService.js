@@ -1,8 +1,10 @@
 import axios from 'axios/index';
-import { apiutlProd,apiurlDev } from '../../Config/api';
+import { Config } from '../../Config/api';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 const authApiClient = axios.create({
-  baseURL: apiutlProd.API_URL,
+  baseURL: Config.API_URL,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
@@ -14,7 +16,7 @@ const authApiClient = axios.create({
 
 
 export function userLogin(payload){
-  return authApiClient.post('/user/mobile/signin', payload);
+  return authApiClient.post('/users/login', payload);
 }
 
 

@@ -16,8 +16,10 @@ import * as Animatable from 'react-native-animatable'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 import LinearGradient from "react-native-linear-gradient"
-
-
+import {
+  userLogin
+} from '../Services/api/authService';
+import axios from "axios";
 
 export default class Auth extends Component {
 
@@ -74,22 +76,23 @@ export default class Auth extends Component {
 
   _onSigninPress = () => {
     this.props.navigation.navigate('Home',{ item: this.state })
-    /*userLogin({
-      number: this.state.login,
+    userLogin({
+      email: this.state.login,
       password: this.state.password,
     })
       .then(rsp => {
         this.saveItem('jwt', rsp.data.token);
-        this.props.navigation.navigate('Onboarding',{ item: this.state })
+        console.log("yoooo "+ rsp.data.token);
+        this.props.navigation.navigate('Home',{ item: this.state })
 
 
 
       })
       .catch(err => {
-        console.log(err);
+        console.log("login test"+err);
       });
 
-     */
+
   };
 
   render() {

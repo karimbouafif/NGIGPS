@@ -3,86 +3,44 @@ import {View, Text, Button, StyleSheet, StatusBar, TextInput, Image, Dimensions}
 import  {Card} from "react-native-paper";
 import {FlatList} from 'react-native-gesture-handler';
 //import DetailsScreen from '../scenes/DetailsScreen'
-
+import jwtDecode  from 'jwt-decode';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const {width, height} = Dimensions.get('window');
 
+import { Block } from "galio-framework";
 
 
-export default class Home extends Component{
+class Home extends React.Component{
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      query: null,
-      dataSource: [],
-      dataBackup: [],
-    };
+      name: ''
+    }
   }
 
-  componentDidMount() {
-    var data = [
-      {   id:'1',
-        status: 'EN COURS',
-        typemission: 'high',
+LoadData = async () =>{
 
-        datedebut:
-          '16-02-2021',
-        datefin:
-          '20-02-2021',
-      },
-      { id:'2',
-        status: 'TERMINER',
-        typemission: 'low',
+  console.log('loading');
+  var item = await AsyncStorage.getItem('Bearer'+jwt);
+  var data = JSON.parse('Bearer'+item);
+  console.log(data.username);
+  console.log('loading data');
 
-        datedebut:
-          '16-02-2021',
-        datefin:
-          '20-02-2021',
-      },
-      { id:'3',
-        status: 'REPORTER',
-        typemission: 'medium',
+}
 
-        datedebut:
-          '16-02-2021',
-        datefin:
-          '20-02-2021',
-      },
-      { id:'4',
-        status: 'ANNULER',
-        typemission: 'high',
+  async componentDidMount() {
 
-        datedebut:
-          '16-02-2021',
-        datefin:
-          '20-02-2021',
-      },
-      { id:'5',
-        status: 'ANNULER',
-        typemission: 'low',
 
-        datedebut:
-          '16-02-2021',
-        datefin:
-          '20-02-2021',
-      },
-      {   id:'6',
-        status: 'ANNULER',
-        typemission: 'high',
+    console.log('loading');
+    var item = await AsyncStorage.getItem('jwt');
+    var data = JSON.parse(item);
+    console.log(data.username);
+    console.log('loading data');
 
-        datedebut:
-          '16-02-2021',
-        datefin:
-          '20-02-2021',
-      },
-    ];
-
-    this.setState({
-      dataBackup: data,
-      dataSource: data,
-    });
   }
+
 
   filterItem = event => {
     var query = event.nativeEvent.text;
@@ -134,7 +92,11 @@ export default class Home extends Component{
 
                 <Card style={{flex: 1, backgroundColor: '#fff', borderRadius: 10}}
                 >
-
+                  <Block>
+                    <Text color="black" size={48}>
+                      {this.state.username}
+                    </Text>
+                  </Block>
 
                   <View style={styles.dataContainer}>
                     <Text style={{flex: 1, fontSize: 15}}>Status :</Text>
@@ -229,3 +191,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
+export default Home;
