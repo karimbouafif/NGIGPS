@@ -28,6 +28,7 @@
     "postinstall": "jetifier -r"
   },
   "dependencies": {
+    "@react-native-community/google-signin": "^3.0.4",
     "@react-native-community/async-storage": "^1.12.1",
     "@react-native-community/datetimepicker": "^3.0.9",
     "@react-native-community/geolocation": "^2.0.2",
@@ -38,6 +39,7 @@
     "@react-native-mapbox-gl/maps": "^8.0.0-rc1",
     "@react-navigation/native": "^5.0.5",
     "react-native-android-permissions": "^1.0.2",
+    "react-native-fbsdk": "^1.1.2",
     "apisauce": "^1.1.1",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",

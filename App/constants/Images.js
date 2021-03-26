@@ -1,5 +1,13 @@
 // local imgs
-
+const Onboarding = require('../Assets/imgs/bg.png');
+const Logo = require("../Assets/imgs/Logo.png");
+const LogoOnboarding = require("../Assets/imgs/argon-logo-onboarding.png");
+const ProfileBackground = require("../Assets/imgs/profile-screen-bg.png");
+const RegisterBackground = require("../Assets/imgs/register-bg.png");
+const Pro = require("../Assets/imgs/getPro-bg.png");
+const ArgonLogo = require("../Assets/imgs/argonlogo.png");
+const iOSLogo = require("../Assets/imgs/ios.png");
+const androidLogo = require("../Assets/imgs/android.png");
 // internet imgs
 
 const ProfilePicture = 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?fit=crop&w=1650&q=80';
@@ -18,8 +26,16 @@ const Products = {
 };
 
 export default {
-
+  Onboarding,
+  Logo,
+  LogoOnboarding,
+  ProfileBackground,
+  ProfilePicture,
+  RegisterBackground,
   Viewed,
   Products,
-
+  Pro,
+  ArgonLogo,
+  iOSLogo,
+  androidLogo
 };

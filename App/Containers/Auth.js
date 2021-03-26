@@ -6,42 +6,52 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
-  ScrollView, StatusBar, TextInput, Platform,
-} from 'react-native'
+  ScrollView,
+} from 'react-native';
 import InputTextField from '../Components/InputTextField';
-import Logo from '../Assets/images/Logo.png';
-import { useTheme } from 'react-native-paper';
+//import Logo from '../assets/images/Logo.png';
+import SocialSignup from '../Components/modals/SocialSignup';
 import AsyncStorage from '@react-native-community/async-storage';
-import * as Animatable from 'react-native-animatable'
-import FontAwesome from 'react-native-vector-icons/FontAwesome'
-import Feather from 'react-native-vector-icons/Feather'
-import LinearGradient from "react-native-linear-gradient"
+
 import {
-  userLogin
-} from '../Services/api/authService';
+  GoogleSignin,
+  GoogleSigninButton,
+  statusCodes,
+} from '@react-native-community/google-signin';
+import { LoginManager,
+  AccessToken,
+  GraphRequest,
+  GraphRequestManager } from 'react-native-fbsdk';
+import FacebookSignInButton from '../Components/FBLoginButton';
 import axios from "axios";
+import {
+  userLogin,
+  googleOauth,
+  getFacebookProfile,
+  facebookOauth,
+} from '../Services/api/authService';
 
 export default class Auth extends Component {
-
-
-
   constructor(props) {
     super(props);
     this.state = {
-      login: '',
+      username: '',
       password: '',
       userInfo: null,
       passwordVisible: false,
-      username: '',
-      check_textInputChange: false,
-      secureTextEntry: true,
-      isValidUser: true,
-      isValidPassword: true,
-
+      googleModalVisible: false,
+      facebookModalVisible: false,
     };
   }
 
-
+  componentDidMount() {
+    GoogleSignin.configure({
+      scopes: ['https://www.googleapis.com/auth/userinfo.email', 'profile'],
+      webClientId:
+        '1075891581077-jfpbqibdak7tp1dvr700q6uiviajfuo0.apps.googleusercontent.com',
+      forceConsentPrompt: true
+    });
+  }
 
   async saveItem(item, selectedValue) {
     try {
@@ -51,174 +61,289 @@ export default class Auth extends Component {
     }
   }
 
-  textInputChange = (val) => {
-    if( val.trim().length >= 4 ) {
-      this.setState({
-        check_textInputChange: !this.state.check_textInputChange,
-        username: val,
+  _toggleGoogleModal = () => {
+    this.setState({ googleModalVisible: !this.state.googleModalVisible });
+  };
 
-        isValidUser: true
-      });
-    }
-  }
+  _toggleFacebookModal = () => {
+    this.setState({
+      facebookModalVisible: !this.state.facebookModalVisible,
+    });
+  };
 
   _togglePasswordVisibility = () => {
     this.setState({ passwordVisible: !this.state.passwordVisible });
   };
 
-  _onLoginChange = login => {
-    this.setState({ login: login });
+  _onGoogleSignupPress = () => {
+    this.props.navigation.navigate('Signup', {
+      socialSignup: true,
+      userInfo: this.state.userInfo,
+      method: 'google',
+    });
   };
 
-  _onPasswordChange = password => {
-    this.setState({ password: password });
+  _onFacebookSignupPress = () => {
+    this.props.navigation.navigate('Signup', {
+      socialSignup: true,
+      userInfo: this.state.userInfo,
+      method: 'facebook',
+    });
   };
 
-  _onSigninPress = () => {
-    this.props.navigation.navigate('Home',{ item: this.state })
-    userLogin({
-      email: this.state.login,
-      password: this.state.password,
-    })
+  _onSignupPress = (e) => {
+    this.props.navigation.navigate('Signup', {
+      socialSignup: false,
+      method: 'local',
+    });
+  }
+
+  _getCurrentUserInfo = async () => {
+    try {
+      const userInfo = await GoogleSignin.signInSilently();
+      console.log('User Info --> ', userInfo);
+      this.setState({ userInfo: userInfo });
+    } catch (error) {
+      if (error.code === statusCodes.SIGN_IN_REQUIRED) {
+        alert('User has not signed in yet');
+        console.log('User has not signed in yet');
+      } else {
+        alert("Something went wrong. Unable to get user's info");
+        console.log("Something went wrong. Unable to get user's info");
+      }
+    }
+  };
+
+
+  _handleGoogleSignin = async () => {
+
+    await GoogleSignin.hasPlayServices({
+      showPlayServicesUpdateDialog: true,
+    });
+
+    const userInfo = await GoogleSignin.signIn();
+
+    googleOauth({ id_token: userInfo.idToken })
       .then(rsp => {
+        console.log('oauth successfull : loged in with this jwt');
+        console.log(rsp.data.token);
+        // save user object and jwt in asyncstorage
         this.saveItem('jwt', rsp.data.token);
-        console.log("yoooo "+ rsp.data.token);
-        this.props.navigation.navigate('Home',{ item: this.state })
+        this.props.navigation.navigate('Onboarding',{ item: this.state })
+
+
 
 
 
       })
       .catch(err => {
-        console.log("login test"+err);
+        const user = {
+          google_id: userInfo.user.id,
+          fullname: userInfo.user.name,
+          email: userInfo.user.email,
+        };
+        this.setState({ userInfo: user });
+        this._toggleGoogleModal();
+      });
+
+    await GoogleSignin.revokeAccess();
+  };
+
+  _handleFacebookSignin = async (error, result) => {
+
+    await LoginManager.logInWithPermissions(['public_profile', 'email']);
+    AccessToken.getCurrentAccessToken().then(data => {
+      const access_token = data.accessToken.toString();
+      facebookOauth({ access_token: access_token })
+        .then(rsp => {
+          jwt = rsp.data.token;
+          // session logic here ***
+          // save user object and jwt in asyncstorage
+          this.saveItem('jwt', rsp.data.token);
+          this.props.navigation.navigate('Onboarding',{ item: this.state })
+
+
+        })
+        .catch(err => {
+          getFacebookProfile(access_token)
+            .then(rsp => {
+              const user = {
+                facebook_id: rsp.data.id,
+                fullname: rsp.data.name,
+                email: rsp.data.email,
+              };
+              this.setState({ userInfo: user });
+            })
+            .catch(err => {
+              console.log(err);
+            });
+          this._toggleFacebookModal();
+        });
+    });
+
+  };
+
+  _onLoginChange = username => {
+    this.setState({ username: username });
+    console.log(username);
+  };
+
+  _onPasswordChange = password => {
+    this.setState({ password: password });
+    console.log(password);
+  };
+
+  _onSigninPress = () => {
+
+    userLogin({
+      username: this.state.username,
+      password: this.state.password,
+    })
+      .then(rsp => {
+        this.saveItem('jwt', rsp.data.token);
+        console.log(rsp.data.token);
+        this.props.navigation.navigate('Onboarding',{ item: this.state })
+
+
+
+      })
+      .catch(err => {
+        console.log("erreur");
+        console.log(err);
       });
 
 
   };
 
   render() {
-    return(
-    <ScrollView style={styles.container}>
+    return (
+      <ScrollView style={styles.container}>
+        <SocialSignup
+          socialAccount="google"
+          isVisible={this.state.googleModalVisible}
+          toggleModal={this._toggleGoogleModal}
+          proceed={this._onGoogleSignupPress}
+        />
 
-
-      <View>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#009299',
-            paddingBottom: 10,
-          }}
-        >
-          <Image source={Logo} style={styles.logoContainer} />
-          <Text
-            style={[
-              styles.text,
-              { fontSize: 24, fontWeight: '300', color: '#fff' },
-            ]}
-          >
-
-          </Text>
-        </View>
-
-        <View style={{ paddingHorizontal: 25 }}>
+        <SocialSignup
+          socialAccount="facebook"
+          isVisible={this.state.facebookModalVisible}
+          toggleModal={this._toggleFacebookModal}
+          proceed={this._onFacebookSignupPress}
+        />
+        <View>
           <View
             style={{
-              marginTop: 40,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#009299',
+              paddingBottom: 10,
             }}
           >
-
-          </View>
-
-          <View
-            style={{ flexDirection: 'row', justifyContent: 'space-between' }}
-          >
-            <View
-              style={{
-                borderWidth: StyleSheet.hairlineWidth,
-                height: 0.1,
-                width: 120,
-                borderColor: '#595959',
-                marginTop: 40,
-              }}
-            />
+            <Image source={require('../Assets/images/Logo.png')} style={styles.logo} />
             <Text
               style={[
                 styles.text,
-                {
-                  color: '#595959',
-                  fontSize: 18,
-                  textAlign: 'center',
-                  marginVertical: 25,
-                  fontWeight: 'bold',
-                },
+                { fontSize: 24, fontWeight: '300', color: '#fff' },
               ]}
             >
-             NGI GPS
+              NGI GPS
             </Text>
-            <View
-              style={{
-                borderWidth: StyleSheet.hairlineWidth,
-                height: 0.1,
-                width: 120,
-                borderColor: '#595959',
-                marginTop: 40,
-              }}
-            />
           </View>
 
-          <InputTextField
-            placeholderText="Votre mail"
-            _onTextChange={this._onLoginChange}
-          />
-          <InputTextField
-            _onTextChange={this._onPasswordChange}
-            style={{ marginTop: 20, marginBottom: 17 }}
-            placeholderText=" Votre Mot de passe "
-            isSecure={this.state.passwordVisible ? false : true}
-            isVisible={this.state.passwordVisible ? true : false}
-            _toggleVisibility={this._togglePasswordVisibility}
-          />
+          <View style={{ paddingHorizontal: 25 }}>
+            <View
+              style={{
+                marginTop: 40,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <FacebookSignInButton onPress={this._handleFacebookSignin} />
 
-          <Text style={[styles.text, styles.link, { textAlign: 'left' }]}>
-           Mot de passe oublier ?
-          </Text>
+              <GoogleSigninButton
+                style={{ width: 190, height: 58 }}
+                size={GoogleSigninButton.Size.Wide}
+                color={GoogleSigninButton.Color.Dark}
+                onPress={this._handleGoogleSignin}
+              />
+            </View>
 
-          <TouchableOpacity
-            style={styles.submitContainer}
-            onPress={this._onSigninPress}
-          >
-            <View>
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+              <View
+                style={{
+                  borderWidth: StyleSheet.hairlineWidth,
+                  height: 0.1,
+                  width: 120,
+                  borderColor: '#595959',
+                  marginTop: 40,
+                }}
+              />
               <Text
                 style={[
                   styles.text,
-                  { color: '#fff', fontWeight: '600', fontSize: 16 },
+                  {
+                    color: '#595959',
+                    fontSize: 18,
+                    textAlign: 'center',
+                    marginVertical: 25,
+                    fontWeight: 'bold',
+                  },
                 ]}
               >
-                Se Connecter
+                or
               </Text>
+              <View
+                style={{
+                  borderWidth: StyleSheet.hairlineWidth,
+                  height: 0.1,
+                  width: 120,
+                  borderColor: '#595959',
+                  marginTop: 40,
+                }}
+              />
             </View>
-          </TouchableOpacity>
 
-          <Text
-            style={[
-              styles.text,
-              {
-                fontSize: 14,
-                color: '#ABB4BD',
-                textAlign: 'center',
-                marginTop: 24,
-              },
-            ]}
-          >
+            <InputTextField
+              placeholderText="Username"
+              _onTextChange={this._onLoginChange}
+            />
+            <InputTextField
+              _onTextChange={this._onPasswordChange}
+              style={{ marginTop: 20, marginBottom: 17 }}
+              placeholderText="Password"
+              isSecure={this.state.passwordVisible ? false : true}
+              isVisible={this.state.passwordVisible ? true : false}
+              _toggleVisibility={this._togglePasswordVisibility}
+            />
+
+            <Text style={[styles.text, styles.link, { textAlign: 'right' }]}>
+              Forgot Password?
+            </Text>
+
+            <TouchableOpacity
+              style={styles.submitContainer}
+              onPress={this._onSigninPress}
+            >
+              <View>
+                <Text
+                  style={[
+                    styles.text,
+                    { color: '#fff', fontWeight: '600', fontSize: 16 },
+                  ]}
+                >
+                  Sign in
+                </Text>
+              </View>
+            </TouchableOpacity>
 
 
-          </Text>
+          </View>
         </View>
-      </View>
-    </ScrollView>
-  );
+      </ScrollView>
+    );
   }
 }
 
@@ -249,12 +374,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
     shadowRadius: 20,
   },
-  logoContainer : {
-
-    marginTop: 20,
-    marginBottom: 15,
+  logo: {
     width: 183,
     height: 40,
-
-  }
+  },
 });

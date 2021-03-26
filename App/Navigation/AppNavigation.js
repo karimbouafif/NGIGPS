@@ -18,6 +18,7 @@ import { Block } from "galio-framework";
 
 // screens
 import Splash from '../Containers/Splash';
+import Onboarding from "../Containers/Onboarding";
 import GererMesMissions from '../Containers/GererMesMissions'
 import AjouterMission from '../Containers/AjouterMission'
 import Logout from "../Containers/Logout";
@@ -178,6 +179,12 @@ const AppStack = createDrawerNavigator(
   {
     Auth: {
       screen: authStack,
+      navigationOptions: {
+        drawerLabel: () => {}
+      }
+    },
+    Onboarding: {
+      screen: Onboarding,
       navigationOptions: {
         drawerLabel: () => {}
       }
