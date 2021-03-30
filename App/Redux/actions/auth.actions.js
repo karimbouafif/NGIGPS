@@ -1,5 +1,6 @@
 import {userLogin} from '../../Services/api/authService';
 
+/*
 export function login(payload) {
   return dispatch => {
     return userLogin(payload)
@@ -13,6 +14,10 @@ export function login(payload) {
   		});
   }
 }
+
+*/
+
+
 
 
 // Actions

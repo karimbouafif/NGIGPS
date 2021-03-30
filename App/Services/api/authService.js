@@ -37,7 +37,7 @@ export function getFacebookProfile(accessToken){
 
 
 export function userLogin(payload){
-  return authApiClient.post('/users/login', payload);
+  return authApiClient.post('/users/mobile/signin', payload);
 }
 
 

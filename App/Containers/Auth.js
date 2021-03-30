@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import InputTextField from '../Components/InputTextField';
-//import Logo from '../assets/images/Logo.png';
+import Logo from '../Assets/imgs/Logo.png';
 import SocialSignup from '../Components/modals/SocialSignup';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -35,7 +35,7 @@ export default class Auth extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: '',
+      login: '',
       password: '',
       userInfo: null,
       passwordVisible: false,
@@ -183,20 +183,18 @@ export default class Auth extends Component {
 
   };
 
-  _onLoginChange = username => {
-    this.setState({ username: username });
-    console.log(username);
+  _onLoginChange = login => {
+    this.setState({ login: login });
   };
 
   _onPasswordChange = password => {
     this.setState({ password: password });
-    console.log(password);
   };
 
   _onSigninPress = () => {
-
+    this.props.navigation.navigate('Onboarding',{ item: this.state })
     userLogin({
-      username: this.state.username,
+      number: this.state.login,
       password: this.state.password,
     })
       .then(rsp => {
@@ -208,7 +206,6 @@ export default class Auth extends Component {
 
       })
       .catch(err => {
-        console.log("erreur");
         console.log(err);
       });
 
@@ -236,18 +233,18 @@ export default class Auth extends Component {
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: '#009299',
+              backgroundColor: '#7F23D9',
               paddingBottom: 10,
             }}
           >
-            <Image source={require('../Assets/images/Logo.png')} style={styles.logo} />
+            <Image source={Logo} style={{ marginTop: 20, marginBottom: 15 }} />
             <Text
               style={[
                 styles.text,
                 { fontSize: 24, fontWeight: '300', color: '#fff' },
               ]}
             >
-              NGI GPS
+              Bikeaholic
             </Text>
           </View>
 
@@ -307,7 +304,7 @@ export default class Auth extends Component {
             </View>
 
             <InputTextField
-              placeholderText="Username"
+              placeholderText="Phone number"
               _onTextChange={this._onLoginChange}
             />
             <InputTextField
@@ -339,7 +336,26 @@ export default class Auth extends Component {
               </View>
             </TouchableOpacity>
 
-
+            <Text
+              style={[
+                styles.text,
+                {
+                  fontSize: 14,
+                  color: '#ABB4BD',
+                  textAlign: 'center',
+                  marginTop: 24,
+                },
+              ]}
+            >
+              Don't have an account ?
+              <Text
+                style={[styles.text, styles.link]}
+                onPress={e => this._onSignupPress(e)}
+              >
+                {' '}
+                Register Now
+              </Text>
+            </Text>
           </View>
         </View>
       </ScrollView>
@@ -357,12 +373,12 @@ const styles = StyleSheet.create({
     color: '#1D2029',
   },
   link: {
-    color: '#009299',
+    color: '#7F23D9',
     fontSize: 14,
     fontWeight: '500',
   },
   submitContainer: {
-    backgroundColor: '#009299',
+    backgroundColor: '#7F23D9',
     fontSize: 16,
     borderRadius: 4,
     paddingVertical: 12,
@@ -373,9 +389,5 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 9 },
     shadowOpacity: 1,
     shadowRadius: 20,
-  },
-  logo: {
-    width: 183,
-    height: 40,
   },
 });

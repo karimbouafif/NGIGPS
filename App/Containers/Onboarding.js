@@ -25,6 +25,7 @@ class Onboarding extends React.Component {
 
   componentDidMount() {
     AsyncStorage.getItem('jwt').then((token) => {
+
       const user = jwtDecode(token).user;
       console.log(user);
       switch (user.method) {
