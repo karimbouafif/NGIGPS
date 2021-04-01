@@ -1,11 +1,12 @@
 import axios from 'axios/index';
 import { Config } from '../../Config/api';
-
+const token = '..your token..'
 const authApiClient = axios.create({
   baseURL: Config.API_URL,
   headers: {
     Accept: 'application/json',
     'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
   },
 })
 

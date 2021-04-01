@@ -21,16 +21,16 @@ export default function InputTextField({title, style, placeholderText, placehold
 
       {isSecure || isVisible?
         <TouchableOpacity
-          onPress = {_toggleVisibility}
-          style = {{marginRight: 15,
-            paddingTop: 10,
-            flex: 1,
-            flexDirection: 'column',
-            alignItems: 'flex-end',
-            justifyContent: 'flex-start'}}>
+        onPress = {_toggleVisibility}
+        style = {{marginRight: 15,
+          paddingTop: 10,
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    justifyContent: 'flex-start'}}>
           {isVisible?
-            <Icon name="eye-with-line" size={26} color="#05375a" family={"MaterialIcons"} /> :
-            <Icon name="eye" size={26} color="#05375a" family={"MaterialIcons"} />}
+          <Icon name="eye-with-line" size={26} color="#595959" family={"MaterialIcons"} /> :
+          <Icon name="eye" size={26} color="#595959" family={"MaterialIcons"} />}
         </TouchableOpacity>
         : null
       }
@@ -42,7 +42,7 @@ export default function InputTextField({title, style, placeholderText, placehold
 const styles = StyleSheet.create({
   container: {
     borderWidth: 1,
-    borderColor: "#05375a",
+    borderColor: "#595959",
     flexDirection: 'row'
   },
   input: {
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     maxWidth: 300,
     minWidth: 300,
     paddingHorizontal: 20,
-    color: "#05375a",
+    color: "#595959",
     fontWeight: 'bold',
     fontSize: 16,
     fontFamily: 'neo_sans',

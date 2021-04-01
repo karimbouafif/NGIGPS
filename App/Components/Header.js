@@ -20,26 +20,10 @@ const BellButton = ({isWhite, style, navigation}) => (
 );
 
 const BasketButton = ({isWhite, style, navigation}) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Map')}>
-    <Icon name="map" size={30} color="#0859B3" />
+  <TouchableOpacity style={[styles.button, style]} >
+    <Icon name="address-card" size={30} color="#0859B3" />
   </TouchableOpacity>
 );
-const MapButton = ({isWhite, style, navigation}) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('')}>
-    <Icon name="map" size={30} color="#0859B3" />
-  </TouchableOpacity>
-);
-const CalenderButton = ({isWhite, style, navigation}) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('...')}>
-    <Icon name="calendar" size={30} color="#0859B3" />
-  </TouchableOpacity>
-);
-const TaskMissionButton = ({isWhite, style, navigation}) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('GererMesMissions')}>
-    <Icon name="tasks" size={30} color="#0859B3" />
-  </TouchableOpacity>
-);
-
 
 const SearchButton = ({isWhite, style, navigation}) => (
   <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
@@ -66,27 +50,24 @@ class Header extends React.Component {
     switch (routeName) {
       case 'Home':
         return ([
-
-          <MapButton key='basket-home' navigation={navigation} isWhite={white} />
+          <BellButton key='chat-home' navigation={navigation} isWhite={white} />,
+          <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
         ]);
-      case 'GererMesMissions':
-        return ([
-          <CalenderButton key='calendar' navigation={navigation} isWhite={white} />
-        ]);
-      case 'AjouterMission':
-        return ([
-          <TaskMissionButton key='add-task' navigation={navigation} isWhite={white} />
-        ]);
+        case 'ShareBikeMap':
+          return ([
 
-
-      case 'MissionMap':
+          ]);
+      case 'FindMyWayScreen':
         return ([
 
         ]);
-      case 'Billing':
-        return ([
 
-        ]);
+
+
+        case 'Billing':
+          return ([
+          
+          ]);
 
 
 
@@ -136,7 +117,7 @@ class Header extends React.Component {
         right
         color="black"
         style={styles.search}
-        placeholder="Chercher par Status ..."
+        placeholder="Are you looking for a certain station ?"
         placeholderTextColor={'#8898AA'}
         onFocus={() => navigation.navigate('ShareBikeMapScreen')}
         onChangeText={text => {console.log("yo")}}
@@ -224,7 +205,7 @@ class Header extends React.Component {
 
 const styles = StyleSheet.create({
   button: {
-    padding: 8,
+    padding: 12,
     position: 'relative',
   },
   title: {
@@ -280,7 +261,7 @@ const styles = StyleSheet.create({
     width: width * 0.35,
     borderRadius: 0,
     borderWidth: 0,
-    height: 18,
+    height: 24,
     elevation: 0,
   },
   tabTitle: {

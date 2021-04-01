@@ -5,10 +5,10 @@ import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Modal } from '
 import { Block, Text, theme } from 'galio-framework';
 
 import { argonTheme } from '../constants';
-//import ShareBikeReservationModal from '../Containers/ShareBikeReservationModal'
+import ShareBikeReservationModal from '../Containers/ShareBikeReservationModal'
 import moment from 'moment'
-//const Edit = require("../assets/imgs/editv1.png");
-//const getBike = require("../assets/imgs/getbike.png");
+const Edit = require("../Assets/imgs/editv1.png");
+const getBike = require("../Assets/imgs/getbike.png");
 class Card extends React.Component {
   constructor (props) {
     super(props)
@@ -32,22 +32,22 @@ class Card extends React.Component {
 
 
     if (this.props.event)
-      return (
-        <Block row={horizontal} card flex style={cardContainer}>
-          <TouchableWithoutFeedback onPress={() => navigation.navigate("SingleEventScreen",{ item: item })}>
-            <Block flex style={imgContainer}>
-              <Image source={{uri: "http://192.168.1.12:4000/"+item.image}} style={imageStyles} />
-            </Block>
-          </TouchableWithoutFeedback>
-          <TouchableWithoutFeedback onPress={() => navigation.navigate("SingleEventScreen",{ item: item })}>
-            <Block flex space="between" style={styles.cardDescription}>
+    return (
+      <Block row={horizontal} card flex style={cardContainer}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate("SingleEventScreen",{ item: item })}>
+          <Block flex style={imgContainer}>
+            <Image source={{uri: "http://192.168.1.12:4000/"+item.image}} style={imageStyles} />
+          </Block>
+        </TouchableWithoutFeedback>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate("SingleEventScreen",{ item: item })}>
+          <Block flex space="between" style={styles.cardDescription}>
 
-              <Text size={14} muted={!ctaColor} color={ctaColor || argonTheme.COLORS.ACTIVE} style={styles.cardTitle}>{item.title}</Text>
-              <Text size={12}  bold>{item.description.substring(0,190) +"..."}</Text>
-            </Block>
-          </TouchableWithoutFeedback>
-        </Block>
-      );
+            <Text size={14} muted={!ctaColor} color={ctaColor || argonTheme.COLORS.ACTIVE} style={styles.cardTitle}>{item.title}</Text>
+            <Text size={12}  bold>{item.description.substring(0,190) +"..."}</Text>
+          </Block>
+        </TouchableWithoutFeedback>
+      </Block>
+    );
     else
       return (
 
@@ -56,7 +56,7 @@ class Card extends React.Component {
           <TouchableWithoutFeedback onPress={() =>{
             if (item.route==="BikeReservationScreen")
               navigation.navigate(item.route,{ reservation: item })
-            else{
+          else{
               this.props.screenProps.toggle(item)
             }
           }

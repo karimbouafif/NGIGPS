@@ -9,51 +9,74 @@ import {
 import { Block, Button, Text, theme } from "galio-framework";
 import jwtDecode  from 'jwt-decode';
 const { height, width } = Dimensions.get("screen");
-
+import AsyncStorage from '@react-native-community/async-storage';
 import argonTheme from "../constants/Theme";
 import Images from "../constants/Images";
-import AsyncStorage from '@react-native-community/async-storage';
 
+const ACCESS_TOKEN = 'access_token';
 class Onboarding extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      name: ''
+      name: '',
+      accessToken: "",
     }
   }
 
+
+
   componentDidMount() {
-    AsyncStorage.getItem('jwt').then((token) => {
+    this.getMyObject();
+    //AsyncStorage.getItem('jwt').then((accessToken) => {
+    //const user = jwtDecode(accessToken).user;
+    //console.log(user);
 
-      const user = jwtDecode(token).user;
-      console.log(user);
-      switch (user.method) {
-        case 'local':
-          console.log('local');
-          this.setState({
-            name: user.local.fullname,
-          });
-          break;
-        case 'google':
-          console.log('google');
-          this.setState({
-            name: user.google.fullname,
-          });
-          break;
-        case 'facebook':
-          console.log('facebook');
-          this.setState({
-            name: user.facebook.fullname,
-          });
-          break;
-        default:
-          break;
+   // });
+  }
+  getMyObject = async () => {
+    try {
+      const value = await AsyncStorage.getItem(ACCESS_TOKEN);
+      if (value !== null) {
+        // We have data!!
+        console.log("value");
+        console.log(value);
+        const user = jwtDecode(value);
+        this.setState({
+          name: user.fullname,
+        });
+        console.log(user.fullname);
       }
-
-    });
+    } catch (error) {
+      // Error retrieving data
+    }
   }
 
+  async getToken(responseData) {
+    try {
+      let userData = await AsyncStorage.getItem(ACCESS_TOKEN);
+      let data = JSON.parse(userData);
+      console.log(data);
+    } catch (error) {
+      console.log("Something went wrong", error);
+    }
+  }
+  /*
+  async getToken(responseData) {
+    try {
+      let accessToken = await AsyncStorage.getItem(ACCESS_TOKEN);
+      console.log(ACCESS_TOKEN);
+      if(!accessToken) {
+        this.props.navigation.navigate('auth',{ item: this.state })
+      } else {
+        this.setState({accessToken: accessToken})
+      }
+    } catch(error) {
+      console.log("Something went wrong");
+      this.props.navigation.navigate('auth',{ item: this.state })
+    }
+  }
+*/
   render() {
     const { navigation } = this.props;
 

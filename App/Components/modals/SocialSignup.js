@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Dimensions, Image  } from 'react-native';
 import Modal from 'react-native-modal/dist/index';
-import Google from '../../Assets/imgs/googlex48.png'
+import Google from '../../Assets/imgs/googlex48.png';
 import Facebook from '../../Assets/imgs/facebookx48.png';
 
 const modalWidth = Math.round(Dimensions.get('window').width) - 80;
@@ -10,24 +10,24 @@ const modalHeight = Math.round(Dimensions.get('window').height) / 3.2;
 
 export default function SocialSignup({isVisible, toggleModal, socialAccount, proceed}) {
 
-  function onProceed() {
-    toggleModal();
-    proceed();
-  }
+	function onProceed() {
+		toggleModal();
+		proceed();
+	}
 
-  return (
+	return (
     <View style= {[styles.container]}>
       <Modal
-        isVisible={isVisible}
-        backdropColor="#999999"
-        backdropOpacity={0.6}
-        animationIn="zoomInDown"
-        animationOut="zoomOutUp"
-        animationInTiming={300}
-        animationOutTiming={300}
-        backdropTransitionInTiming={300}
-        backdropTransitionOutTiming={300}
-        style = {{marginHorizontal: 40}}>
+      isVisible={isVisible}
+      backdropColor="#999999"
+      backdropOpacity={0.6}
+      animationIn="zoomInDown"
+      animationOut="zoomOutUp"
+      animationInTiming={300}
+      animationOutTiming={300}
+      backdropTransitionInTiming={300}
+      backdropTransitionOutTiming={300}
+      style = {{marginHorizontal: 40}}>
 
         {/* modal content*/}
         <View   style = {{width: modalWidth, height: modalHeight , backgroundColor: '#fff'}}>
@@ -36,28 +36,28 @@ export default function SocialSignup({isVisible, toggleModal, socialAccount, pro
           <View style = {{ flex: 1, alignItems: 'center', marginVertical: 10,  padding: 30 ,}}>
             <Image source =  {socialAccount === 'google' ? Google: Facebook} />
             <Text style = {{  marginVertical:20, fontSize: 14, justifyContent: 'center',alignItems: 'center', textAlign: 'center',}}>
-              <Text>Sorry ! We could not find a NGI GPS account linked to your {socialAccount} account.</Text>
+              <Text>Sorry ! We could not find a Bikeaholic account linked to your {socialAccount} account.</Text>
               <Text> Proceed with creating one ?</Text>
             </Text>
           </View>
 
           {/* separator*/}
 
-          <View style={{ borderWidth: StyleSheet.hairlineWidth, width: modalWidth,borderColor:'#595959',}}/>
+            <View style={{ borderWidth: StyleSheet.hairlineWidth, width: modalWidth,borderColor:'#595959',}}/>
 
           {/* Buttons*/}
           <View style = {{flexDirection: 'row', paddingHorizontal: 30, height: modalHeight / 7,justifyContent: "space-around",
           }}>
-            <TouchableOpacity style = {{justifyContent: 'center',alignItems: 'center'}} onPress = {onProceed}>
-              <Text style = {{ fontSize: 14}}>Proceed</Text>
-            </TouchableOpacity>
-            <View style={{ borderWidth: StyleSheet.hairlineWidth, borderColor:'#595959'}}/>
+          <TouchableOpacity style = {{justifyContent: 'center',alignItems: 'center'}} onPress = {onProceed}>
+            <Text style = {{ fontSize: 14}}>Proceed</Text>
+          </TouchableOpacity>
+          <View style={{ borderWidth: StyleSheet.hairlineWidth, borderColor:'#595959'}}/>
 
-            <TouchableOpacity
-              style = {{justifyContent: 'center',alignItems: 'center'}}
-              onPress = {toggleModal}  >
-              <Text style = {{ fontSize: 14, alignItems: 'center'}}>Dismiss</Text>
-            </TouchableOpacity>
+          <TouchableOpacity
+ 					style = {{justifyContent: 'center',alignItems: 'center'}}
+          onPress = {toggleModal}  >
+            <Text style = {{ fontSize: 14, alignItems: 'center'}}>Dismiss</Text>
+          </TouchableOpacity>
           </View>
 
           <View style={{ borderWidth: StyleSheet.hairlineWidth, width: modalWidth,borderColor:'#595959',}}/>
@@ -66,15 +66,15 @@ export default function SocialSignup({isVisible, toggleModal, socialAccount, pro
         </View>
       </Modal>
     </View>
-  );
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+	container: {
+		flex: 1,
     color: '#fff',
 
-  },
+	},
 });
 
 /*

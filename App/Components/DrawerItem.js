@@ -8,7 +8,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 
 
 
-
+import argonTheme from "../constants/Theme";
 
 class DrawerItem extends React.Component {
   renderIcon = () => {
@@ -17,11 +17,11 @@ class DrawerItem extends React.Component {
     switch (title) {
       case "Home":
         return (
-          <Icon name="home" size={28} color="#05375a" />
+          <Icon name="home" size={30} color="#999999" />
         );
-      case "GererMesMissions":
+      case "Reservations":
         return (
-          <MatIcon name="calendar" size={28} color="#05375a" />
+          <MatIcon name="bike" size={30} color="#999999" />
         );
       case "Navigation":
         return (
@@ -32,18 +32,18 @@ class DrawerItem extends React.Component {
         return (
           <Icon5 name="blog" size={30} color="#999999" />        );
 
-      case "Billing":
-        return (
-          <Icon name="cc-mastercard" size={30} color="#999999" />
-        );
-      case "Profile":
-        return (
-          <Entypo name="user" size={30} color="#999999" />
-        );
-      case "Logout":
-        return (
-          <MatIcon name="logout" size={30} color="#999999" />
-        );
+        case "Billing":
+          return (
+            <Icon name="cc-mastercard" size={30} color="#999999" />
+          );
+          case "Profile":
+            return (
+              <Entypo name="user" size={30} color="#999999" />
+            );
+          case "Logout":
+            return (
+              <MatIcon name="logout" size={30} color="#999999" />
+            );
 
       default:
         return null;
@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 14
   },
   activeStyle: {
-    backgroundColor: '#009299',
+    backgroundColor: '#7F23D9',
     borderRadius: 4
   },
   shadow: {

@@ -12,7 +12,7 @@ import InputTextField from '../Components/InputTextField';
 import Logo from '../Assets/imgs/Logo.png';
 import SocialSignup from '../Components/modals/SocialSignup';
 import AsyncStorage from '@react-native-community/async-storage';
-
+import { Config } from '../Config/api'
 import {
   GoogleSignin,
   GoogleSigninButton,
@@ -31,18 +31,83 @@ import {
   facebookOauth,
 } from '../Services/api/authService';
 
+const API_URL = Config.API_URL;
+const ACCESS_TOKEN = 'access_token';
+
 export default class Auth extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      login: '',
+      email: '',
       password: '',
       userInfo: null,
+      error: "",
+      showProgress: false,
       passwordVisible: false,
       googleModalVisible: false,
       facebookModalVisible: false,
     };
   }
+
+
+  redirect(routeName, accessToken){
+    this.props.navigator.push({
+      name: routeName
+    });
+  }
+
+  async onLoginPressed() {
+    this.setState({showProgress: true})
+    try {
+      let response = await fetch(API_URL+'/users/mobile/signin', {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          session:{
+            email: this.state.email,
+            password: this.state.password,
+          }
+        })
+      });
+      let res = await response.text();
+      if (response.status >= 200 && response.status < 300) {
+        //Handle success
+        let accessToken = res;
+        console.log(accessToken);
+        //On success we will store the access_token in the AsyncStorage
+        this.storeToken(accessToken);
+        this.props.navigation.navigate('Onboarding',{ item: this.state })
+      } else {
+        //Handle error
+        let error = res;
+        throw error;
+      }
+    } catch(error) {
+       this.setState({error: error});
+      console.log("error " + error);
+      this.setState({showProgress: false});
+    }
+  }
+
+  storeToken(responseData){
+    AsyncStorage.setItem(ACCESS_TOKEN, responseData, (err)=> {
+      if(err){
+        console.log("an error");
+        throw err;
+      }
+      console.log("success");
+    // console.log(responseData);
+    }).catch((err)=> {
+      console.log("error is: " + err);
+    });
+  }
+
+
+
+
 
   componentDidMount() {
     GoogleSignin.configure({
@@ -183,8 +248,8 @@ export default class Auth extends Component {
 
   };
 
-  _onLoginChange = login => {
-    this.setState({ login: login });
+  _onLoginChange = email => {
+    this.setState({ email: email });
   };
 
   _onPasswordChange = password => {
@@ -194,12 +259,12 @@ export default class Auth extends Component {
   _onSigninPress = () => {
     this.props.navigation.navigate('Onboarding',{ item: this.state })
     userLogin({
-      number: this.state.login,
+      email: this.state.email,
       password: this.state.password,
     })
       .then(rsp => {
-        this.saveItem('jwt', rsp.data.token);
-        console.log(rsp.data.token);
+       // console.log(rsp.data.token);
+        this.storeToken( rsp.data.token);
         this.props.navigation.navigate('Onboarding',{ item: this.state })
 
 
@@ -244,7 +309,7 @@ export default class Auth extends Component {
                 { fontSize: 24, fontWeight: '300', color: '#fff' },
               ]}
             >
-              Bikeaholic
+              NGI GPS
             </Text>
           </View>
 
@@ -304,7 +369,7 @@ export default class Auth extends Component {
             </View>
 
             <InputTextField
-              placeholderText="Phone number"
+              placeholderText="Email"
               _onTextChange={this._onLoginChange}
             />
             <InputTextField

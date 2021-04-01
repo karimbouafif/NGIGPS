@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import {
-  View,
-  Text,
-  StyleSheet,
-  Image,
-  TouchableHighlight
+	View,
+	Text,
+	StyleSheet,
+	Image,
+	TouchableHighlight
 } from 'react-native';
 
 import Logo from '../Assets/imgs/facebook_logo.png';
@@ -35,16 +35,16 @@ const styles = StyleSheet.create({
     marginTop: 4.4,
     marginBottom: 4.4,
     flexDirection: 'row',
-    borderWidth: 1,
-    borderColor: 'rgba(173, 100, 189, 0.35)',
-    borderRadius: 2,
+		borderWidth: 1,
+		borderColor: 'rgba(173, 100, 189, 0.35)',
+		borderRadius: 2,
     elevation: 7,
-    backgroundColor: '#fff',
+		backgroundColor: '#fff',
 
   },
-  socialButton: {
-    flexDirection: 'row',
-  },
+	socialButton: {
+		flexDirection: 'row',
+	},
   text: {
     paddingTop: 14,
     fontFamily: 'google_sans_bold',

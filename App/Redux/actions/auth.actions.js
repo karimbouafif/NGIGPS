@@ -1,6 +1,5 @@
-import {userLogin} from '../../Services/api/authService';
+/*import userLogin from '../services/api/authService';
 
-/*
 export function login(payload) {
   return dispatch => {
     return userLogin(payload)
@@ -13,11 +12,7 @@ export function login(payload) {
   			console.log(err);
   		});
   }
-}
-
-*/
-
-
+}*/
 
 
 // Actions

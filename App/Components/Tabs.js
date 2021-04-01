@@ -68,7 +68,7 @@ export default class Tabs extends React.Component {
       outputRange: [argonTheme.COLORS.BLACK, isActive ? argonTheme.COLORS.WHITE : argonTheme.COLORS.BLACK],
       extrapolate: 'clamp',
     });
-
+    
     const containerStyles = [
       styles.titleContainer,
       !isActive && { backgroundColor: argonTheme.COLORS.SECONDARY },
