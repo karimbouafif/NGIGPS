@@ -5,7 +5,7 @@ import { StyleSheet, Dimensions, Image, TouchableWithoutFeedback, Modal } from '
 import { Block, Text, theme } from 'galio-framework';
 
 import { argonTheme } from '../constants';
-import ShareBikeReservationModal from '../Containers/ShareBikeReservationModal'
+//import ShareBikeReservationModal from '../Containers/ShareBikeReservationModal'
 import moment from 'moment'
 const Edit = require("../Assets/imgs/editv1.png");
 const getBike = require("../Assets/imgs/getbike.png");
@@ -31,15 +31,15 @@ class Card extends React.Component {
     let icon = item.route==="BikeReservationScreen" ? getBike : Edit;
 
 
-    if (this.props.event)
+    if (this.props.mission)
     return (
       <Block row={horizontal} card flex style={cardContainer}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate("SingleEventScreen",{ item: item })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate("SingleMissionScreen",{ item: item })}>
           <Block flex style={imgContainer}>
             <Image source={{uri: "http://192.168.1.12:4000/"+item.image}} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate("SingleEventScreen",{ item: item })}>
+        <TouchableWithoutFeedback onPress={() => navigation.navigate("SingleMissionScreen",{ item: item })}>
           <Block flex space="between" style={styles.cardDescription}>
 
             <Text size={14} muted={!ctaColor} color={ctaColor || argonTheme.COLORS.ACTIVE} style={styles.cardTitle}>{item.title}</Text>

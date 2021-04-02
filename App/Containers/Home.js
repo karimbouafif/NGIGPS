@@ -1,194 +1,96 @@
-import React, {Component} from 'react';
-import {View, Text, Button, StyleSheet, StatusBar, TextInput, Image, Dimensions} from 'react-native';
-import  {Card} from "react-native-paper";
-import {FlatList} from 'react-native-gesture-handler';
-//import DetailsScreen from '../scenes/DetailsScreen'
-import jwtDecode  from 'jwt-decode';
-import AsyncStorage from '@react-native-community/async-storage';
+import React from 'react';
+import { StyleSheet, Dimensions, ScrollView, Button, View, ActivityIndicator } from 'react-native'
+import { Block, theme } from 'galio-framework';
+import { Card } from '../Components';
+import articles from '../constants/articles';
+import stations from '../constants/Stations'
+import axios from 'axios';
+import { Config } from '../Config/api'
+const { width } = Dimensions.get('screen');
+const serverIp="192.168.1.12";
+const API_URL = Config.API_URL;
 
-const {width, height} = Dimensions.get('window');
-
-import { Block } from "galio-framework";
-
-
-class Home extends React.Component{
+class Home extends React.Component {
 
   constructor(props) {
     super(props);
+    this.map = React.createRef();
     this.state = {
-      name: ''
-    }
+      loading: false,
+      data: [],
+      error: null,
+
+    };
+    this.arrayholder = [];
   }
 
-LoadData = async () =>{
-
-  console.log('loading');
-  var item = await AsyncStorage.getItem('Bearer'+jwt);
-  var data = JSON.parse('Bearer'+item);
-  console.log(data.username);
-  console.log('loading data');
-
-}
-
-  async componentDidMount() {
-
-
-    console.log('loading');
-    var item = await AsyncStorage.getItem('jwt');
-    var data = JSON.parse(item);
-    console.log(data.username);
-    console.log('loading data');
+  componentDidMount() {
+    this.makeRemoteRequest();
 
   }
 
+  makeRemoteRequest = () => {
+    const url = API_URL+"/missions";
+    this.setState({ loading: true });
 
-  filterItem = event => {
-    var query = event.nativeEvent.text;
-    this.setState({
-      query: query,
-    });
-    if (query == '') {
-      this.setState({
-        dataSource: this.state.dataBackup,
+    axios.get(url)
+      .then(res => {
+        this.setState({
+          data: res.data,  //res.results
+          error: res.error || null,
+          loading: false,
+        });
+        console.log(this.state.data);
+        this.arrayholder = res.data;  //res.results
+      })
+      .catch(error => {
+        console.log(error);
+        this.setState({ error, loading: false });
       });
-    } else {
-      var data = this.state.dataBackup;
-      query = query.toLowerCase();
-      data = data.filter(l => l.status.toLowerCase().match(query));
-
-      this.setState({
-        dataSource: data,
-      });
-    }
   };
 
-  separator = () => {
+
+  renderArticles = () => {
+
     return (
-      <View style={{height: 10, width: '100%', backgroundColor: '#e5e5e5'}} />
-    );
-  };
-
-  getMissionData=(item)=>{
-    var id=item.id;
-    var status= item.status;
-    var typemission =item.typemission;
-
-    alert(id+"\n"+status+"\n"+typemission);
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={styles.articles}>
+        <Block flex>
+          {this.state.data.map((item) => {
+            return (
+              <Card mission item={item} full />
+            );
+          })}
+        </Block>
+      </ScrollView>
+    )
   }
-
 
   render() {
-
-    return (
-      <View style={styles.container}>
-        <StatusBar barStyle="light-content" backgroundColor="#009299" />
-
-        <View style={{flex:1,padding:5}}>
-          <FlatList
-            data={this.state.dataSource}
-            ItemSeparatorComponent={() => this.separator()}
-            renderItem={({item, index}) => {
-              return (
-
-                <Card style={{flex: 1, backgroundColor: '#fff', borderRadius: 10}}
-                >
-                  <Block>
-                    <Text color="black" size={48}>
-                      {this.state.username}
-                    </Text>
-                  </Block>
-
-                  <View style={styles.dataContainer}>
-                    <Text style={{flex: 1, fontSize: 15}}>Status :</Text>
-                    <Text style={{flex: 1, fontSize: 15}}>{item.status}</Text>
-                  </View>
-                  <View style={styles.dataContainer}>
-                    <Text style={{flex: 1, fontSize: 15}}>Typemission :</Text>
-                    <Text style={{flex: 1, fontSize: 15}}>{item.typemission}</Text>
-                  </View>
-                  <View style={styles.dataContainer}>
-                    <Text style={{flex: 1, fontSize: 15}}>Date Début :</Text>
-                    <Text style={{flex: 1, fontSize: 15}}>{item.datedebut}</Text>
-                  </View>
-                  <View style={styles.dataContainer}>
-                    <Text style={{flex: 1, fontSize: 15}}>Date Fin :</Text>
-                    <Text style={{flex: 1, fontSize: 15}}>{item.datefin}</Text>
-                  </View>
-
-                  <Button
-                    title="go to details"
-                    onPress={() =>this.props.navigation.navigate('DetailsScreen',{id:item.id})}
-
-                  />
-                </Card>
-              );
-
-            }
-
-            }
-
-            keyExtractor={item=>item.id}
-
-          />
-
+    if (this.state.loading) {
+      return (
+        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+          <ActivityIndicator />
         </View>
-      </View>
-
+      );
+    }
+    return (
+      <Block flex center style={styles.home}>
+        {this.renderArticles()}
+      </Block>
     );
-
   }
-
 }
 
-
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center'
+  home: {
+    width: width,
   },
-  header: {
-    height: 80,
-    width: '100%',
-    backgroundColor: '#009299',
-    justifyContent: 'center',
-    alignContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    height: 45,
-    width: '90%',
-    backgroundColor: '#fff',
-    borderRadius: 20,
-    padding: 5,
-    paddingLeft: 10,
-  },
-  status: {
-    flex:1,
-    flexDirection: 'row',
-    padding: 10,
-    paddingLeft: 20,
-  },
-
-  dataContainer: {
-    flex:1,
-    flexDirection: 'row',
-    padding: 10,
-    marginLeft:20,
-    width:   width-40,
-  },
-  title: {
-    fontSize: 17,
-    fontWeight: 'bold',
-    color: '#000',
-  },
-  description: {
-    fontSize: 16,
-    color: 'gray',
-  },
-  typemission: {
-    fontSize: 16,
+  articles: {
+    width: width - theme.SIZES.BASE * 2,
+    paddingVertical: theme.SIZES.BASE,
   },
 });
+
 export default Home;

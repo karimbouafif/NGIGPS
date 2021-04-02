@@ -9,7 +9,7 @@ import {
   ScrollView,
 } from 'react-native';
 import InputTextField from '../Components/InputTextField';
-import Logo from '../Assets/imgs/Logo.png';
+import Logo from '../Assets/images/Logo.png';
 import SocialSignup from '../Components/modals/SocialSignup';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Config } from '../Config/api'
@@ -30,6 +30,7 @@ import {
   getFacebookProfile,
   facebookOauth,
 } from '../Services/api/authService';
+import * as Animatable from 'react-native-animatable'
 
 const API_URL = Config.API_URL;
 const ACCESS_TOKEN = 'access_token';
@@ -298,11 +299,11 @@ export default class Auth extends Component {
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: '#7F23D9',
+              backgroundColor: '#009299',
               paddingBottom: 10,
             }}
           >
-            <Image source={Logo} style={{ marginTop: 20, marginBottom: 15 }} />
+            <Image source={Logo}   style={styles.logo} />
             <Text
               style={[
                 styles.text,
@@ -438,12 +439,12 @@ const styles = StyleSheet.create({
     color: '#1D2029',
   },
   link: {
-    color: '#7F23D9',
+    color: '#009299',
     fontSize: 14,
     fontWeight: '500',
   },
   submitContainer: {
-    backgroundColor: '#7F23D9',
+    backgroundColor: '#009299',
     fontSize: 16,
     borderRadius: 4,
     paddingVertical: 12,
@@ -454,5 +455,9 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 9 },
     shadowOpacity: 1,
     shadowRadius: 20,
+  },
+  logo: {
+    width: 183,
+    height: 40,
   },
 });

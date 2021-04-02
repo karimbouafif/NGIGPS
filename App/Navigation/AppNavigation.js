@@ -21,6 +21,7 @@ import Splash from '../Containers/Splash';
 import Onboarding from "../Containers/Onboarding";
 import GererMesMissions from '../Containers/GererMesMissions'
 import AjouterMission from '../Containers/AjouterMission'
+import SingleMissionScreen from '../Containers/SingleMissionScreen'
 import Logout from "../Containers/Logout";
 // drawer
 import DrawerItem from "../Components/DrawerItem";
@@ -36,7 +37,8 @@ import Home from '../Containers/Home'
 // Manifest of possible screens
 const PrimaryNav = createStackNavigator({
 
-  LaunchScreen: { screen: LaunchScreen }
+  LaunchScreen: { screen: LaunchScreen },
+  SingleEventScreen: { screen: SingleMissionScreen },
 }, {
   // Default config for all screens
   headerMode: 'none',
@@ -108,11 +110,16 @@ const HomeStack = createStackNavigator(
     Home: {
       screen: Home,
       navigationOptions: ({ navigation }) => ({
-        header: <Header search options title="Home" navigation={navigation} />
+        header: <Header search options title="Acceuil" navigation={navigation} />
       })
     },
 
-
+    SingleMissionScreen: {
+      screen: SingleMissionScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: <Header search options title="Mission unique " navigation={navigation} />
+      })
+    }
 
 
   },
