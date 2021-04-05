@@ -3,9 +3,10 @@ import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import styles from './Styles/ShareBikeMapBoxStyle'
 import MapboxGL from "@react-native-mapbox-gl/maps";
+import Logger from '@react-native-mapbox-gl/maps/javascript/utils/Logger';
 import  MapView  from './MapBox/MapView';
-MapboxGL.setAccessToken("pk.eyJ1IjoiZ29nZXRzdSIsImEiOiJjazgwNTB5c2YwMXF2M2tvZG50enZua3BoIn0.wyu1plc3NpFxjdpknePvMA");
-const api_key="pk.eyJ1IjoiZ29nZXRzdSIsImEiOiJjazgwNTB5c2YwMXF2M2tvZG50enZua3BoIn0.wyu1plc3NpFxjdpknePvMA"
+MapboxGL.setAccessToken("pk.eyJ1Ijoia2FyaW1lc3ByaXQiLCJhIjoiY2szYm1vaWNjMG5qdjNvcXR6ZmI0eWE2OCJ9.Zcpnxn-I0W6JjZWdzIl2bg");
+const api_key="pk.eyJ1Ijoia2FyaW1lc3ByaXQiLCJhIjoiY2szYm1vaWNjMG5qdjNvcXR6ZmI0eWE2OCJ9.Zcpnxn-I0W6JjZWdzIl2bg"
 export default class ShareBikeMapBox extends Component {
 
   constructor(props) {

@@ -143,7 +143,7 @@ export default class Map extends Component {
             description={item.etat + " : " +item.numberOfBikesAvailable+"/"+item.numberOfBikesCapacity}
           >
 
-            <Image source={require('../assets/imgs/logo2.png')} style={{height: 50, width:50 }} />
+            <Image source={require('../Assets/imgs/logo2.png')} style={{height: 50, width:50 }} />
           </Marker>
         ))
       );

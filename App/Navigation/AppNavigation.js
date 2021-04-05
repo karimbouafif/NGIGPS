@@ -21,7 +21,10 @@ import Splash from '../Containers/Splash';
 import Onboarding from "../Containers/Onboarding";
 import GererMesMissions from '../Containers/GererMesMissions'
 import AjouterMission from '../Containers/AjouterMission'
+import ModalDatePickerScreen from '../Containers/ModalDatePickerScreen'
 import SingleMissionScreen from '../Containers/SingleMissionScreen'
+import MissionNgiReservationModal from '../Containers/MissionNgiReservationModal'
+import Pro from "../Containers/Pro";
 import Logout from "../Containers/Logout";
 // drawer
 import DrawerItem from "../Components/DrawerItem";
@@ -29,6 +32,7 @@ import DrawerItem from "../Components/DrawerItem";
 // header for screens
 import Header from "../Components/Header";
 import Home from '../Containers/Home'
+import FindMyWayStack from '../Containers/FindMyWayStack'
 
 
 
@@ -36,8 +40,9 @@ import Home from '../Containers/Home'
 
 // Manifest of possible screens
 const PrimaryNav = createStackNavigator({
-
+  MissionNgiReservationModal: { screen: MissionNgiReservationModal },
   LaunchScreen: { screen: LaunchScreen },
+  ModalDatePickerScreen: { screen: ModalDatePickerScreen },
   SingleEventScreen: { screen: SingleMissionScreen },
 }, {
   // Default config for all screens
@@ -113,7 +118,23 @@ const HomeStack = createStackNavigator(
         header: <Header search options title="Acceuil" navigation={navigation} />
       })
     },
-
+    ModalDatePickerScreen: {
+      screen: ModalDatePickerScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: (
+          <Header left={<Block />} white transparent title="ModalDatePickerScreen" navigation={navigation} />
+        ),
+      })
+    },
+    Pro: {
+      screen: Pro,
+      navigationOptions: ({ navigation }) => ({
+        header: (
+          <Header left={<Block />} white transparent title="" navigation={navigation} />
+        ),
+        headerTransparent: true
+      })
+    },
     SingleMissionScreen: {
       screen: SingleMissionScreen,
       navigationOptions: ({ navigation }) => ({
@@ -180,7 +201,33 @@ const gerermissionStack = createStackNavigator(
   }
 );
 
+const MapStack = createStackNavigator({
+  MissionNgiReservationModal: {
+    screen: MissionNgiReservationModal,
+    navigationOptions: ({ navigation }) => ({
+      header: (
+        <Header left={<Block />} white  title="MissionNgiReservationModal" navigation={navigation} />
+      ),
+    })
+  },
+ Pro: {
+    screen: Pro,
+    navigationOptions: ({ navigation }) => ({
+      header: (
+        <Header left={<Block />} white transparent title="" navigation={navigation} />
+      ),
+      headerTransparent: true
+    })
+  }
 
+
+
+},{
+  cardStyle: {
+    backgroundColor: "#F8F9FE"
+  },
+  transitionConfig
+});
 
 const AppStack = createDrawerNavigator(
   {
@@ -204,12 +251,28 @@ const AppStack = createDrawerNavigator(
         )
       })
     },
+    MissionNgiMap: {
+      screen: MapStack,
+      navigationOptions: navOpt => ({
+        drawerLabel: ({ focused }) => (
+          <DrawerItem focused={focused} screen="ShareBikeMapScreen" title="Missions" />
+        )
+      })
+    },
 
     GererMesMissions: {
       screen: gerermissionStack,
       navigationOptions: navOpt => ({
         drawerLabel: ({ focused }) => (
           <DrawerItem focused={focused} title="GererMesMissions" />
+        )
+      })
+    },
+    FindMyWayStack: {
+      screen: FindMyWayStack,
+      navigationOptions: navOpt => ({
+        drawerLabel: ({ focused }) => (
+          <DrawerItem focused={focused} screen="FindMyWayScreen" title="Navigation" />
         )
       })
     },

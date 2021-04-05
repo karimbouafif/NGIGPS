@@ -66,7 +66,7 @@ class Header extends React.Component {
 
         case 'Billing':
           return ([
-          
+
           ]);
 
 
@@ -117,9 +117,9 @@ class Header extends React.Component {
         right
         color="black"
         style={styles.search}
-        placeholder="Are you looking for a certain station ?"
+        placeholder="Chercher Une Mission ..."
         placeholderTextColor={'#8898AA'}
-        onFocus={() => navigation.navigate('ShareBikeMapScreen')}
+        onFocus={() => navigation.navigate('MissionNgiMapScreen')}
         onChangeText={text => {console.log("yo")}}
         iconContent={<Icon size={16} color={theme.COLORS.MUTED} name="search" family="ArgonExtra" />}
       />
