@@ -109,7 +109,7 @@ export default class Map extends Component {
 
   }
   makeRemoteRequest = () => {
-    const url = API_URL+"/stations";
+    const url = API_URL+"/missions";
     this.setState({ loading: true });
 
     axios.get(url)

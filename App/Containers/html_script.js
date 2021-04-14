@@ -15,7 +15,8 @@ const html_script = `
 <body style="padding: 0; margin: 0">
 <div id="mapid" style="width: 100%; height: 100vh;"></div>
 <script>
-	var mymap = L.map('mapid').setView([51.505, -0.09], 5);
+	var mymap = L.map('mapid').setView([33.892166, 9.561555499999997], 5);
+	//var	mymap=L.map('mapid').locate({setView: true, maxZoom: 16});
 	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
 		maxZoom: 18,
 		attribution: 'Map data &copy; OpenStreetMap contributors, ',
@@ -29,6 +30,10 @@ const html_script = `
 			.openOn(mymap);
 	}
 	mymap.on('click', onMapClick);
+	
+
+	
+	
 </script>
 </body>
 </html>

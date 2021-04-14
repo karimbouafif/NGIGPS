@@ -15,7 +15,9 @@ import XDate from 'xdate';
 import InputTextField from '../Components/InputTextField'
 const { width } = Dimensions.get("window");
 import * as Nominatim from 'nominatim-browser';
-
+import axios from 'axios'
+import * as QueryString from 'querystringify'
+import jwtDecode from 'jwt-decode'
 
 
 

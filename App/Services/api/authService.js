@@ -41,4 +41,9 @@ export function userLogin(payload){
   return authApiClient.post('/users/mobile/signin', payload);
 }
 
+export function  AddMission(payload){
+
+  return authApiClient.post('/missions/add', payload);
+}
+
 

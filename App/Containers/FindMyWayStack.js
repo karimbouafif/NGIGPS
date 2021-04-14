@@ -20,6 +20,15 @@ const { width } = Dimensions.get("screen");
 const API_URL = Config.API_URL;
 const thumbMeasure = (width - 48 - 32) / 3;
 const cardWidth = width - theme.SIZES.BASE * 2;
+
+
+import AsyncStorage from '@react-native-community/async-storage';
+
+
+
+const ACCESS_TOKEN = 'access_token';
+
+
 class FindMyWayScreen extends Component {
   constructor(props) {
     super(props);
@@ -30,10 +39,13 @@ class FindMyWayScreen extends Component {
       error: null,
 
       endingPoint: {
-        latitude: 37.491998,
-        longitude:  -122.044000,
+        latitude: 36.75829559465801,
+        longitude:  10.709304845903853,
       }
     };
+
+
+
     checkPermission("android.permission.ACCESS_FINE_LOCATION").then((result) => {
       console.log("Already Granted!");
       console.log(result);

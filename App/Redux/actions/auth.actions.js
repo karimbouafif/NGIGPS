@@ -1,48 +1,70 @@
-/*import userLogin from '../services/api/authService';
-
-export function login(payload) {
-  return dispatch => {
-    return userLogin(payload)
-      .then(res => {
-        const token = res.data.token;
-  			console.log(token);
-        localStorage.setItem('jwtToken', token);
-  		})
-  		.catch((err) => {
-  			console.log(err);
-  		});
-  }
-}*/
-
-
-// Actions
-export const setAuthPending = () => {
-	return {
-		type: 'SET_AUTH_PENDING'
-	};
-};
-export const setLoginSuccess = (authToken, refreshToken) => {
-	return {
-		type: 'SET_LOGIN_SUCCESS',
-		authToken,
-		refreshToken
-	};
-};
-export const setLoginError = loginError => {
-	return {
-		type: 'SET_LOGIN_ERROR',
-		loginError
-	};
+import axios from './../../Services/api/authService';
+import jwt_decode from 'jwt-decode';
+import { SET_CURRENT_USER, GET_ERRORS, CLEAR_ERRORS } from './types';
+// Register User
+export const registerUser = userData => dispatch => {
+	axios
+		.post('/user/register', userData)
+		.then(res =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: {
+					message: res.data,
+					visible: true,
+					success:true
+				}
+			})
+		)
+		.catch(err =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: {
+					message: err.response.data,
+					visible: true,
+					success:false
+				}
+			})
+		);
 };
 
-export const setLogout = () => {
+export const loginUser = userData => dispatch => {
+	axios
+		.post('/users/mobile/signin', userData)
+		.then(res => {
+			const { token } = res.data;
+			localStorage.setItem('token', token);
+			const decoded = jwt_decode(token);
+			dispatch(clearErrors());
+			dispatch(setCurrentUser(decoded));
+		})
+		.catch(err =>
+			dispatch({
+				type: GET_ERRORS,
+				payload: {
+					message: err.response.data,
+					visible: true
+				}
+			})
+		);
+};
+
+// Set logged in user
+export const setCurrentUser = decoded => {
 	return {
-		type: 'SET_LOGOUT'
+		type: SET_CURRENT_USER,
+		payload: decoded
 	};
 };
-export const saveAppToken = authToken => {
+
+// Log user out
+export const logoutUser = () => dispatch => {
+	localStorage.removeItem('token');
+	dispatch(setCurrentUser({}));
+};
+
+// Clear errors
+export const clearErrors = () => {
 	return {
-		type: 'SAVE_APP_TOKEN',
-		authToken
+		type: CLEAR_ERRORS
 	};
 };

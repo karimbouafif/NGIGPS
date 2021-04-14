@@ -46,7 +46,7 @@ class ModalDatePickerScreen extends React.Component {
     //console.log(reservationId);
 
   }
-  componentDidMount (){
+  componentWillUpdate  (){
     const promise =this.getUser();
 
   }

@@ -6,20 +6,29 @@ import {
   StyleSheet,
 } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-
+const ACCESS_TOKEN = 'access_token';
 export default class MyComponent extends Component {
+  constructor(props){
+    super(props);
 
+    this.state = {
+      isLoggenIn: "",
+      showProgress: false,
+      accessToken: "",
+    }
+  }
   componentDidMount() {
-    this.removeItem('jwt');
+    this.deleteToken();
     this.props.navigation.navigate('Auth',{ item: this.state })
   }
 
-  async removeItem(item) {
+  async deleteToken() {
     try {
-      await AsyncStorage.removeItem(item);
-    } catch (error) {
-      console.error('AsyncStorage error: ' + error.message);
-
+      await AsyncStorage.removeItem(ACCESS_TOKEN)
+      console.log("Token Deleted");
+      this.props.navigation.navigate('Auth',{ item: this.state })
+    } catch(error) {
+      console.log("Something went wrong");
     }
   }
 

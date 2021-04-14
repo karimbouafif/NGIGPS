@@ -31,7 +31,7 @@ import {
   facebookOauth,
 } from '../Services/api/authService';
 import * as Animatable from 'react-native-animatable'
-
+import {loginUser} from "../Services/api/authService";
 const API_URL = Config.API_URL;
 const ACCESS_TOKEN = 'access_token';
 
@@ -39,7 +39,7 @@ export default class Auth extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
+        email: '',
       password: '',
       userInfo: null,
       error: "",
@@ -322,10 +322,10 @@ export default class Auth extends Component {
                 justifyContent: 'space-between',
               }}
             >
-              <FacebookSignInButton onPress={this._handleFacebookSignin} />
+
 
               <GoogleSigninButton
-                style={{ width: 190, height: 58 }}
+                style={{ width: 280, height: 58 }}
                 size={GoogleSigninButton.Size.Wide}
                 color={GoogleSigninButton.Color.Dark}
                 onPress={this._handleGoogleSignin}
@@ -356,7 +356,7 @@ export default class Auth extends Component {
                   },
                 ]}
               >
-                or
+                Ou
               </Text>
               <View
                 style={{
@@ -383,7 +383,7 @@ export default class Auth extends Component {
             />
 
             <Text style={[styles.text, styles.link, { textAlign: 'right' }]}>
-              Forgot Password?
+              Mot de passe oublier ?
             </Text>
 
             <TouchableOpacity
@@ -397,7 +397,7 @@ export default class Auth extends Component {
                     { color: '#fff', fontWeight: '600', fontSize: 16 },
                   ]}
                 >
-                  Sign in
+                 Se Connecter
                 </Text>
               </View>
             </TouchableOpacity>
@@ -413,14 +413,8 @@ export default class Auth extends Component {
                 },
               ]}
             >
-              Don't have an account ?
-              <Text
-                style={[styles.text, styles.link]}
-                onPress={e => this._onSignupPress(e)}
-              >
-                {' '}
-                Register Now
-              </Text>
+
+
             </Text>
           </View>
         </View>

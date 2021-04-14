@@ -14,7 +14,7 @@ const iPhoneX = () => Platform.OS === 'ios' && (height === 812 || width === 812 
 
 const BellButton = ({isWhite, style, navigation}) => (
   <TouchableOpacity style={[styles.button, style]} >
-    <Icon name="meetup" size={30} color="#0859B3" />
+    <Icon name="calendar" size={30} color="#0859B3" onPress={() => navigation.navigate('Calendar')}/>
     <Block middle style={styles.notify} />
   </TouchableOpacity>
 );
@@ -51,7 +51,7 @@ class Header extends React.Component {
       case 'Home':
         return ([
           <BellButton key='chat-home' navigation={navigation} isWhite={white} />,
-          <BasketButton key='basket-home' navigation={navigation} isWhite={white} />
+
         ]);
         case 'ShareBikeMap':
           return ([

@@ -77,7 +77,7 @@ class Card extends React.Component {
 
               <Text size={25} muted={!ctaColor} color={ctaColor || argonTheme.COLORS.ACTIVE} style={styles.cardTitle}>{item.station.title}</Text>
               <Text size={18}  bold>{item.station.etat}</Text>
-              <Text size={16} color={"#FE2472"}   bold>{moment(item.dateReservation).format('DD/MM/YYYY')}</Text>
+              <Text size={16} color={"#009299"}   bold>{moment(item.dateReservation).format('DD/MM/YYYY')}</Text>
 
               <Image source={icon} style={{width:40,height:40,marginLeft:120}} />
             </Block>

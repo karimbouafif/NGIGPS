@@ -29,7 +29,7 @@ export default class ShareBikeMapBox extends Component {
     this.mapRef.moveCamera();
   }
 
-  componentDidMount() {
+  componentWillUnmount() {
     this.moveCamera();
   }
 

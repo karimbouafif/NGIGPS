@@ -1,0 +1,32 @@
+export const GET_ERRORS = "GET_ERRORS";
+export const CLEAR_ERRORS = "CLEAR_ERRORS";
+export const SET_CURRENT_USER = "SET_CURRENT_USER";
+
+
+
+// MISSION TYPES
+export const MISSION_LOADING = "MISSION_LOADING";
+export const LOADING_EDIT_MISSION = "LOADING_EDIT_EVENT";
+export const GET_MISSIONS = "GET_MISSIONS";
+export const GET_MISSION = "GET_MISSION";
+export const ADD_MISSION = "ADD_MISSION";
+export const DELETE_MISSION = "DELETE_MISSION";
+export const SEARCH_MISSION = "SEARCH_MISSION";
+export const EDIT_MISSION = "EDIT_MISSION";
+export const UNARCHIVE_MISSION = "UNARCHIVE_MISSION";
+export const ARCHIVE_MISSION = "ARCHIVE_MISSION";
+export const IS_MODIFIED_MISSION = "IS_MODIFIED_MISSION";
+
+
+// BIKE TYPES
+export const BIKE_LOADING = "BIKE_LOADING";
+export const GET_BIKE = "GET_BIKE";
+export const GET_BIKES = "GET_BIKES";
+export const ADD_BIKE = "ADD_BIKE";
+export const DELETE_BIKE = "DELETE_BIKE";
+export const SEARCH_BIKE = "SEARCH_BIKE";
+export const EDIT_BIKE = "EDIT_BIKE";
+export const GET_INACTIVE_BIKE = "GET_INACTIVE_BIKE";
+export const ARCHIVE_BIKE = "ARCHIVE_BIKE";
+export const UNARCHIVE_BIKE = "UNARCHIVE_BIKE";
+export const IS_MODIFIED_BIKE = "IS_MODIFIED_BIKE";

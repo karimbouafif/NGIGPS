@@ -40,7 +40,9 @@ class Home extends React.Component {
           error: res.error || null,
           loading: false,
         });
+
         console.log(this.state.data);
+
         this.arrayholder = res.data;  //res.results
       })
       .catch(error => {

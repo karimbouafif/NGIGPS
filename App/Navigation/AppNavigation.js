@@ -24,6 +24,10 @@ import AjouterMission from '../Containers/AjouterMission'
 import ModalDatePickerScreen from '../Containers/ModalDatePickerScreen'
 import SingleMissionScreen from '../Containers/SingleMissionScreen'
 import MissionNgiReservationModal from '../Containers/MissionNgiReservationModal'
+import Calendar from '../Containers/Calendrier'
+import AffecterVoiture from'../Containers/AffecterVoiture'
+
+import ViewMap from '../Containers/ViewMap'
 import Pro from "../Containers/Pro";
 import Logout from "../Containers/Logout";
 // drawer
@@ -42,7 +46,6 @@ import FindMyWayStack from '../Containers/FindMyWayStack'
 const PrimaryNav = createStackNavigator({
   MissionNgiReservationModal: { screen: MissionNgiReservationModal },
   LaunchScreen: { screen: LaunchScreen },
-  ModalDatePickerScreen: { screen: ModalDatePickerScreen },
   SingleEventScreen: { screen: SingleMissionScreen },
 }, {
   // Default config for all screens
@@ -109,6 +112,22 @@ const LogoutStack = createStackNavigator(
     transitionConfig
   }
 );
+const VoitureStack = createStackNavigator(
+  {
+    AffecterVoiture: {
+      screen: AffecterVoiture,
+      navigationOptions: ({ navigation }) => ({
+        header: <Header   title="AffecterVoiture" navigation={navigation} />
+      })
+    },
+  },
+{
+  cardStyle: { backgroundColor: "#FFFFFF" },
+  transitionConfig
+}
+);
+
+
 
 const HomeStack = createStackNavigator(
   {
@@ -118,11 +137,12 @@ const HomeStack = createStackNavigator(
         header: <Header search options title="Acceuil" navigation={navigation} />
       })
     },
-    ModalDatePickerScreen: {
-      screen: ModalDatePickerScreen,
+
+    Calendar: {
+      screen: Calendar,
       navigationOptions: ({ navigation }) => ({
         header: (
-          <Header left={<Block />} white transparent title="ModalDatePickerScreen" navigation={navigation} />
+          <Header left={<Block />} white transparent title="Calendrier" navigation={navigation} />
         ),
       })
     },
@@ -251,11 +271,11 @@ const AppStack = createDrawerNavigator(
         )
       })
     },
-    MissionNgiMap: {
-      screen: MapStack,
+    Voiture: {
+      screen: VoitureStack,
       navigationOptions: navOpt => ({
         drawerLabel: ({ focused }) => (
-          <DrawerItem focused={focused} screen="ShareBikeMapScreen" title="Missions" />
+          <DrawerItem focused={focused} screen="AffecterVoiture" title="Affecter Une Voiture" />
         )
       })
     },
