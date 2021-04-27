@@ -21,12 +21,12 @@ const BellButton = ({isWhite, style, navigation}) => (
 
 const BasketButton = ({isWhite, style, navigation}) => (
   <TouchableOpacity style={[styles.button, style]} >
-    <Icon name="address-card" size={30} color="#0859B3" />
+    <Icon name="address-card" size={30} color="#0859B3"onPress={() => navigation.navigate('AffecterVoiture')} />
   </TouchableOpacity>
 );
 
 const SearchButton = ({isWhite, style, navigation}) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
+  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('AffecterVoiture')}>
     <Icon name="rocket" size={30} color="#900" />
   </TouchableOpacity>
 );
@@ -61,8 +61,10 @@ class Header extends React.Component {
         return ([
 
         ]);
-
-
+      case 'AjouterVoiture':
+        return ([
+          <SearchButton key='chat-home' navigation={navigation} isWhite={white} />
+        ]);
 
         case 'Billing':
           return ([

@@ -27,7 +27,8 @@ import MissionNgiReservationModal from '../Containers/MissionNgiReservationModal
 import Calendar from '../Containers/Calendrier'
 import AffecterVoiture from'../Containers/AffecterVoiture'
 
-import ViewMap from '../Containers/ViewMap'
+import ListCars from '../Containers/ListCars'
+//import ViewMap from '../Containers/ViewMap'
 import Pro from "../Containers/Pro";
 import Logout from "../Containers/Logout";
 // drawer
@@ -37,6 +38,8 @@ import DrawerItem from "../Components/DrawerItem";
 import Header from "../Components/Header";
 import Home from '../Containers/Home'
 import FindMyWayStack from '../Containers/FindMyWayStack'
+import AjouterVoiture from '../Containers/AjouterVoiture'
+
 
 
 
@@ -47,6 +50,7 @@ const PrimaryNav = createStackNavigator({
   MissionNgiReservationModal: { screen: MissionNgiReservationModal },
   LaunchScreen: { screen: LaunchScreen },
   SingleEventScreen: { screen: SingleMissionScreen },
+
 }, {
   // Default config for all screens
   headerMode: 'none',
@@ -120,6 +124,19 @@ const VoitureStack = createStackNavigator(
         header: <Header   title="AffecterVoiture" navigation={navigation} />
       })
     },
+    ListCars: {
+      screen: ListCars,
+      navigationOptions: ({ navigation }) => ({
+        header: <Header   title="ListCars" navigation={navigation} />
+      })
+    },
+    AjouterVoiture: {
+      screen: AjouterVoiture,
+      navigationOptions: ({ navigation }) => ({
+        header: <Header   title="AjouterVoiture" navigation={navigation} />
+      })
+    },
+
   },
 {
   cardStyle: { backgroundColor: "#FFFFFF" },
@@ -134,7 +151,7 @@ const HomeStack = createStackNavigator(
     Home: {
       screen: Home,
       navigationOptions: ({ navigation }) => ({
-        header: <Header search options title="Acceuil" navigation={navigation} />
+
       })
     },
 

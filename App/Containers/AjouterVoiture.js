@@ -9,22 +9,26 @@ import {
   ScrollView,
 } from 'react-native';
 import InputTextField from '../Components/InputTextField';
-import Logo from '../Assets/images/Logo.png';
-
+import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Config } from '../Config/api'
-
-
-
+import Icon from 'react-native-vector-icons/Feather';
 
 const API_URL = Config.API_URL;
+const ACCESS_TOKEN = 'access_token';
 
-
-export default class AffecterVoiture extends Component {
+export default class AjouterVoiture extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      email: '',
+      password: '',
+      userInfo: null,
+      error: "",
+      showProgress: false,
+      passwordVisible: false,
+      googleModalVisible: false,
+      facebookModalVisible: false,
     };
   }
 
@@ -32,13 +36,9 @@ export default class AffecterVoiture extends Component {
 
 
 
+  componentDidMount() {
 
-
-
-
-
-
-
+  }
 
 
 
@@ -57,16 +57,8 @@ export default class AffecterVoiture extends Component {
     this.setState({ password: password });
   };
 
-  _onAffecterCarPress = () => {
-    this.props.navigation.navigate('AjouterVoiture',{ item: this.state })
-console.log("touch");
 
-  };
-  _onViewListCarPress = () => {
-    this.props.navigation.navigate('ListCars',{ item: this.state })
-    console.log("touch");
 
-  };
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -74,10 +66,29 @@ console.log("touch");
 
 
         <View>
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#009299',
+              paddingBottom: 10,
+            }}
+          >
 
+          </View>
 
           <View style={{ paddingHorizontal: 25 }}>
+            <View
+              style={{
+                marginTop: 40,
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
 
+
+
+            </View>
 
             <View
               style={{ flexDirection: 'row', justifyContent: 'space-between' }}
@@ -91,7 +102,20 @@ console.log("touch");
                   marginTop: 40,
                 }}
               />
-
+              <Text
+                style={[
+                  styles.text,
+                  {
+                    color: '#595959',
+                    fontSize: 18,
+                    textAlign: 'center',
+                    marginVertical: 25,
+                    fontWeight: 'bold',
+                  },
+                ]}
+              >
+                Affecter
+              </Text>
               <View
                 style={{
                   borderWidth: StyleSheet.hairlineWidth,
@@ -103,13 +127,43 @@ console.log("touch");
               />
             </View>
 
+            <InputTextField
+              placeholderText="Matricule"
+              _onTextChange={this._onLoginChange}
+            />
+            <InputTextField
+              _onTextChange={this._onPasswordChange}
+              style={{ marginTop: 20, marginBottom: 17 }}
+              placeholderText="Type"
 
+              _toggleVisibility={this._togglePasswordVisibility}
+            />
 
+            <InputTextField
+              placeholderText="Etat"
+              _onTextChange={this._onLoginChange}
+            />
 
-
+            <DropDownPicker
+              items={[
+                {label: 'Karim - 21322124', value: 'Karim', icon: () => <Icon name="flag" size={18} color="#900" />, hidden: true},
+                {label: 'zied -22826556', value: 'zied -22826556', icon: () => <Icon name="flag" size={18} color="#900" />},
+                {label: 'Karim - 21322124', value: 'karim', icon: () => <Icon name="flag" size={18} color="#900" />},
+              ]}
+              defaultValue={this.state.country}
+              containerStyle={{height: 40}}
+              style={{backgroundColor: '#fafafa'}}
+              itemStyle={{
+                justifyContent: 'flex-start'
+              }}
+              dropDownStyle={{backgroundColor: '#fafafa'}}
+              onChangeItem={item => this.setState({
+                country: item.value
+              })}
+            />
             <TouchableOpacity
               style={styles.submitContainer}
-              onPress={this._onAffecterCarPress}
+              onPress={this._onSigninPress}
             >
               <View>
                 <Text
@@ -118,25 +172,11 @@ console.log("touch");
                     { color: '#fff', fontWeight: '600', fontSize: 16 },
                   ]}
                 >
-                  Affecter Voiture
+                 Confirmer
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.submitContainer}
-              onPress={this._onViewListCarPress}
-            >
-              <View>
-                <Text
-                  style={[
-                    styles.text,
-                    { color: '#fff', fontWeight: '600', fontSize: 16 },
-                  ]}
-                >
-                  Liste Des Voitures
-                </Text>
-              </View>
-            </TouchableOpacity>
+
             <Text
               style={[
                 styles.text,
