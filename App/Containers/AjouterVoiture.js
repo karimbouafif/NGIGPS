@@ -13,6 +13,9 @@ import DropDownPicker from 'react-native-dropdown-picker';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Config } from '../Config/api'
 import Icon from 'react-native-vector-icons/Feather';
+import axios from 'axios'
+import { number } from 'prop-types'
+import { AddCarToUser, userLogin } from '../Services/api/authService'
 
 const API_URL = Config.API_URL;
 const ACCESS_TOKEN = 'access_token';
@@ -21,14 +24,18 @@ export default class AjouterVoiture extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: '',
-      password: '',
+      matricule: '',
+      type: '',
+      etat:'',
+      dispinibilite:'',
       userInfo: null,
       error: "",
       showProgress: false,
       passwordVisible: false,
       googleModalVisible: false,
       facebookModalVisible: false,
+      users:[],
+      dataSource:[]
     };
   }
 
@@ -37,7 +44,19 @@ export default class AjouterVoiture extends Component {
 
 
   componentDidMount() {
+    this.getUsers();
 
+  }
+  getUsers = () => {
+    fetch("http://192.168.1.17:4000/api/users/users")  // **Api for fetching**
+      .then(response => response.json())
+      .then((responseJson)=> {
+        this.setState({
+          loading: false,
+          dataSource: responseJson
+        })
+      })
+      .catch(error=>console.log(error)) //to catch the errors if any
   }
 
 
@@ -49,13 +68,48 @@ export default class AjouterVoiture extends Component {
 
 
 
-  _onLoginChange = email => {
-    this.setState({ email: email });
+  _onMatriculeChange = matricule => {
+    this.setState({ matricule: matricule });
   };
 
-  _onPasswordChange = password => {
-    this.setState({ password: password });
+  _onTypeChange = type => {
+    this.setState({ type: type });
   };
+  _onEtatChange = etat => {
+    this.setState({ etat: etat });
+  };
+  _ondispoChange = dispinibilite => {
+    this.setState({ dispinibilite: dispinibilite });
+  };
+
+  _onConfirmPress = () => {
+
+    AddCarToUser ( { // if validation fails, value will be null
+
+        body: JSON.stringify({
+          matricule: this.state.matricule,
+          type: this.state.type,
+          etat: this.state.etat,
+          dispinibilite: this.state.dispinibilite,
+
+        })
+      })
+        .then((response) => response.json())
+        .then((responseData) => {
+
+            alert(
+              "Signup Success!",
+              "Click the button to get a Chuck Norris quote!"
+            )
+        })
+        .done();
+    };
+
+
+
+
+
+
 
 
 
@@ -129,10 +183,10 @@ export default class AjouterVoiture extends Component {
 
             <InputTextField
               placeholderText="Matricule"
-              _onTextChange={this._onLoginChange}
+              _onTextChange={this._onMatriculeChange}
             />
             <InputTextField
-              _onTextChange={this._onPasswordChange}
+              _onTextChange={this._onTypeChange}
               style={{ marginTop: 20, marginBottom: 17 }}
               placeholderText="Type"
 
@@ -141,29 +195,38 @@ export default class AjouterVoiture extends Component {
 
             <InputTextField
               placeholderText="Etat"
-              _onTextChange={this._onLoginChange}
+              _onTextChange={this._onEtatChange}
             />
-
+            <InputTextField
+              placeholderText="Disponibilité"
+              _onTextChange={this._ondispoChange}
+            />
             <DropDownPicker
-              items={[
-                {label: 'Karim - 21322124', value: 'Karim', icon: () => <Icon name="flag" size={18} color="#900" />, hidden: true},
-                {label: 'zied -22826556', value: 'zied -22826556', icon: () => <Icon name="flag" size={18} color="#900" />},
-                {label: 'Karim - 21322124', value: 'karim', icon: () => <Icon name="flag" size={18} color="#900" />},
-              ]}
+              placeholder="Ajouter Un Ouvrier"
+              style={{
+                alignItems: "center"
+                , justifyContent: "center"
+              }}
+              items={this.state.dataSource.map(item=> ({label:item.fullname  + item.number,value:item.fullname + item.number}))}
               defaultValue={this.state.country}
+
+
               containerStyle={{height: 40}}
               style={{backgroundColor: '#fafafa'}}
               itemStyle={{
                 justifyContent: 'flex-start'
               }}
-              dropDownStyle={{backgroundColor: '#fafafa'}}
+              dropDownStyle={{ backgroundColor: '#fafafa' }}
               onChangeItem={item => this.setState({
-                country: item.value
-              })}
+                  country: item.value
+                },
+                console.log(item.value)
+              )
+              }
             />
             <TouchableOpacity
               style={styles.submitContainer}
-              onPress={this._onSigninPress}
+              onPress={this._onConfirmPress}
             >
               <View>
                 <Text

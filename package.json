@@ -95,6 +95,7 @@
     "react-native-reanimated": "^1.13.2",
     "react-native-safe-area-context": "0.6.4",
     "react-native-screens": "^2.17.1",
+    "react-native-share": "^6.0.1",
     "react-native-smooth-pincode-input": "^1.0.9",
     "react-native-step-indicator": "0.0.11",
     "react-native-svg": "^12.1.1",

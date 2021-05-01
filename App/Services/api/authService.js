@@ -40,6 +40,9 @@ export function getFacebookProfile(accessToken){
 export function userLogin(payload){
   return authApiClient.post('/users/mobile/signin', payload);
 }
+export function AddCarToUser(payload){
+  return authApiClient.post('/voitures/add', payload);
+}
 
 export function  AddMission(payload){
 

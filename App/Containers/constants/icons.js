@@ -12,6 +12,10 @@ export const more = require("../../Assets/icons/more_icon.png");
 export const pin = require("../../Assets/icons/pin.png");
 export const sports_icon = require("../../Assets/icons/sports_icon.png");
 export const up_arrow = require("../../Assets/icons/up_arrow.png");
+export const Pending = require("../../Assets/icons/wall-clock.png");
+export const Low = require("../../Assets/icons/low-connection.png");
+export const Moyen = require("../../Assets/icons/volume.png");
+export const High = require("../../Assets/icons/rocket-launch.png");
 
 export default {
     baby_car,
@@ -27,5 +31,9 @@ export default {
     more,
     pin,
     sports_icon,
-    up_arrow
+    up_arrow,
+    High,
+    Moyen,
+    Low,
+    Pending
 }

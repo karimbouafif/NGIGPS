@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from 'react'
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,7 +16,7 @@ import {
 import { VictoryPie } from 'victory-native';
 
 import {Svg} from 'react-native-svg';
-
+import axios from 'axios';
 import { COLORS, FONTS, SIZES, icons, images } from '../Containers/constants';
 
 const Home = () => {
@@ -28,39 +28,39 @@ const Home = () => {
   let categoriesData = [
     {
       id: 1,
-      name: "Education",
-      icon: icons.education,
-      color: COLORS.yellow,
+      name: "haut",
+      icon: icons.High,
+      color: COLORS.red,
       expenses: [
         {
           id: 1,
-          title: "Tuition Fee",
-          description: "Tuition fee",
-          location: "ByProgrammers' tuition center",
+          title: "Mission Tres urgent",
+          description: "delevrier le package",
+          location: "Centre urbain",
           total: 100.00,
           status: pendingStatus
         },
         {
           id: 2,
-          title: "Arduino",
-          description: "Hardward",
-          location: "ByProgrammers' tuition center",
+          title: "Mission Tres urgent",
+          description: "boitier en panne ",
+          location: "Charguia",
           total: 30.00,
           status: pendingStatus
         },
         {
           id: 3,
-          title: "Javascript Books",
-          description: "Javascript books",
-          location: "ByProgrammers' Book Store",
+          title: "Tres urgent",
+          description: "Voiture en panne",
+          location: "Nabeul",
           total: 20.00,
           status: confirmStatus
         },
         {
           id: 4,
-          title: "PHP Books",
-          description: "PHP books",
-          location: "ByProgrammers' Book Store",
+          title: "panne technique",
+          description: "voiture en panne ",
+          location: "Tunis",
           total: 20.00,
           status: confirmStatus
         }
@@ -68,23 +68,23 @@ const Home = () => {
     },
     {
       id: 2,
-      name: "Nutrition",
-      icon: icons.food,
-      color: COLORS.lightBlue,
+      name: "moyen",
+      icon: icons.Moyen,
+      color: COLORS.yellow,
       expenses: [
         {
           id: 5,
-          title: "Vitamins",
-          description: "Vitamin",
-          location: "ByProgrammers' Pharmacy",
+          title: "panne technique",
+          description: "voiture en panne",
+          location: "Ariana",
           total: 25.00,
           status: pendingStatus,
         },
 
         {
           id: 6,
-          title: "Protein powder",
-          description: "Protein",
+          title: "panne",
+          description: "voiture en panne",
           location: "ByProgrammers' Pharmacy",
           total: 50.00,
           status: confirmStatus,
@@ -94,132 +94,72 @@ const Home = () => {
     },
     {
       id: 3,
-      name: "Child",
-      icon: icons.baby_car,
+      name: "faible",
+      icon: icons.Low,
       color: COLORS.darkgreen,
       expenses: [
         {
           id: 7,
-          title: "Toys",
-          description: "toys",
-          location: "ByProgrammers' Toy Store",
+          title: "Panne",
+          description: "boitier endommmager",
+          location: "Charguia 1 ",
           total: 25.00,
           status: confirmStatus,
         },
         {
           id: 8,
-          title: "Baby Car Seat",
-          description: "Baby Car Seat",
-          location: "ByProgrammers' Baby Care Store",
+          title: "voiture en panne",
+          description: "Boitier ",
+          location: "Sousse",
           total: 100.00,
           status: pendingStatus,
         },
         {
           id: 9,
-          title: "Pampers",
-          description: "Pampers",
-          location: "ByProgrammers' Supermarket",
+          title: "¨Panne mechanique",
+          description: "voiture en panne",
+          location: "Jandouba",
           total: 100.00,
           status: pendingStatus,
         },
-        {
-          id: 10,
-          title: "Baby T-Shirt",
-          description: "T-Shirt",
-          location: "ByProgrammers' Fashion Store",
-          total: 20.00,
-          status: pendingStatus,
-        },
+
       ],
     },
     {
       id: 4,
-      name: "Beauty & Care",
-      icon: icons.healthcare,
-      color: COLORS.peach,
+      name: "En Attente",
+      icon: icons.Pending,
+      color: COLORS.darkgray,
       expenses: [
         {
           id: 11,
-          title: "Skin Care product",
-          description: "skin care",
-          location: "ByProgrammers' Pharmacy",
+          title: "Panne",
+          description: "Voiture",
+          location: "Nabeul",
           total: 10.00,
           status: pendingStatus,
         },
         {
           id: 12,
-          title: "Lotion",
-          description: "Lotion",
-          location: "ByProgrammers' Pharmacy",
+          title: "livraison",
+          description: "mission livraison marchandises",
+          location: "Kelibia",
           total: 50.00,
           status: confirmStatus,
         },
         {
           id: 13,
-          title: "Face Mask",
-          description: "Face Mask",
-          location: "ByProgrammers' Pharmacy",
+          title: "Package",
+          description: "Mission livraison",
+          location: "Bizerte",
           total: 50.00,
           status: pendingStatus,
         },
-        {
-          id: 14,
-          title: "Sunscreen cream",
-          description: "Sunscreen cream",
-          location: "ByProgrammers' Pharmacy",
-          total: 50.00,
-          status: pendingStatus,
-        },
+
       ],
     },
-    {
-      id: 5,
-      name: "Sports",
-      icon: icons.sports_icon,
-      color: COLORS.purple,
-      expenses: [
-        {
-          id: 15,
-          title: "Gym Membership",
-          description: "Monthly Fee",
-          location: "ByProgrammers' Gym",
-          total: 45.00,
-          status: pendingStatus,
-        },
-        {
-          id: 16,
-          title: "Gloves",
-          description: "Gym Equipment",
-          location: "ByProgrammers' Gym",
-          total: 15.00,
-          status: confirmStatus,
-        },
-      ],
-    },
-    {
-      id: 6,
-      name: "Clothing",
-      icon: icons.cloth_icon,
-      color: COLORS.red,
-      expenses: [
-        {
-          id: 17,
-          title: "T-Shirt",
-          description: "Plain Color T-Shirt",
-          location: "ByProgrammers' Mall",
-          total: 20.00,
-          status: pendingStatus,
-        },
-        {
-          id: 18,
-          title: "Jeans",
-          description: "Blue Jeans",
-          location: "ByProgrammers' Mall",
-          total: 50.00,
-          status: confirmStatus,
-        },
-      ],
-    }
+
+
   ]
 
   const categoryListHeightAnimationValue = useRef(new Animated.Value(115)).current;
@@ -228,15 +168,48 @@ const Home = () => {
   const [viewMode, setViewMode] = React.useState("chart")
   const [selectedCategory, setSelectedCategory] = React.useState(null)
   const [showMoreToggle, setShowMoreToggle] = React.useState(false)
+  const [currentDate, setCurrentDate] = useState('');
+  const [data, setData] = React.useState({ hits: [] });
 
 
+
+
+
+
+
+
+  useEffect(() => {
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+
+    setCurrentDate(
+      date + '/' + month + '/' + year
+
+    );
+  }, []);
+
+
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        'http://192.168.1.17:4000/api/missions',
+      );
+      console.log(result.data);
+      setData(result.data);
+    };
+
+    fetchData();
+  }, []);
 
   function renderHeader() {
     return (
       <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: SIZES.padding, backgroundColor: COLORS.white }}>
         <View>
-          <Text style={{ color: COLORS.primary, ...FONTS.h2 }}>My Expenses</Text>
-          <Text style={{ ...FONTS.h3, color: COLORS.darkgray }}>Summary (private)</Text>
+          <Text style={{ color: COLORS.primary, ...FONTS.h2 }}>Mes Statistiques</Text>
+          <Text style={{ ...FONTS.h3, color: COLORS.darkgray }}>Sommaire (prive)</Text>
         </View>
 
         <View style={{ flexDirection: 'row', marginTop: SIZES.padding, alignItems: 'center' }}>
@@ -259,8 +232,8 @@ const Home = () => {
           </View>
 
           <View style={{ marginLeft: SIZES.padding }}>
-            <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>11 Nov, 2020</Text>
-            <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>18% more than last month</Text>
+            <Text style={{ color: COLORS.primary, ...FONTS.h3 }}>{currentDate}</Text>
+            <Text style={{ ...FONTS.body3, color: COLORS.darkgray }}>18% plus que le mois dernier</Text>
           </View>
         </View>
       </View>
@@ -358,7 +331,7 @@ const Home = () => {
       <View style={{ paddingHorizontal: SIZES.padding - 5 }}>
         <Animated.View style={{ height: categoryListHeightAnimationValue }}>
           <FlatList
-            data={categories}
+            data={categoriesData}
             renderItem={renderItem}
             keyExtractor={item => `${item.id}`}
             numColumns={2}
@@ -403,7 +376,7 @@ const Home = () => {
     return (
       <View style={{ height: 80, backgroundColor: COLORS.lightGray2, padding: SIZES.padding }}>
         {/* Title */}
-        <Text style={{ ...FONTS.h3, color: COLORS.primary }}>INCOMING EXPENSES</Text>
+        <Text style={{ ...FONTS.h3, color: COLORS.primary }}>Total Missions</Text>
         <Text style={{ ...FONTS.body4, color: COLORS.darkgray }}>12 Total</Text>
       </View>
     )
@@ -473,19 +446,7 @@ const Home = () => {
           </View>
         </View>
 
-        {/* Price */}
-        <View
-          style={{
-            height: 50,
-            alignItems: 'center',
-            justifyContent: 'center',
-            borderBottomStartRadius: SIZES.radius,
-            borderBottomEndRadius: SIZES.radius,
-            backgroundColor: selectedCategory.color,
-          }}
-        >
-          <Text style={{ color: COLORS.white, ...FONTS.body3 }}>CONFIRM {item.total.toFixed(2)} USD</Text>
-        </View>
+
       </View>
     )
 
@@ -695,7 +656,7 @@ const Home = () => {
 
         {/* Expenses */}
         <View style={{ justifyContent: 'center' }}>
-          <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}>{item.y} USD - {item.label}</Text>
+          <Text style={{ color: (selectedCategory && selectedCategory.name == item.name) ? COLORS.white : COLORS.primary, ...FONTS.h3 }}> {item.label}</Text>
         </View>
       </TouchableOpacity>
     )

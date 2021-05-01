@@ -4,7 +4,7 @@ const { width, height } = Dimensions.get("window");
 export const COLORS = {
     // base colors
     primary: "#194868", // Dark Blue
-    secondary: "#FF615F",   // peach
+    secondary: "#009299",   // peach
 
     // colors
     black: "#1E1F20",

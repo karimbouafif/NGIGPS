@@ -16,6 +16,8 @@ import InputTextField from '../Components/InputTextField'
 const { width } = Dimensions.get("window");
 import * as Nominatim from 'nominatim-browser';
 import axios from 'axios'
+const API_URL = Config.API_URL;
+import { Config } from '../Config/api'
 import * as QueryString from 'querystringify'
 import jwtDecode from 'jwt-decode'
 
@@ -42,8 +44,9 @@ export default  class AjouterMission extends  Component<{}> {
     tel:'',
     note:'',
 //ComboBox
-    PickerValue:''
-
+    PickerValue:'',
+    data: [],
+    error: null,
   };
 
   clickme=()=>{
@@ -55,6 +58,8 @@ export default  class AjouterMission extends  Component<{}> {
     }
 
   }
+
+
 
   setModalVisible = (visible) => {
 

@@ -39,6 +39,7 @@ import Header from "../Components/Header";
 import Home from '../Containers/Home'
 import FindMyWayStack from '../Containers/FindMyWayStack'
 import AjouterVoiture from '../Containers/AjouterVoiture'
+import ProfileScreen from '../Containers/UserDetailScene'
 
 
 
@@ -106,6 +107,24 @@ const LogoutStack = createStackNavigator(
       navigationOptions: ({ navigation }) => ({
         header: (
           <Header white transparent title="Logout" iconColor={'#FFF'} navigation={navigation} />
+        ),
+        headerTransparent: true
+      })
+    }
+  },
+  {
+    cardStyle: { backgroundColor: "#FFFFFF" },
+    transitionConfig
+  }
+);
+
+const ProfileStack = createStackNavigator(
+  {
+    ProfileScreen: {
+      screen: ProfileScreen,
+      navigationOptions: ({ navigation }) => ({
+        header: (
+          <Header   title="ProfileScreen" iconColor={'#FFF'} navigation={navigation} />
         ),
         headerTransparent: true
       })
@@ -310,6 +329,14 @@ const AppStack = createDrawerNavigator(
       navigationOptions: navOpt => ({
         drawerLabel: ({ focused }) => (
           <DrawerItem focused={focused} screen="FindMyWayScreen" title="Navigation" />
+        )
+      })
+    },
+    Profile: {
+      screen: ProfileStack,
+      navigationOptions: navOpt => ({
+        drawerLabel: ({ focused }) => (
+          <DrawerItem focused={focused} screen="ProfileScreen" title="Profile" />
         )
       })
     },
