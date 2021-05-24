@@ -6,9 +6,8 @@ const Colors = {
   paleGoldenrod: '#EEE8A9',
   lightCyan: '#D2F5FF',
   blanchedAlmond: '#F9F871',
-  blue: "#007bff",
-  dustyGray: "#999999"
-}
+  blue: '#007bff',
+  dustyGray: '#999999',
+};
 
-export default Colors
-
+export default Colors;

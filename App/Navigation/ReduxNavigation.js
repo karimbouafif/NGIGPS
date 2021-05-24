@@ -8,8 +8,8 @@ import { connect } from 'react-redux'
 import AppNavigation from './AppNavigation'
 
 export const appNavigatorMiddleware = createReactNavigationReduxMiddleware(
-  (state) => state.nav,
-  'root'
+    (state) => state.nav,
+    'root'
 )
 
 const ReduxAppNavigator = createReduxContainer(AppNavigation, 'root')

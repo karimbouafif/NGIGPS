@@ -3,7 +3,7 @@ import React from 'react';
 import { Image, StyleSheet, View } from 'react-native'
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import Images from '../../constants/Images'
-const Logo = require("../../Assets/imgs/Logo.png");
+//const Logo = require("../../Assets/imgs/Logo.png");
 const ANNOTATION_SIZE = 45;
 const styles = {
   annotationContainer: {

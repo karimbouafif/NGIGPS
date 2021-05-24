@@ -1,16 +1,11 @@
 // local imgs
-const Onboarding = require('../Assets/imgs/bg.png');
-const Logo = require("../Assets/imgs/Logo.png");
-const LogoOnboarding = require("../Assets/imgs/argon-logo-onboarding.png");
-const ProfileBackground = require("../Assets/imgs/profile-screen-bg.png");
-const RegisterBackground = require("../Assets/imgs/register-bg.png");
-const Pro = require("../Assets/imgs/getPro-bg.png");
-const ArgonLogo = require("../Assets/imgs/argonlogo.png");
-const iOSLogo = require("../Assets/imgs/ios.png");
-const androidLogo = require("../Assets/imgs/android.png");
+
+const Logo = require('../Assets/images/Logo.png');
+
 // internet imgs
 
-const ProfilePicture = 'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?fit=crop&w=1650&q=80';
+const ProfilePicture =
+  'https://images.unsplash.com/photo-1492633423870-43d1cd2775eb?fit=crop&w=1650&q=80';
 
 const Viewed = [
   'https://images.unsplash.com/photo-1501601983405-7c7cabaa1581?fit=crop&w=240&q=80',
@@ -22,20 +17,10 @@ const Viewed = [
 ];
 
 const Products = {
-  'View article': 'https://images.unsplash.com/photo-1501601983405-7c7cabaa1581?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=840&q=840',
+  'View article':
+    'https://images.unsplash.com/photo-1501601983405-7c7cabaa1581?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=840&q=840',
 };
 
 export default {
-  Onboarding,
   Logo,
-  LogoOnboarding,
-  ProfileBackground,
-  ProfilePicture,
-  RegisterBackground,
-  Viewed,
-  Products,
-  Pro,
-  ArgonLogo,
-  iOSLogo,
-  androidLogo
 };

@@ -8,8 +8,7 @@ import { ListItem, SearchBar } from 'react-native-elements';
 // Styles
 import styles from './Styles/FindMyWayScreenStyle'
 import { Block, theme } from 'galio-framework'
-import RoundedButton from '../Components/RoundedButton'
-import ShareBikeReservationModal from './MissionNgiReservationModal'
+
 import ShareBikeMapBox from '../Components/ShareBikeMapBox'
 import stations from '../constants/Stations'
 import { checkPermission } from 'react-native-android-permissions'
@@ -29,7 +28,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 const ACCESS_TOKEN = 'access_token';
 
 
-class FindMyWayScreen extends Component {
+export default  class FindMyWayScreen extends Component {
   constructor(props) {
     super(props);
     this.map = React.createRef();
@@ -190,14 +189,6 @@ class FindMyWayScreen extends Component {
   }
 }
 
-const mapStateToProps = (state) => {
-  return {
-  }
-}
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-  }
-}
 
-export default connect(mapStateToProps, mapDispatchToProps)(FindMyWayScreen)
+

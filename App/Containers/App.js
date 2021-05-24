@@ -1,37 +1,85 @@
-import '../Config'
-import DebugConfig from '../Config/DebugConfig'
-import React, { Component } from 'react'
-import { Provider } from 'react-redux'
-import RootContainer from './RootContainer'
-import createStore from '../Redux'
+import React, {Component, useEffect, useState} from 'react';
+import {View, Text,ActivityIndicator} from 'react-native';
 
-import Login from "../Containers/Auth";
-// create our store
-const store = createStore()
+import {
+    NavigationContainer,
+    DefaultTheme as NavigationDefaultTheme,
+    DarkTheme as NavigationDarkTheme
+} from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import {
+    Provider as PaperProvider,
+    DefaultTheme as PaperDefaultTheme,
+    DarkTheme as PaperDarkTheme
+} from 'react-native-paper';
+import Store from '../Redux/store';
+import RootNavigator from './RootNavigator';
+import HomeScreen from './HomeScreen';
+import MainAppNavigator from './RootContainer';
+import Splash from './Splash';
+import LoginScreen from './LoginScreen';
+import {DrawerContent} from './DrawerContent';
+import AsyncStorage from '@react-native-community/async-storage';
+import { AuthContext } from '../Components/context';
+const Drawer = createDrawerNavigator();
+import { SET_CURRENT_USER, GET_ERRORS, CLEAR_ERRORS } from '../Redux/actions/types';
+import jwt_decode from 'jwt-decode';
+import {clearErrors, setCurrentUser} from '../Redux/actions/authActions';
+const App = () => {
 
-/**
- * Provides an entry point into our application.  Both index.ios.js and index.android.js
- * call this component first.
- *
- * We create our Redux store here, put it into a provider and then bring in our
- * RootContainer.
- *
- * We separate like this to play nice with React Native's hot reloading.
- */
-class App extends Component {
-    render () {
-        return (
-            <Provider store={store}>
-
-                <RootContainer />
 
 
-            </Provider>
-        )
+    const [isloggedin,setLogged] = useState(null)
+
+    const detectLogin= async ()=>{
+        const token = await AsyncStorage.getItem('token')
+        if(token){
+            setLogged(true)
+        }else{
+            setLogged(false)
+        }
     }
+    useEffect(()=>{
+        detectLogin()
+    },[])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    function Root() {
+        return (
+            <MainAppNavigator />
+        );
+    }
+
+    return (
+    <Store>
+            <NavigationContainer>
+                <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+                    <Drawer.Screen name="Splash" component={Splash} />
+                    <Drawer.Screen name="Root" component={Root}  />
+                </Drawer.Navigator>
+            </NavigationContainer>
+
+
+    </Store>
+
+    );
 }
 
-// allow reactotron overlay for fast design in dev mode
-export default DebugConfig.useReactotron
-    ? console.tron.overlay(App)
-    : App
+export default App;

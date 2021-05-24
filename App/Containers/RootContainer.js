@@ -1,34 +1,34 @@
-import React, { Component } from 'react'
-import { View, StatusBar } from 'react-native'
-import ReduxNavigation from '../Navigation/ReduxNavigation'
-import { connect } from 'react-redux'
-import StartupActions from '../Redux/StartupRedux'
-import ReduxPersist from '../Config/ReduxPersist'
+import React from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 
-// Styles
-import styles from './Styles/RootContainerStyles'
+import HomeScreen from '../Containers/HomeScreen';
 
-class RootContainer extends Component {
-    componentDidMount () {
-        // if redux persist is not active fire startup action
-        if (!ReduxPersist.active) {
-            this.props.startup()
-        }
-    }
+import AddCalenderEvents from '../Containers/AddCalenderEvents';
+import SplashScreen from './Splash';
+import LoginScreen from './LoginScreen'
+import CalenderScreen from './CalenderScreen';
+import FindMyWayScreen from './FindMyWayStack';
 
-    render () {
-        return (
-            <View style={styles.applicationView}>
-                <StatusBar backgroundColor='grey' barStyle='light-content' />
-                <ReduxNavigation />
-            </View>
-        )
-    }
-}
 
-// wraps dispatch to create nicer functions to call within our component
-const mapDispatchToProps = (dispatch) => ({
-    startup: () => dispatch(StartupActions.startup())
-})
 
-export default connect(null, mapDispatchToProps)(RootContainer)
+const Stack = createStackNavigator();
+
+const MainAppNavigator = ({navigation}) => (
+    <Stack.Navigator headerMode="screen"  >
+        <Stack.Screen name="Splash" component={SplashScreen} headerMode='none' />
+        <Stack.Screen name="Home" component={HomeScreen} options={{
+                headerShown: false,}} />
+        <Stack.Screen name="CalenderScreen" component={CalenderScreen} options={{ title: 'Calender' }} />
+
+        <Stack.Screen name="AddCalenderEvents" component={AddCalenderEvents} options={{ title: 'Manage Your Event' }} />
+        <Stack.Screen name={"LoginScreen"} component={LoginScreen}   options={{
+                headerShown: false,
+        }} />
+            <Stack.Screen name={"FindMyWayScreen"} component={FindMyWayScreen}   options={{
+                    headerShown: false,
+            }} />
+
+    </Stack.Navigator>
+);
+
+export default MainAppNavigator;
