@@ -8,6 +8,8 @@ import SplashScreen from './Splash';
 import LoginScreen from './LoginScreen'
 import CalenderScreen from './CalenderScreen';
 import FindMyWayScreen from './FindMyWayStack';
+import SettingsScreen from './SettingsScreen'
+import LanguageScreen from './LanguageScreen'
 
 
 
@@ -27,6 +29,12 @@ const MainAppNavigator = ({navigation}) => (
             <Stack.Screen name={"FindMyWayScreen"} component={FindMyWayScreen}   options={{
                     headerShown: false,
             }} />
+      <Stack.Screen name={"SettingsScreen"} component={SettingsScreen}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"LanguageScreen"} component={LanguageScreen}   options={{
+        headerShown: false,
+      }} />
 
     </Stack.Navigator>
 );

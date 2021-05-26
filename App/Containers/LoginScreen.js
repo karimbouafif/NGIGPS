@@ -13,7 +13,7 @@ import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
-
+import t from '../Localize'
 import { useTheme } from 'react-native-paper';
 import * as api from "../Services/auth";
 import { AuthContext } from '../Components/context';
@@ -169,7 +169,7 @@ const LoginScene = (props) => {
         <View style={styles.container}>
             <StatusBar backgroundColor='#009387' barStyle="light-content"/>
             <View style={styles.header}>
-                <Text style={styles.text_header}>Bienvenue !</Text>
+                <Text style={styles.text_header}>  {t('login.hello')}</Text>
             </View>
             <Animatable.View
                 animation="fadeInUpBig"
@@ -180,7 +180,7 @@ const LoginScene = (props) => {
                 <Text style={[styles.text_footer, {
                     color: colors.text
                 }]}>
-                    Nom d'utilisateur</Text>
+                    {t('login.username')}</Text>
                 <View style={styles.action}>
                     <FontAwesome
                         name="user-o"
@@ -188,7 +188,7 @@ const LoginScene = (props) => {
                         size={20}
                     />
                     <TextInput
-                        placeholder="Votre Nom d'utilisateur"
+                        placeholder={t('login.username')}
                         placeholderTextColor="#666666"
                         style={[styles.textInput, {
                             color: colors.text
@@ -219,7 +219,7 @@ const LoginScene = (props) => {
                 <Text style={[styles.text_footer, {
                     color: colors.text,
                     marginTop: 35
-                }]}>Mot de passe</Text>
+                }]}>{t('login.password')}</Text>
                 <View style={styles.action}>
                     <Feather
                         name="lock"
@@ -227,7 +227,7 @@ const LoginScene = (props) => {
                         size={20}
                     />
                     <TextInput
-                        placeholder="Votre mot de passe"
+                        placeholder={t('login.password')}
                         placeholderTextColor="#666666"
                         secureTextEntry={data.secureTextEntry ? true : false}
                         style={[styles.textInput, {
@@ -262,7 +262,7 @@ const LoginScene = (props) => {
 
 
                 <TouchableOpacity>
-                    <Text style={{color: '#009299', marginTop:15}}>Mot de passe oublier ?</Text>
+                    <Text style={{color: '#009299', marginTop:15}}>{t('login.forgotpassword')}</Text>
                 </TouchableOpacity>
                 <View style={styles.button}>
                     <TouchableOpacity
@@ -279,7 +279,7 @@ const LoginScene = (props) => {
                                 color:'#fff'
                             }]}
                                >
-                            Se Connecter</Text>
+                                {t('login.login')}</Text>
                         </LinearGradient>
                     </TouchableOpacity>
 

@@ -1,0 +1,44 @@
+{
+  "global": {
+    "home": "Home",
+    "contacts": "Contacts",
+    "message": "Message",
+    "settings": "Settings",
+    "about": "About",
+    "profile": "Profile",
+    "send": "Send",
+    "ok": "OK",
+    "close": "Close",
+    "back": "Retour",
+    "comment": "Comment",
+    "like": "Like",
+    "post": "Post",
+    "emptyBox": "Nothing here!!"
+  },
+  "home": {
+    "publisher": "Publisher",
+    "publisherPlaceholder": "What's new with you.",
+    "noMorePost": "No Updated Post"
+  },
+  "settings": {
+    "location": "Emplacement",
+    "language": "Langue",
+    "feedback": "Feedback",
+    "about": "À propos",
+    "avatar": "Avatar",
+    "nickname": "Nickname",
+    "gender": "Surnom",
+    "male": "mâle",
+    "female": "Femelle",
+    "needRestartTip": "Le paramètre de langue prendra effet après le redémarrage de l'application",
+    "feedbackPlaceholder": "Salut, une suggestion à nous dire?",
+    "feedbackSuccess": "Merci pour vos commentaires"
+  },
+  "login": {
+    "username": "Nom d'utlisateur",
+    "password": "Mot de passe",
+    "forgotpassword": "Mot de passe oublier ?",
+    "hello": "Bienvenue !",
+    "login": "Se connecter"
+  }
+}

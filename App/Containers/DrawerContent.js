@@ -112,11 +112,24 @@ export function DrawerContent(props) {
                             />
                           )}
 
-                          label="Gérer mes missions"
+                          label="Affichage Instantanné Maps"
 
                           onPress={() => props.navigation.navigate('Root', { screen: 'FindMyWayScreen' })}
                         />
 
+                    </Drawer.Section>
+                    <Drawer.Section style={styles.bottomDrawerSection}>
+                        <DrawerItem
+                          icon={({color, size}) => (
+                            <Icon
+                              name="exit-to-app"
+                              color={color}
+                              size={size}
+                            />
+                          )}
+                          label="Paramètres"
+                          onPress={() => props.navigation.navigate('Root', { screen: 'SettingsScreen' })}
+                        />
                     </Drawer.Section>
                     <Drawer.Section style={styles.bottomDrawerSection}>
                         <DrawerItem

@@ -8,10 +8,10 @@ import {
 } from '@react-navigation/native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import {
-    Provider as PaperProvider,
-    DefaultTheme as PaperDefaultTheme,
-    DarkTheme as PaperDarkTheme
-} from 'react-native-paper';
+    SafeAreaView,
+    StyleSheet,
+    StatusBar
+} from 'react-native'
 import Store from '../Redux/store';
 import RootNavigator from './RootNavigator';
 import HomeScreen from './HomeScreen';
@@ -22,64 +22,64 @@ import {DrawerContent} from './DrawerContent';
 import AsyncStorage from '@react-native-community/async-storage';
 import { AuthContext } from '../Components/context';
 const Drawer = createDrawerNavigator();
-import { SET_CURRENT_USER, GET_ERRORS, CLEAR_ERRORS } from '../Redux/actions/types';
-import jwt_decode from 'jwt-decode';
-import {clearErrors, setCurrentUser} from '../Redux/actions/authActions';
-const App = () => {
-
-
-
-    const [isloggedin,setLogged] = useState(null)
-
-    const detectLogin= async ()=>{
-        const token = await AsyncStorage.getItem('token')
-        if(token){
-            setLogged(true)
-        }else{
-            setLogged(false)
+import { setI18nConfig } from '../Localize'
+import * as RNLocalize from 'react-native-localize'
+export default class App extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            isTranslationLoaded: false,
         }
+        setI18nConfig()
+          .then(() => {
+              this.setState({ isTranslationLoaded: true })
+              RNLocalize.addEventListener('change', this.handleLocalizationChange)
+          })
+          .catch(error => {
+              console.error(error)
+          })
     }
-    useEffect(()=>{
-        detectLogin()
-    },[])
+
+    componentWillUnmount() {
+        RNLocalize.removeEventListener('change', this.handleLocalizationChange)
+    }
+
+    handleLocalizationChange = () => {
+        setI18nConfig()
+          .then(() => this.forceUpdate())
+          .catch(error => {
+              console.error(error)
+          })
+    }
 
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    function Root() {
+    Root = () => {
         return (
-            <MainAppNavigator />
+          <MainAppNavigator/>
         );
     }
 
-    return (
-    <Store>
-            <NavigationContainer>
-                <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
-                    <Drawer.Screen name="Splash" component={Splash} />
-                    <Drawer.Screen name="Root" component={Root}  />
-                </Drawer.Navigator>
-            </NavigationContainer>
+    render () {
+        if (!this.state.isTranslationLoaded) {
+            return <SafeAreaView />
+        }
+        return (
+          <Store>
+              <NavigationContainer>
+                  <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
+                      <Drawer.Screen name="Splash" component={Splash}/>
+                      <Drawer.Screen name="Root" component={this.Root}/>
+                  </Drawer.Navigator>
+              </NavigationContainer>
 
 
-    </Store>
+          </Store>
 
-    );
+        )
+    }
 }
 
-export default App;
