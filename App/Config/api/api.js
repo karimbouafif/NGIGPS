@@ -1,17 +1,16 @@
-import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
-import { Config } from './index'
-const token = AsyncStorage.getItem("token");
-const api = axios.create({
+import axios from 'axios/index';
+import { Config } from './index';
+const token = '..your token..'
+const authApiClient = axios.create({
     baseURL: Config.API_URL,
     headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${AsyncStorage.getItem("token")}`
+        'Authorization': `Bearer ${token}`
     },
 })
 
-api.interceptors.request.use(config => {
+authApiClient.interceptors.request.use(config => {
     // perform a task before the request is sent
     console.log('Request was sent');
     return config;
@@ -19,4 +18,33 @@ api.interceptors.request.use(config => {
     // handle the error
     return Promise.reject(error);
 });
-export default api ;
+
+export function googleOauth(payload){
+    return authApiClient.post('/users/mobile/oauth/google', payload);
+}
+
+export function googleSignup(payload){
+    return authApiClient.post('/users/mobile/signup/google', payload);
+}
+
+export function facebookOauth(payload){
+    return authApiClient.post('/users/mobile/oauth/facebook', payload)
+}
+
+export function getFacebookProfile(accessToken){
+    return authApiClient.post('https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=' + accessToken)
+}
+
+
+
+export function userLogin(payload){
+    return authApiClient.post('/users/mobile/signin', payload);
+}
+export function AddCarToUser(payload){
+    return authApiClient.post('/voitures/addCar', payload);
+}
+
+export function  AddMission(payload){
+
+    return authApiClient.post('/missions/add', payload);
+}

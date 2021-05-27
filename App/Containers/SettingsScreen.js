@@ -34,7 +34,7 @@ export default class HomeScreen extends React.Component {
         icon: 'feedback2',
         color: '#0c9',
         onPress() {
-          this.props.navigation.navigate('Feedback')
+          this.props.navigation.navigate('FeedbackScreen')
         }
       },
       {
@@ -42,7 +42,7 @@ export default class HomeScreen extends React.Component {
         icon: 'about1',
         color: '#fc3',
         onPress() {
-          this.props.navigation.navigate('About')
+          this.props.navigation.navigate('AboutScreen')
         }
       }
     ]

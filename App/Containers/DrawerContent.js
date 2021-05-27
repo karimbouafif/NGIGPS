@@ -92,13 +92,13 @@ export function DrawerContent(props) {
                         <DrawerItem
                             icon={({color, size}) => (
                                 <Icon
-                                    name="account-check-outline"
+                                    name="calendar-account"
                                     color={color}
                                     size={size}
                                 />
                             )}
 
-                            label="Gérer mes missions"
+                            label="Calendrier Personnel"
 
                             onPress={() => props.navigation.navigate('Root', { screen: 'CalenderScreen' })}
                         />
@@ -106,7 +106,7 @@ export function DrawerContent(props) {
                         <DrawerItem
                           icon={({color, size}) => (
                             <Icon
-                              name="account-check-outline"
+                              name="google-maps"
                               color={color}
                               size={size}
                             />
@@ -122,7 +122,20 @@ export function DrawerContent(props) {
                         <DrawerItem
                           icon={({color, size}) => (
                             <Icon
-                              name="exit-to-app"
+                              name="car"
+                              color={color}
+                              size={size}
+                            />
+                          )}
+                          label="Gestion des Voitures"
+                          onPress={() => props.navigation.navigate('Root', { screen: 'CarScreen' })}
+                        />
+                    </Drawer.Section>
+                    <Drawer.Section style={styles.bottomDrawerSection}>
+                        <DrawerItem
+                          icon={({color, size}) => (
+                            <Icon
+                              name="account-settings"
                               color={color}
                               size={size}
                             />

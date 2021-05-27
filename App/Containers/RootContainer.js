@@ -10,6 +10,11 @@ import CalenderScreen from './CalenderScreen';
 import FindMyWayScreen from './FindMyWayStack';
 import SettingsScreen from './SettingsScreen'
 import LanguageScreen from './LanguageScreen'
+import FeedbackScreen from './FeedBackScreen'
+import AboutScreen from './AboutScreen'
+import CarScreen from './CarScreen'
+import AffecterCarScreen from './AffecterCarScreen'
+import ListCars from './ViewCarScreen'
 
 
 
@@ -35,7 +40,23 @@ const MainAppNavigator = ({navigation}) => (
       <Stack.Screen name={"LanguageScreen"} component={LanguageScreen}   options={{
         headerShown: false,
       }} />
+      <Stack.Screen name={"FeedbackScreen"} component={FeedbackScreen}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"AboutScreen"} component={AboutScreen}   options={{
+        headerShown: false,
+      }} />
 
+      <Stack.Screen name={"CarScreen"} component={CarScreen}   options={{
+        headerShown: false,
+      }} />
+
+      <Stack.Screen name={"AffecterCarScreen"} component={AffecterCarScreen}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"ListCars"} component={ListCars}   options={{
+        headerShown: false,
+      }} />
     </Stack.Navigator>
 );
 
