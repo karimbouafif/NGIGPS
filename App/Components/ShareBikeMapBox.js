@@ -7,6 +7,9 @@ import Logger from '@react-native-mapbox-gl/maps/javascript/utils/Logger';
 import  MapView  from './MapBox/MapView';
 MapboxGL.setAccessToken("pk.eyJ1Ijoia2FyaW1lc3ByaXQiLCJhIjoiY2szYm1vaWNjMG5qdjNvcXR6ZmI0eWE2OCJ9.Zcpnxn-I0W6JjZWdzIl2bg");
 const api_key="pk.eyJ1Ijoia2FyaW1lc3ByaXQiLCJhIjoiY2szYm1vaWNjMG5qdjNvcXR6ZmI0eWE2OCJ9.Zcpnxn-I0W6JjZWdzIl2bg"
+
+import { Input } from 'react-native-elements'
+
 export default class ShareBikeMapBox extends Component {
 
   constructor(props) {
@@ -15,9 +18,21 @@ export default class ShareBikeMapBox extends Component {
     this.state = {
       startingPoint: this.props.startingPoint,
       endingPoint: this.props.endingPoint,
+      adress:'',
     };
     this.arrayholder = [];
   }
+  handleChange = address => {
+    this.setState({ address });
+  };
+
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => console.log('Success', latLng))
+      .catch(error => console.error('Error', error));
+  };
+
   changePoint = (latitude,longitude)=>{
     console.log(latitude+0);
     console.log(longitude+0);
@@ -37,6 +52,7 @@ export default class ShareBikeMapBox extends Component {
     return (
       <View style={styles.page}>
         <View style={styles.container}>
+
           <MapView
             mapBoxApiKey={api_key}
             navigationMode="Course" // Or "Global"

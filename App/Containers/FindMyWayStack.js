@@ -110,7 +110,7 @@ export default  class FindMyWayScreen extends Component {
       value: text,
     });
     const newData = this.arrayholder.filter(item => {
-      const itemData = `${item.title.toUpperCase()} ${item.etat.toUpperCase()} `;
+      const itemData = `${item.title.toUpperCase()} ${item.title.toUpperCase()} `;
       const textData = text.toUpperCase();
 
       return itemData.indexOf(textData) > -1;

@@ -1,18 +1,31 @@
-import React, { memo, createContext, useReducer } from 'react';
+import {createStore, compose, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+import {persistStore, persistReducer, createMigrate} from 'redux-persist';
+import AsyncStorage from '@react-native-community/async-storage';
+import reducers from './reducers';
 
-import { GlobalReducer, GLOBAL_INITIAL_STATE } from './reducers/calenderReducer';
-import {authReducer,AUTH_INITIAL_STATE} from './reducers/authReducer';
-
-
-export const GlobalContext = createContext(GLOBAL_INITIAL_STATE);
-export const AuthContext  = createContext(AUTH_INITIAL_STATE);
-
-const Store = (props) => {
-    const globalReducer = useReducer(GlobalReducer, GLOBAL_INITIAL_STATE);
-    const  authReducer =useReducer(authReducer,AUTH_INITIAL_STATE);
-
-    return <GlobalContext.Provider value={globalReducer}>{props.children}</GlobalContext.Provider>;
-    return <AuthContext.Provider value={authReducer}>{props.children}</AuthContext.Provider>;
+const migrations = {
+    0: (state) => {
+        return {
+            ...state,
+            calender: {...state.calender, markedDates: {}},
+        };
+    },
 };
 
-export default memo(Store);
+const persistConfig = {
+    key: 'root',
+    storage: AsyncStorage,
+    version: 0,
+    migrate: createMigrate(migrations, {debug: false}),
+    blacklist: ['ui', 'data'],
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
+export const store = createStore(
+  persistedReducer,
+  {},
+  compose(applyMiddleware(thunk)),
+);
+export const persistor = persistStore(store);

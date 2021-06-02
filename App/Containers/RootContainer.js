@@ -15,6 +15,15 @@ import AboutScreen from './AboutScreen'
 import CarScreen from './CarScreen'
 import AffecterCarScreen from './AffecterCarScreen'
 import ListCars from './ViewCarScreen'
+import LogoutScreen from './LogoutScreen'
+import ChatsScreen from './Chat/chatScreen'
+import Broadcast from './Chat/Broadcast'
+import Messages from './Chat/Messages'
+import PeoplesScreen from './Chat/Peoples'
+
+
+
+
 
 
 
@@ -57,7 +66,24 @@ const MainAppNavigator = ({navigation}) => (
       <Stack.Screen name={"ListCars"} component={ListCars}   options={{
         headerShown: false,
       }} />
+
+      <Stack.Screen name={"LogoutScreen"} component={LogoutScreen}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"ChatsScreen"} component={ChatsScreen}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"Broadcast"} component={Broadcast}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"Messages"} component={Messages}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"PeoplesScreen"} component={PeoplesScreen}   options={{
+        headerShown: false,
+      }} />
     </Stack.Navigator>
+
 );
 
 export default MainAppNavigator;

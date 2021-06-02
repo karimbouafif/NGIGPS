@@ -172,7 +172,7 @@ const Home = () => {
     const [email,setEmail] = useState("loading")
     const Boiler = async ()=>{
         const token = await AsyncStorage.getItem("token")
-        fetch('http://192.168.1.16:4s000/api/',{
+        fetch('http://110.40.20.46:4s000/api/',{
             headers:new Headers({
                 Authorization:"Bearer "+token
             })
@@ -212,7 +212,7 @@ const Home = () => {
     useEffect(() => {
         const fetchData = async () => {
             const result = await axios(
-                'http://192.168.43.146:4000/api/missions',
+                'http://10.40.20.46.146:4000/api/missions',
             );
             console.log("test token Home !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             console.log(result.data);

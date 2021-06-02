@@ -1,50 +1,25 @@
-import axios from 'axios/index';
-import { Config } from './index';
-const token = '..your token..'
-const authApiClient = axios.create({
-    baseURL: Config.API_URL,
-    headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-    },
-})
-
-authApiClient.interceptors.request.use(config => {
-    // perform a task before the request is sent
-    console.log('Request was sent');
-    return config;
-}, error => {
-    // handle the error
-    return Promise.reject(error);
+import axios from 'axios';
+import AsyncStorage from '@react-native-community/async-storage';
+const api = axios.create({
+    baseURL: `http://192.168.1.16:4000/api`
 });
 
-export function googleOauth(payload){
-    return authApiClient.post('/users/mobile/oauth/google', payload);
-}
+api.interceptors.request.use(function(config) {
+    const token = AsyncStorage.getItem("token");
 
-export function googleSignup(payload){
-    return authApiClient.post('/users/mobile/signup/google', payload);
-}
+    if ( token != null ) {
+        const headers = {
+            "Authorization": `Bearer ${AsyncStorage.getItem("token")}`,
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+        config.headers = headers;
+    }
 
-export function facebookOauth(payload){
-    return authApiClient.post('/users/mobile/oauth/facebook', payload)
-}
+    return config;
+}, function (err) {
+    console.log(err)
+    return Promise.reject(err);
+});
 
-export function getFacebookProfile(accessToken){
-    return authApiClient.post('https://graph.facebook.com/v2.5/me?fields=email,name,friends&access_token=' + accessToken)
-}
-
-
-
-export function userLogin(payload){
-    return authApiClient.post('/users/mobile/signin', payload);
-}
-export function AddCarToUser(payload){
-    return authApiClient.post('/voitures/addCar', payload);
-}
-
-export function  AddMission(payload){
-
-    return authApiClient.post('/missions/add', payload);
-}
+export default api ;

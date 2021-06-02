@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "598959801482",
+    "project_id": "ngigps-e8fad",
+    "storage_bucket": "ngigps-e8fad.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:598959801482:android:b703bc7e4c24f053ab9973",
+        "android_client_info": {
+          "package_name": "com.ngigps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "598959801482-hqpsjn2vju5i37a23nbjm32d6fh3r18b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZIVP35_BtUAN7V9i9m80tYkfKJG7VAzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "598959801482-hqpsjn2vju5i37a23nbjm32d6fh3r18b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

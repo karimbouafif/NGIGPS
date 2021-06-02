@@ -1,6 +1,6 @@
 import React, {Component, useEffect, useState} from 'react';
 import {View, Text,ActivityIndicator} from 'react-native';
-
+import AsyncStorage from '@react-native-community/async-storage';
 import {
     NavigationContainer,
     DefaultTheme as NavigationDefaultTheme,
@@ -12,18 +12,26 @@ import {
     StyleSheet,
     StatusBar
 } from 'react-native'
-import Store from '../Redux/store';
-import RootNavigator from './RootNavigator';
-import HomeScreen from './HomeScreen';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
+import {store, persistor} from '../Redux/store';
 import MainAppNavigator from './RootContainer';
 import Splash from './Splash';
-import LoginScreen from './LoginScreen';
+
 import {DrawerContent} from './DrawerContent';
-import AsyncStorage from '@react-native-community/async-storage';
-import { AuthContext } from '../Components/context';
+import {setCurrentUser, logoutUser} from "../Redux/actions/authActions";
 const Drawer = createDrawerNavigator();
 import { setI18nConfig } from '../Localize'
 import * as RNLocalize from 'react-native-localize'
+
+
+
+
+
+
+
+
+
 export default class App extends React.Component {
     constructor(props) {
         super(props)
@@ -42,6 +50,7 @@ export default class App extends React.Component {
 
     componentWillUnmount() {
         RNLocalize.removeEventListener('change', this.handleLocalizationChange)
+        this.SessionAlive()
     }
 
     handleLocalizationChange = () => {
@@ -52,7 +61,22 @@ export default class App extends React.Component {
           })
     }
 
+SessionAlive = ()=> {
 
+    if (AsyncStorage.token) {
+        const decoded = jwt_decode(AsyncStorage.token);
+        // Set user and isAuthenticated
+        store.dispatch(setCurrentUser(decoded));
+        // Check for expired token
+        const currentTime = Date.now() / 1000;
+        if (decoded.exp < currentTime) {
+            // Logout user
+            store.dispatch(logoutUser());
+            // Redirect to login
+            this.props.navigation.navigate('Root', { screen: 'LoginScene' })
+        }
+    }
+}
 
 
 
@@ -68,7 +92,8 @@ export default class App extends React.Component {
             return <SafeAreaView />
         }
         return (
-          <Store>
+          <Provider store={store}>
+            <PersistGate persistor={persistor}>
               <NavigationContainer>
                   <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
                       <Drawer.Screen name="Splash" component={Splash}/>
@@ -77,7 +102,8 @@ export default class App extends React.Component {
               </NavigationContainer>
 
 
-          </Store>
+            </PersistGate>
+          </Provider>
 
         )
     }

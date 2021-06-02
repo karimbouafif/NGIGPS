@@ -32,7 +32,7 @@ export default class ListCars extends Component{
     });
   }
   getCarsList = () => {
-    fetch("http://192.168.1.16:4000/api/voitures")  // **Api for fetching**
+    fetch("http://10.40.20.46:4000/api/voitures")  // **Api for fetching**
       .then(response => response.json())
       .then((responseJson)=> {
         this.setState({

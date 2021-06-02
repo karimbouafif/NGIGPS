@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, { useContext, useEffect, useState } from 'react'
 import {
     View,
     Text,
@@ -18,7 +18,8 @@ import { useTheme } from 'react-native-paper';
 import * as api from "../Services/auth";
 import { AuthContext } from '../Components/context';
 import {useAuth} from './provider';
-
+import {connect} from "react-redux";
+import {loginUser} from "../Redux/actions/authActions";
 import AsyncStorage from '@react-native-community/async-storage';
 
 const LoginScene = (props) => {
@@ -100,45 +101,18 @@ const LoginScene = (props) => {
  */
 
 
-   const _showMoreApp = () => {
-        this.props.navigation.navigate('Home');
-    };
 
+
+    useEffect(() => {
+        // Met à jour le titre du document via l’API du navigateur
+        if (props.auth.isAuthenticated) {
+            props.navigation.navigate('Home');
+        }
+    });
 
 /*
-        const logini = async () => {
-            if (data.email != '' && data.password != "") {
-                //alert('Azul dina')
-                await fetch('http://192.168.43.146:4000/api/users/mobile/signin', {
-                    method: 'POST',
-                    headers: {
-                        'accept': 'application/json',
-                        'Content-type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        'email': data.email,
-                        'password': data.password
-                    })
-                }).then(res => res.json())
-                    .then(resData => {
-                        alert("Connexion Avec Succées")
-                        console.log(resData);
-                        _showMoreApp()
-                    })
-
-            }
-
-
-      //  signIn(logini)
-    }
-
-
-
- */
-
-
     const sendCred = async (email,password)=>{
-        fetch("http://192.168.1.16:4000/api/users/mobile/signin",{
+        fetch("http://10.40.20.46:4000/api/users/mobile/signin",{
             method:"POST",
             headers: {
                 'Content-Type': 'application/json'
@@ -161,7 +135,17 @@ const LoginScene = (props) => {
                 }
             })
     }
+    */
 
+  const   onSubmit = async (email,password) => {
+
+        const userData = {
+            email: email,
+            password:password
+        };
+        props.loginUser(userData);
+        console.log("test");
+    };
 
 
 
@@ -267,7 +251,7 @@ const LoginScene = (props) => {
                 <View style={styles.button}>
                     <TouchableOpacity
                         style={styles.signIn}
-                        onPress={() => {sendCred( data.email,data.password )}}
+                        onPress={() => onSubmit(data.email,data.password)}
                        //
                     >
                         <LinearGradient
@@ -289,8 +273,16 @@ const LoginScene = (props) => {
         </View>
     );
 };
+const mapStateToProps = state => ({
+    auth: state.auth,
+    //errors: state.errors
+});
 
-export default LoginScene;
+export default connect(
+  mapStateToProps,
+  {loginUser}
+)(LoginScene);
+
 
 const styles = StyleSheet.create({
     container: {

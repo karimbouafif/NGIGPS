@@ -1,28 +1,21 @@
-//Action Types
-export const LOGGED_IN = `auth/LOGGED_IN`;
-export const LOGGED_OUT = `auth/LOGGED_OUT`;
 
-export const  initialState = {
-  isLoggedIn: false,
-  user: null
+import { SET_CURRENT_USER } from "../actions/types";
+
+const initialState = {
+  isAuthenticated: false,
+  user: {},
+  profile:{}
 };
 
-//REDUCER
-const authReducer = (state = initialState, action) => {
+export default function(state = initialState, action) {
   switch (action.type) {
-    case LOGGED_IN:{
-      let { user } = action;
-
-      return {...state, isLoggedIn: true, user};
-    }
-
-    case LOGGED_OUT:{
-      return {...state, ...initialState};
-    }
-
+    case SET_CURRENT_USER:
+      return {
+        ...state,
+        isAuthenticated: (action.payload),
+        user: action.payload
+      };
     default:
       return state;
   }
-};
-
-export default authReducer;
+}

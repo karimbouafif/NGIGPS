@@ -26,6 +26,8 @@ import {createStackNavigator} from "@react-navigation/stack";
 import {createDrawerNavigator} from "@react-navigation/drawer";
 import HomeScreen from "./HomeScreen";
 import * as AsyncStorage from 'react-native/Libraries/Storage/AsyncStorage';
+import { connect } from 'react-redux'
+import { logoutUser } from '../Redux/actions/authActions'
 
 
 export function DrawerContent(props) {
@@ -55,6 +57,16 @@ export function DrawerContent(props) {
     const paperTheme = useTheme();
 
   //  const { signOut, toggleTheme } = React.useContext(AuthContext);
+
+
+    const   onSubmit = async () => {
+
+
+        props.logoutUser();
+        props.navigation.navigate('Root', { screen: 'LoginScene' })
+    };
+
+
 
     return(
         <View style={{flex:1}}>
@@ -89,19 +101,8 @@ export function DrawerContent(props) {
                             label="Acceuil"
                             onPress={() => props.navigation.navigate('Root', { screen: 'HomeScreen' })}
                         />
-                        <DrawerItem
-                            icon={({color, size}) => (
-                                <Icon
-                                    name="calendar-account"
-                                    color={color}
-                                    size={size}
-                                />
-                            )}
 
-                            label="Calendrier Personnel"
 
-                            onPress={() => props.navigation.navigate('Root', { screen: 'CalenderScreen' })}
-                        />
 
                         <DrawerItem
                           icon={({color, size}) => (
@@ -144,6 +145,20 @@ export function DrawerContent(props) {
                           onPress={() => props.navigation.navigate('Root', { screen: 'SettingsScreen' })}
                         />
                     </Drawer.Section>
+
+                    <Drawer.Section style={styles.bottomDrawerSection}>
+                        <DrawerItem
+                          icon={({color, size}) => (
+                            <Icon
+                              name="exit-to-app"
+                              color={color}
+                              size={size}
+                            />
+                          )}
+                          label="Chat"
+                          onPress={() => props.navigation.navigate('Root', { screen: 'PeoplesScreen' })}
+                        />
+                    </Drawer.Section>
                     <Drawer.Section style={styles.bottomDrawerSection}>
                         <DrawerItem
                             icon={({color, size}) => (
@@ -154,7 +169,7 @@ export function DrawerContent(props) {
                                 />
                             )}
                             label="Se déconnecter"
-                            onPress={() => props.navigation.navigate('Root', { screen: 'LoginScreen' })}
+                            onPress={() => props.navigation.navigate('Root', { screen: 'LogoutScreen' })}
                         />
                     </Drawer.Section>
                 </View>
@@ -164,7 +179,15 @@ export function DrawerContent(props) {
         </View>
     );
 }
+const mapStateToProps = state => ({
+    auth: state.auth,
+    //errors: state.errors
+});
 
+export default connect(
+  mapStateToProps,
+  {logoutUser}
+)(DrawerContent);
 const styles = StyleSheet.create({
     drawerContent: {
         flex: 1,
