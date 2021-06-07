@@ -4,7 +4,7 @@ import IoniconsIcon from 'react-native-vector-icons/Ionicons';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { Text, View, FlatList, Pressable, StyleSheet } from 'react-native';
 
-import { GlobalContext } from '../../Redux/store';
+import { GlobalContext } from '../../Redux/reducers/GlobalState';
 import { getFormattedDate } from '../../utils';
 
 import CalenderEvent from './CalenderEvent';

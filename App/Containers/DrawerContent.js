@@ -102,7 +102,19 @@ export function DrawerContent(props) {
                             onPress={() => props.navigation.navigate('Root', { screen: 'HomeScreen' })}
                         />
 
-
+                        <Drawer.Section style={styles.bottomDrawerSection}>
+                            <DrawerItem
+                              icon={({color, size}) => (
+                                <Icon
+                                  name="calendar"
+                                  color={color}
+                                  size={size}
+                                />
+                              )}
+                              label="Calendrier Personnel"
+                              onPress={() => props.navigation.navigate('Root', { screen: 'CalenderScreen' })}
+                            />
+                        </Drawer.Section>
 
                         <DrawerItem
                           icon={({color, size}) => (
@@ -150,13 +162,13 @@ export function DrawerContent(props) {
                         <DrawerItem
                           icon={({color, size}) => (
                             <Icon
-                              name="exit-to-app"
+                              name="chat"
                               color={color}
                               size={size}
                             />
                           )}
                           label="Chat"
-                          onPress={() => props.navigation.navigate('Root', { screen: 'PeoplesScreen' })}
+                          onPress={() => props.navigation.navigate('Root', { screen: 'ChatsScreen' })}
                         />
                     </Drawer.Section>
                     <Drawer.Section style={styles.bottomDrawerSection}>

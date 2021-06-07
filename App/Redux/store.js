@@ -4,6 +4,8 @@ import {persistStore, persistReducer, createMigrate} from 'redux-persist';
 import AsyncStorage from '@react-native-community/async-storage';
 import reducers from './reducers';
 
+
+
 const migrations = {
     0: (state) => {
         return {
@@ -12,7 +14,7 @@ const migrations = {
         };
     },
 };
-
+//export const GlobalContext = createContext(GLOBAL_INITIAL_STATE);
 const persistConfig = {
     key: 'root',
     storage: AsyncStorage,
@@ -21,9 +23,13 @@ const persistConfig = {
     blacklist: ['ui', 'data'],
 };
 
-const persistedReducer = persistReducer(persistConfig, reducers);
+ const persistedReducer = persistReducer(persistConfig, reducers);
+
 
 export const store = createStore(
+
+
+
   persistedReducer,
   {},
   compose(applyMiddleware(thunk)),

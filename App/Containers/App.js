@@ -24,9 +24,12 @@ const Drawer = createDrawerNavigator();
 import { setI18nConfig } from '../Localize'
 import * as RNLocalize from 'react-native-localize'
 
+import socketIOClient from "socket.io-client";
+const ENDPOINT = "http://192.168.1.16:4000/api";
+import  { memo, createContext, useReducer } from 'react';
 
-
-
+import { GlobalReducer, GLOBAL_INITIAL_STATE } from '../Redux/reducers/calenderReducer';
+import GlobalProvider from '../Redux/reducers/GlobalState'
 
 
 
@@ -37,6 +40,8 @@ export default class App extends React.Component {
         super(props)
         this.state = {
             isTranslationLoaded: false,
+            response : null,
+            setResponse : null,
         }
         setI18nConfig()
           .then(() => {
@@ -80,7 +85,6 @@ SessionAlive = ()=> {
 
 
 
-
     Root = () => {
         return (
           <MainAppNavigator/>
@@ -90,9 +94,12 @@ SessionAlive = ()=> {
     render () {
         if (!this.state.isTranslationLoaded) {
             return <SafeAreaView />
+
         }
         return (
+
           <Provider store={store}>
+              <GlobalProvider>
             <PersistGate persistor={persistor}>
               <NavigationContainer>
                   <Drawer.Navigator drawerContent={props => <DrawerContent {...props} />}>
@@ -103,6 +110,7 @@ SessionAlive = ()=> {
 
 
             </PersistGate>
+              </GlobalProvider>
           </Provider>
 
         )

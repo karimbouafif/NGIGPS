@@ -42,15 +42,19 @@ export const ARCHIVE_SLIDER = 'ARCHIVE_SLIDER';
 export const UNARCHIVE_SLIDER = 'UNARCHIVE_SLIDER';
 export const IS_MODIFIED_SLIDER = 'IS_MODIFIED_SLIDER';
 
-// BIKE TYPES
-export const BIKE_LOADING = 'BIKE_LOADING';
-export const GET_BIKE = 'GET_BIKE';
-export const GET_BIKES = 'GET_BIKES';
-export const ADD_BIKE = 'ADD_BIKE';
-export const DELETE_BIKE = 'DELETE_BIKE';
-export const SEARCH_BIKE = 'SEARCH_BIKE';
-export const EDIT_BIKE = 'EDIT_BIKE';
-export const GET_INACTIVE_BIKE = 'GET_INACTIVE_BIKE';
-export const ARCHIVE_BIKE = 'ARCHIVE_BIKE';
-export const UNARCHIVE_BIKE = 'UNARCHIVE_BIKE';
-export const IS_MODIFIED_BIKE = 'IS_MODIFIED_BIKE';
+// CAR TYPES
+export const CAR_LOADING = 'CAR_LOADING';
+export const GET_CAR = 'GET_CAR';
+export const GET_CARS = 'GET_CARS';
+export const ADD_CAR = 'ADD_CAR';
+export const DELETE_CAR = 'DELETE_CAR';
+export const SEARCH_CAR = 'SEARCH_CAR';
+export const EDIT_CAR = 'EDIT_CAR';
+export const GET_INACTIVE_CAR = 'GET_INACTIVE_CAR';
+export const ARCHIVE_CAR = 'ARCHIVE_CAR';
+export const UNARCHIVE_CAR = 'UNARCHIVE_CAR';
+export const IS_MODIFIED_CAR = 'IS_MODIFIED_CAR';
+
+
+//CALENDER TYPES
+export const CHANGE_SELECTED_DATE = 'CHANGE_SELECTED_DATE';

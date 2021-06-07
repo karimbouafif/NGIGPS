@@ -2,7 +2,7 @@ import React, { memo, useState, useContext, useCallback, useMemo } from 'react';
 import { Text, View, Pressable, StyleSheet } from 'react-native';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-import { GlobalContext } from '../../Redux/store';
+import { GlobalContext } from '../../Redux/reducers/GlobalState';
 import { colorMap, getFormattedTime } from '../../utils';
 
 import Action from './HeaderAction';

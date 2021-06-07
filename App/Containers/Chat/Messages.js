@@ -14,7 +14,7 @@ import {
   Send,
   Composer,
 } from 'react-native-gifted-chat';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import ImagePicker from 'react-native-image-picker';
 import axios from 'axios';
 import io from 'socket.io-client';
@@ -44,7 +44,7 @@ class Messages extends React.Component {
         }}
         wrapperStyle={{
           right: {
-            backgroundColor: '#46CF76',
+            backgroundColor: '#009299',
           },
           left: {
             backfroundColor: '#aaa',
@@ -93,9 +93,9 @@ class Messages extends React.Component {
           }}
           onPress={this.handleChoosePhoto}>
           <Icon
-            name="ios-analytics"
+            name="google-analytics"
             style={{
-              color: '#46CF76',
+              color: '#009299',
             }}
             size={32}
           />
@@ -110,9 +110,9 @@ class Messages extends React.Component {
       <>
         <Send {...props}>
           <Icon
-            name="ios-arrow-dropright-circle"
+            name="send"
             style={{
-              color: '#46CF76',
+              color: '#009299',
               marginRight: '0%',
               marginBottom: '30%',
             }}
@@ -258,8 +258,8 @@ class Messages extends React.Component {
 
     try {
       let formData = {
-        sender: this.state.userId,
-        reciever: this.state.recieverId,
+        sender: '6065d78ee7101b2b584a765a',
+        reciever:'60b0c7026699d7727c4b82f7',
         messages: this.state.messages,
       };
       let response = await axios.post(
@@ -298,13 +298,13 @@ class Messages extends React.Component {
                 this.props.navigation.goBack();
               }}>
               <Icon
-                name="ios-arrow-back"
+                name="arrow-back"
                 size={32}
-                style={{color: '#46CF76'}}
+                style={{color: '#009299'}}
               />
             </TouchableOpacity>
             <Text
-              name="ios-home"
+              name="home"
               style={{
                 flex: 1,
                 fontSize: 18,
@@ -313,7 +313,7 @@ class Messages extends React.Component {
               }}>
 
             </Text>
-            <Icon name="ios-home" size={32} style={{opacity: 0, flex: 1}} />
+            <Icon name="home" size={32} style={{opacity: 0, flex: 1}} />
           </View>
           <GiftedChat
             listViewProps={{

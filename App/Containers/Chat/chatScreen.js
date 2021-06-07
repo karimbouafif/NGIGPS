@@ -84,7 +84,7 @@ class ChatsScreen extends React.Component {
       <View>
         <Text
           style={{
-            color: '#f4f4f4',
+            color: '#000000',
             fontSize: 36,
             padding: '5%',
             paddingLeft: '7%',
@@ -133,7 +133,7 @@ class ChatsScreen extends React.Component {
                     style={{
                       fontSize: 18,
                       fontFamily: 'Cairo-SemiBold',
-                      color: '#f2f2f2',
+                      color: '#000000',
                     }}>
                     Broadcast
                   </Text>
@@ -168,6 +168,7 @@ class ChatsScreen extends React.Component {
                     marginVertical: '2%',
                     paddingVertical: '4%',
                     borderRadius: 10,
+                    color: 'grey',
                   }}>
                   <Image
                     source={{
@@ -186,7 +187,7 @@ class ChatsScreen extends React.Component {
                       style={{
                         fontSize: 18,
                         fontFamily: 'Cairo-SemiBold',
-                        color: '#f2f2f2',
+                        color: '#000000',
                       }}>
                       {chatItem.user.name}
                     </Text>
@@ -194,7 +195,7 @@ class ChatsScreen extends React.Component {
                       style={{
                         fontSize: 14,
                         fontFamily: 'Cairo-Light',
-                        color: 'lightgrey',
+                        color: 'grey',
                       }}>
                       {chatItem.message}
                     </Text>

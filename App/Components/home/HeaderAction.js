@@ -3,7 +3,7 @@ import { View, Pressable, StyleSheet } from 'react-native';
 import RNCalendarEvents from 'react-native-calendar-events';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-import { GlobalContext } from '../../Redux/store';
+import { GlobalContext } from '../../Redux/reducers/GlobalState';
 
 const Action = (props) => {
 	const [_, setGlobalStore] = useContext(GlobalContext);

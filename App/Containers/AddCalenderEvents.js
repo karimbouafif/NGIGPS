@@ -5,14 +5,14 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import RNCalendarEvents from 'react-native-calendar-events';
 
 import { colorMap, getFormattedTime, getFormattedDate } from '../utils';
-//import { GlobalContext } from '../Redux/store';
+import { GlobalContext } from '../Redux/reducers/GlobalState';
 import {useSelector, useDispatch} from 'react-redux';
 import Container from '../Components/common/Container';
 import Done from '../Components/add-calender-events/Done';
 
 function AddCalenderEvent(props) {
-    const {globalStore, setGlobalStore} = useSelector((state) => state.calender);
-   // const [globalStore, setGlobalStore] = useContext(GlobalContext);
+    //const {globalStore, setGlobalStore} = useSelector((state) => state.calender);
+    const [globalStore, setGlobalStore] = useContext(GlobalContext);
 
     const [title, setTitle] = useState(props.route.params?.title ?? '');
     const [description, setDescription] = useState(props.route.params?.description ?? '');
