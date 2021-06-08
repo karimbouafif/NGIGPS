@@ -4,18 +4,18 @@ import t, { getCurrentLanguage, setCurrentLanguage } from '../Localize'
 
 import HeaderButton from '../Components/HeaderButton'
 import ListTitle from '../Components/ListTitle'
-
+import { Theme } from '../constants';
 import {
   View,
   StyleSheet,
-  Alert, Platform, StatusBar, Text, TextInput, TouchableOpacity
+  Alert, Platform, StatusBar, Text, TextInput, TouchableOpacity, Image
 } from 'react-native'
 import * as Animatable from 'react-native-animatable'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import Feather from 'react-native-vector-icons/Feather'
 import LinearGradient from "react-native-linear-gradient"
 import { useTheme } from 'react-native-paper'
-
+import { COLORS, FONTS, SIZES, icons, images } from '../Containers/constants';
 
 
  class CarScreen extends React.Component {
@@ -63,53 +63,92 @@ import { useTheme } from 'react-native-paper'
 
 
 
-          <View style={styles.button} >
+          <View style={{ height: "50%", backgroundColor: COLORS.lightGray }}>
+            <View style={{
+              flex: 1,
+              backgroundColor: COLORS.lightGray
+            }}>
+              <View style={{ marginTop: SIZES.radius, marginHorizontal: SIZES.padding }}>
+                <Text style={{ color: COLORS.secondary, ...FONTS.h2, }}>Affecter Voiture</Text>
 
-            <TouchableOpacity
-              style={styles.signIn}
-              onPress={this._onAffecterCarPress}
-              >
-              <LinearGradient
-                colors={['#009299', '#009299']}
-                style={styles.signIn}
+                <View style={{ flexDirection: 'row', height: '60%' }}>
+                  {/* Friends */}
+                  <View style={{ flex: 1.3, flexDirection: 'row', alignItems: 'center' }}>
 
-              >
-                <Text style={[styles.textSign, {
-                  color:'#fff'
-                }]}
-                >
-                  <FontAwesome
-                    name="address-card-o"
+                  </View>
 
-                    size={20}
-                  />
-                 Affecter Voiture</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+                  {/* Add Friend */}
+                  <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                    <Text style={{ color: COLORS.secondary, ...FONTS.body3 }}>Ajouter</Text>
+                    <TouchableOpacity
+                      style={{
+                        marginLeft: SIZES.base,
+                        width: 40,
+                        height: 40,
+                        borderRadius: 10,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: COLORS.gray
+                      }}
+                      onPress={this._onAffecterCarPress}
+                    >
+                      <Image
+                        source={icons.plus}
+                        resizeMode="contain"
+                        style={{
+                          width: 20,
+                          height: 20
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
 
-            <View style={styles.action}>
 
-            <TouchableOpacity
-              style={styles.signIn}
-              onPress={this._onViewCarsPress}
-            >
-              <LinearGradient
-                colors={['#009299', '#009299']}
-                style={styles.signIn}
+          <View style={{ height: "50%", backgroundColor: COLORS.lightGray }}>
+            <View style={{
+              flex: 1,
+              backgroundColor: COLORS.lightGray
+            }}>
+              <View style={{ marginTop: SIZES.radius, marginHorizontal: SIZES.padding }}>
+                <Text style={{ color: COLORS.secondary, ...FONTS.h2, }}>Afficher Voiture</Text>
 
-              >
-                <Text style={[styles.textSign, {
-                  color:'#fff'
-                }]}
-                >
-                  <FontAwesome
-                    name="list"
+                <View style={{ flexDirection: 'row', height: '60%' }}>
+                  {/* Friends */}
+                  <View style={{ flex: 1.3, flexDirection: 'row', alignItems: 'center' }}>
 
-                    size={20}
-                  />
-                  Afficher Voiture</Text>
-              </LinearGradient>
-            </TouchableOpacity>
+                  </View>
+
+                  {/* Add Friend */}
+                  <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
+                    <Text style={{ color: COLORS.secondary, ...FONTS.body3 }}>Afficher</Text>
+                    <TouchableOpacity
+                      style={{
+                        marginLeft: SIZES.base,
+                        width: 40,
+                        height: 40,
+                        borderRadius: 10,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        backgroundColor: COLORS.gray
+                      }}
+                      onPress={this._onViewCarsPress}
+                    >
+                      <Image
+                        source={icons.List}
+                        resizeMode="contain"
+                        style={{
+                          width: 20,
+                          height: 20
+                        }}
+                      />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
             </View>
           </View>
         </Animatable.View>
@@ -132,6 +171,12 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
     paddingBottom: 50
+  },
+  spacebetween: {
+    justifyContent: 'space-between',
+    flex: 1,
+    backgroundColor: '#fff',
+    paddingVertical: 20,
   },
   footer: {
     flex: 3,

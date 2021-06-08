@@ -36,7 +36,7 @@ this.getUsers();
   }
 
   getUsers = () => {
-    fetch("http://192.168.1.16:4000/api/users/users")  // **Api for fetching**
+    fetch("http://10.40.20.26:4000/api/users/users")  // **Api for fetching**
       .then(response => response.json())
       .then((responseJson)=> {
         this.setState({
@@ -70,7 +70,7 @@ this.getUsers();
 
   _onConfirmPress = async () => {
 
-    fetch('http://192.168.1.16:4000/api/voitures/addCar', {
+    fetch('http://10.40.20.26:4000/api/voitures/addCar', {
       method: 'POST',
       headers: {
         Accept: 'application/json',

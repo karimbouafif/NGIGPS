@@ -20,6 +20,7 @@ import ChatsScreen from './Chat/chatScreen'
 import Broadcast from './Chat/Broadcast'
 import Messages from './Chat/Messages'
 import PeoplesScreen from './Chat/Peoples'
+import CarDetails from './CarDetails'
 
 
 
@@ -82,6 +83,10 @@ const MainAppNavigator = ({navigation}) => (
       <Stack.Screen name={"PeoplesScreen"} component={PeoplesScreen}   options={{
         headerShown: false,
       }} />
+      <Stack.Screen name={"CarDetails"} component={CarDetails}   options={{
+        headerShown: false,
+      }} />
+
     </Stack.Navigator>
 
 );
