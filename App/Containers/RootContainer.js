@@ -21,7 +21,8 @@ import Broadcast from './Chat/Broadcast'
 import Messages from './Chat/Messages'
 import PeoplesScreen from './Chat/Peoples'
 import CarDetails from './CarDetails'
-
+import MissionScreen from './TaskManagementScreen'
+import ViewTask from './ViewTaskScreen'
 
 
 
@@ -84,6 +85,12 @@ const MainAppNavigator = ({navigation}) => (
         headerShown: false,
       }} />
       <Stack.Screen name={"CarDetails"} component={CarDetails}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"MissionScreen"} component={MissionScreen}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"ViewTask"} component={ViewTask}   options={{
         headerShown: false,
       }} />
 

@@ -115,6 +115,19 @@ export function DrawerContent(props) {
                               onPress={() => props.navigation.navigate('Root', { screen: 'CalenderScreen' })}
                             />
                         </Drawer.Section>
+                        <Drawer.Section style={styles.bottomDrawerSection}>
+                            <DrawerItem
+                              icon={({color, size}) => (
+                                <Icon
+                                  name="bookmark-plus"
+                                  color={color}
+                                  size={size}
+                                />
+                              )}
+                              label="Gestion des Missions"
+                              onPress={() => props.navigation.navigate('Root', { screen: 'MissionScreen' })}
+                            />
+                        </Drawer.Section>
 
                         <DrawerItem
                           icon={({color, size}) => (

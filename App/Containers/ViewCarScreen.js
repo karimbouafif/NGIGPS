@@ -223,12 +223,13 @@ const ListCars = ({ navigation }) => {
                   onPress={() => navigation.navigate( 'Root',{screen:'CarDetails'} )}>
 
                   <Image
-                    source={images.plant5}
+                    source={images.Logo}
                     resizeMode="cover"
                     style={{
-                      width: '100%',
-                      height: '100%',
-                      borderRadius: 20
+                      width: 183,
+                      height: 40,
+                      borderRadius: 20,
+
                     }}
                   />
                 </TouchableOpacity>
@@ -238,12 +239,13 @@ const ListCars = ({ navigation }) => {
                   onPress={() => navigation.navigate( 'Root',{screen:'CarDetails'} )}>
 
                   <Image
-                    source={images.plant6}
+                    source={images.Logo}
                     resizeMode="cover"
                     style={{
-                      width: '100%',
-                      height: '100%',
-                      borderRadius: 20
+                      width: 183,
+                      height: 40,
+                      borderRadius: 20,
+
                     }}
                   />
                 </TouchableOpacity>
@@ -254,12 +256,13 @@ const ListCars = ({ navigation }) => {
                   onPress={() => navigation.navigate( 'Root',{screen:'CarDetails'} )}>
 
                   <Image
-                    source={images.plant7}
+                    source={images.Logo}
                     resizeMode="cover"
                     style={{
-                      width: '100%',
-                      height: '100%',
-                      borderRadius: 20
+                      width: 183,
+                      height: 45,
+                      borderRadius: 20,
+
                     }}
                   />
                 </TouchableOpacity>
