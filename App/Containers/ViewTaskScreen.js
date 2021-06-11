@@ -26,54 +26,25 @@ const ViewTask = ({ navigation }) => {
   const categoryData = [
     {
       id: 1,
-      name: "Rice",
+      name: "High",
       icon: icons.rice_bowl,
     },
     {
       id: 2,
-      name: "Noodles",
+      name: "Medium",
       icon: icons.noodle,
     },
     {
       id: 3,
-      name: "Hot Dogs",
+      name: "Low",
       icon: icons.hotdog,
     },
     {
       id: 4,
-      name: "Salads",
-      icon: icons.salad,
+      name: "Canceled",
+      icon: icons.cancel,
     },
-    {
-      id: 5,
-      name: "Burgers",
-      icon: icons.hamburger,
-    },
-    {
-      id: 6,
-      name: "Pizza",
-      icon: icons.pizza,
-    },
-    {
-      id: 7,
-      name: "Snacks",
-      icon: icons.fries,
-    },
-    {
-      id: 8,
-      name: "Sushi",
-      icon: icons.sushi,
-    },
-    {
-      id: 9,
-      name: "Desserts",
-      icon: icons.donut,
-    },
-    {
-      id: 10,
-      name: "Drinks",
-      icon: icons.drink,
-    },
+
 
   ]
 
@@ -480,7 +451,7 @@ const ViewTask = ({ navigation }) => {
     const renderItem = ({ item }) => (
       <TouchableOpacity
         style={{ marginBottom: SIZES.padding * 2 }}
-        onPress={() => navigation.navigate("Restaurant", {
+        onPress={() => navigation.navigate("TaskDetailsScreen", {
           item,
           currentLocation
         })}

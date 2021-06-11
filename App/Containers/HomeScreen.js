@@ -227,7 +227,7 @@ const Home = () => {
             <View style={{ paddingHorizontal: SIZES.padding, paddingVertical: SIZES.padding, backgroundColor: COLORS.white }}>
                 <View>
                     <Text style={{ color: COLORS.primary, ...FONTS.h2 }}>Mes Statistiques</Text>
-                    <Text style={{ ...FONTS.h3, color: COLORS.darkgray }}>Sommaire (prive)</Text>
+                    <Text style={{ ...FONTS.h3, color: COLORS.darkgray }}>Sommaire (privée)</Text>
                 </View>
 
                 <View style={{ flexDirection: 'row', marginTop: SIZES.padding, alignItems: 'center' }}>

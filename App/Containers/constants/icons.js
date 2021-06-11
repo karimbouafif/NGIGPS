@@ -54,6 +54,7 @@ export const basket = require("../../Assets/icons/shopping-basket.png");
 export const star = require("../../Assets/icons/star.png");
 export const sushi = require("../../Assets/icons/sushi.png");
 export const user = require("../../Assets/icons/user.png");
+export const cancel = require("../../Assets/icons/multiply.png");
 export default {
     baby_car,
     back_arrow,
@@ -109,4 +110,5 @@ export default {
     star,
     sushi,
     user,
+    cancel
 }

@@ -23,6 +23,8 @@ import PeoplesScreen from './Chat/Peoples'
 import CarDetails from './CarDetails'
 import MissionScreen from './TaskManagementScreen'
 import ViewTask from './ViewTaskScreen'
+import TaskDetailsScreen from './TaskDetailsScreen'
+import TaskMapsScreen from './ViewTaskInMpasScreen'
 
 
 
@@ -91,6 +93,13 @@ const MainAppNavigator = ({navigation}) => (
         headerShown: false,
       }} />
       <Stack.Screen name={"ViewTask"} component={ViewTask}   options={{
+        headerShown: false,
+      }} />
+
+      <Stack.Screen name={"TaskDetailsScreen"} component={TaskDetailsScreen}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"TaskMapsScreen"} component={TaskMapsScreen}   options={{
         headerShown: false,
       }} />
 
