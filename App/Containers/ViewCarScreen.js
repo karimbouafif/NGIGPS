@@ -18,6 +18,7 @@ const {width, height} = Dimensions.get('window');
 import { COLORS, FONTS, SIZES, icons, images } from '../Containers/constants';
 import axios from 'axios'
 import { Logo } from './constants/images'
+import { Block } from 'galio-framework'
 
 
 const ListCars = ({ navigation }) => {
@@ -29,9 +30,9 @@ const ListCars = ({ navigation }) => {
   useEffect(() => {
     const fetchData = async () => {
       const result = await axios(
-        'http://192.168.1.16:4000/api/voitures',
+        'http://192.168.1.16:4000/api/voitures/latest',
       );
-      console.log("Affichage DES VOITURES  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      console.log("Affichage DES 3 DERNIERS VOITURES !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
       console.log(result.data);
       setNewPlants(result.data);
     };
@@ -77,8 +78,9 @@ const ListCars = ({ navigation }) => {
             width: SIZES.width * 0.23,
             height: '82%',
             borderRadius: 15
-          }}
-        />
+          }}/>
+
+
 
         <View
           style={{
@@ -89,7 +91,9 @@ const ListCars = ({ navigation }) => {
             paddingHorizontal: SIZES.base,
             borderTopLeftRadius: 10,
             borderBottomLeftRadius: 10,
+
           }}
+
         >
           <Text style={{ color: COLORS.white, ...FONTS.body4 }}>{item.title}</Text>
         </View>
@@ -210,7 +214,7 @@ const ListCars = ({ navigation }) => {
               <Text style={{ color: COLORS.secondary, ...FONTS.h2, }}>Today's Assign</Text>
 
               <TouchableOpacity
-                onPress={() => { console.log("See All on pressed") }}
+                onPress={() => navigation.navigate( 'Root',{screen:'AllCarsScreen'} )}
               >
                 <Text style={{ color: COLORS.secondary, ...FONTS.body3 }}>See All</Text>
               </TouchableOpacity>
@@ -234,39 +238,9 @@ const ListCars = ({ navigation }) => {
                   />
                 </TouchableOpacity>
 
-                <TouchableOpacity
-                  style={{ flex: 1, marginTop: SIZES.font }}
-                  onPress={() => navigation.navigate( 'Root',{screen:'CarDetails'} )}>
 
-                  <Image
-                    source={images.Logo}
-                    resizeMode="cover"
-                    style={{
-                      width: 183,
-                      height: 40,
-                      borderRadius: 20,
-
-                    }}
-                  />
-                </TouchableOpacity>
               </View>
-              <View style={{ flex: 1.3 }}>
-                <TouchableOpacity
-                  style={{ flex: 1, marginLeft: SIZES.font }}
-                  onPress={() => navigation.navigate( 'Root',{screen:'CarDetails'} )}>
 
-                  <Image
-                    source={images.Logo}
-                    resizeMode="cover"
-                    style={{
-                      width: 183,
-                      height: 45,
-                      borderRadius: 20,
-
-                    }}
-                  />
-                </TouchableOpacity>
-              </View>
             </View>
           </View>
         </View>

@@ -44,17 +44,33 @@ export const location = require("../../Assets/icons/location.png");
 export const master_card = require("../../Assets/icons/mastercard.png");
 export const nearby = require("../../Assets/icons/nearby.png");
 export const noodle = require("../../Assets/icons/noodle.png");
-
 export const pizza = require("../../Assets/icons/pizza.png");
 export const red_pin = require("../../Assets/icons/red-pin.png");
 export const rice_bowl = require("../../Assets/icons/rice-bowl.png");
 export const salad = require("../../Assets/icons/salad.png");
-
+export const card_icon = require("../../Assets/icons/card_icon.png");
+export const claim_icon = require("../../Assets/icons/claim_icon.png");
+export const dashboard_icon = require("../../Assets/icons/dashboard_icon.png");
+export const menu_icon = require("../../Assets/icons/menu_icon.png");
+export const notification_icon = require("../../Assets/icons/notification_icon.png");
+export const point_icon = require("../../Assets/icons/point_icon.png");
+export const search_icon = require("../../Assets/icons/search_icon.png");
+export const clock_icon = require("../../Assets/icons/clock_icon.png");
+export const page_icon = require("../../Assets/icons/page_icon.png");
+export const page_filled_icon = require("../../Assets/icons/page_filled_icon.png");
+export const plus_icon = require("../../Assets/icons/plus_icon.png");
+export const bookmark_icon = require("../../Assets/icons/bookmark_icon.png");
+export const read_icon = require("../../Assets/icons/read_icon.png");
+export const back_arrow_icon = require("../../Assets/icons/back_arrow_icon.png");
+export const more_icon = require("../../Assets/icons/more_icon.png");
 export const basket = require("../../Assets/icons/shopping-basket.png");
 export const star = require("../../Assets/icons/star.png");
 export const sushi = require("../../Assets/icons/sushi.png");
 export const user = require("../../Assets/icons/user.png");
 export const cancel = require("../../Assets/icons/multiply.png");
+export const High = require("../../Assets/icons/up_arrow.png");
+export const Meduim = require("../../Assets/icons/right-arrow.png");
+export const Low = require("../../Assets/icons/down_arrow.png");
 export default {
     baby_car,
     back_arrow,
@@ -110,5 +126,23 @@ export default {
     star,
     sushi,
     user,
-    cancel
+    cancel,
+    High,
+    Meduim,
+    Low,
+    card_icon,
+    claim_icon,
+    dashboard_icon,
+    menu_icon,
+    notification_icon,
+    point_icon,
+    search_icon,
+    clock_icon,
+    page_icon,
+    page_filled_icon,
+    plus_icon,
+    bookmark_icon,
+    read_icon,
+    back_arrow_icon,
+    more_icon
 }

@@ -1,591 +1,372 @@
-import React from "react";
+import React, { useEffect } from 'react'
 import {
   SafeAreaView,
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   Image,
+  ScrollView,
   FlatList
-} from "react-native";
+} from 'react-native';
 
-import { icons, images, SIZES, COLORS, FONTS } from '../Containers/constants'
+import { COLORS, FONTS, SIZES, icons, images } from '../Containers/constants';
+import axios from 'axios'
+
+const LineDivider = () => {
+  return (
+    <View style={{ width: 1, paddingVertical: 18 }}>
+      <View style={{ flex: 1, borderLeftColor: COLORS.lightGray, borderLeftWidth: 1 }}></View>
+    </View>
+  )
+}
 
 const ViewTask = ({ navigation }) => {
 
-  // Dummy Datas
 
-  const initialCurrentLocation = {
-    streetName: "Kuching",
-    gps: {
-      latitude: 1.5496614931250685,
-      longitude: 110.36381866919922
-    }
+  const bookOtherWordsForHome = {
+    id: 1,
+    bookName: "Other Words For Home",
+    bookCover: images.otherWordsForHome,
+    rating: 4.5,
+    language: "Eng",
+    pageNo: 341,
+    author: "Jasmine Warga",
+    genre: [
+      "Romance", "Adventure", "Drama"
+    ],
+    readed: "12k",
+    description: "Jude never thought she’d be leaving her beloved older brother and father behind, all the way across the ocean in Syria. But when things in her hometown start becoming volatile, Jude and her mother are sent to live in Cincinnati with relatives. At first, everything in America seems too fast and too loud. The American movies that Jude has always loved haven’t quite prepared her for starting school in the US—and her new label of 'Middle Eastern,' an identity she’s never known before. But this life also brings unexpected surprises—there are new friends, a whole new family, and a school musical that Jude might just try out for. Maybe America, too, is a place where Jude can be seen as she really is.",
+    backgroundColor: "rgba(240,240,232,0.9)",
+    navTintColor: "#000"
   }
 
-  const categoryData = [
-    {
-      id: 1,
-      name: "High",
-      icon: icons.rice_bowl,
-    },
-    {
-      id: 2,
-      name: "Medium",
-      icon: icons.noodle,
-    },
-    {
-      id: 3,
-      name: "Low",
-      icon: icons.hotdog,
-    },
-    {
-      id: 4,
-      name: "Canceled",
-      icon: icons.cancel,
-    },
+  const bookTheMetropolis = {
+    id: 2,
+    bookName: "The Metropolis",
+    bookCover: images.theMetropolist,
+    rating: 4.1,
+    language: "Eng",
+    pageNo: 272,
+    author: "Seith Fried",
+    genre: [
+      "Adventure", "Drama"
+    ],
+    readed: "13k",
+    description: "In Metropolis, the gleaming city of tomorrow, the dream of the great American city has been achieved. But all that is about to change, unless a neurotic, rule-following bureaucrat and an irreverent, freewheeling artificial intelligence can save the city from a mysterious terrorist plot that threatens its very existence. Henry Thompson has dedicated his life to improving America's infrastructure as a proud employee of the United States Municipal Survey. So when the agency comes under attack, he dutifully accepts his unexpected mission to visit Metropolis looking for answers. But his plans to investigate quietly, quickly, and carefully are interrupted by his new partner: a day-drinking know-it-all named OWEN, who also turns out to be the projected embodiment of the agency's supercomputer. Soon, Henry and OWEN are fighting to save not only their own lives and those of the city's millions of inhabitants, but also the soul of Metropolis. The Municipalists is a thrilling, funny, and touching adventure story, a tour-de-force of imagination that trenchantly explores our relationships to the cities around us and the technologies guiding us into the future.",
+    backgroundColor: "rgba(247,239,219,0.9)",
+    navTintColor: "#000"
+  }
 
+  const bookTheTinyDragon = {
+    id: 3,
+    bookName: "The Tiny Dragon",
+    bookCover: images.theTinyDragon,
+    rating: 3.5,
+    language: "Eng",
+    pageNo: 110,
+    author: "Ana C Bouvier",
+    genre: [
+      "Drama", "Adventure", "Romance"
+    ],
+    readed: "13k",
+    description: "This sketchbook for kids is the perfect tool to improve your drawing skills! Designed to encourage kids around the world to express their uniqueness through drawing, sketching or doodling, this sketch book is filled with 110 high quality blank pages for creations. Add some fun markers, crayons, and art supplies and you have the perfect, easy gift for kids!",
+    backgroundColor: "rgba(119,77,143,0.9)",
+    navTintColor: "#FFF"
+  }
 
+  const myBooksData = [
+    {
+      ...bookOtherWordsForHome,
+      completion: "75%",
+      lastRead: "3d 5h",
+
+    },
+    {
+      ...bookTheMetropolis,
+      completion: "23%",
+      lastRead: "10d 5h",
+
+    },
+    {
+      ...bookTheTinyDragon,
+      completion: "10%",
+      lastRead: "1d 2h",
+
+    }
   ]
 
-  // price rating
-  const affordable = 1
-  const fairPrice = 2
-  const expensive = 3
-
-  const restaurantData = [
+  const categoriesData = [
     {
       id: 1,
-      name: "ByProgrammers Burger",
-      rating: 4.8,
-      categories: [5, 7],
-      priceRating: affordable,
-      photo: images.burger_restaurant_1,
-      duration: "30 - 45 min",
-      location: {
-        latitude: 1.5347282806345879,
-        longitude: 110.35632207358996,
-      },
-      courier: {
-        avatar: images.avatar_1,
-        name: "Amy"
-      },
-      menu: [
-        {
-          menuId: 1,
-          name: "Crispy Chicken Burger",
-          photo: images.crispy_chicken_burger,
-          description: "Burger with crispy chicken, cheese and lettuce",
-          calories: 200,
-          price: 10
-        },
-        {
-          menuId: 2,
-          name: "Crispy Chicken Burger with Honey Mustard",
-          photo: images.honey_mustard_chicken_burger,
-          description: "Crispy Chicken Burger with Honey Mustard Coleslaw",
-          calories: 250,
-          price: 15
-        },
-        {
-          menuId: 3,
-          name: "Crispy Baked French Fries",
-          photo: images.baked_fries,
-          description: "Crispy Baked French Fries",
-          calories: 194,
-          price: 8
-        }
+      categoryName: "Best Seller",
+      books: [
+        bookOtherWordsForHome, bookTheMetropolis, bookTheTinyDragon
       ]
     },
     {
       id: 2,
-      name: "ByProgrammers Pizza",
-      rating: 4.8,
-      categories: [2, 4, 6],
-      priceRating: expensive,
-      photo: images.pizza_restaurant,
-      duration: "15 - 20 min",
-      location: {
-        latitude: 1.556306570595712,
-        longitude: 110.35504616746915,
-      },
-      courier: {
-        avatar: images.avatar_2,
-        name: "Jackson"
-      },
-      menu: [
-        {
-          menuId: 4,
-          name: "Hawaiian Pizza",
-          photo: images.hawaiian_pizza,
-          description: "Canadian bacon, homemade pizza crust, pizza sauce",
-          calories: 250,
-          price: 15
-        },
-        {
-          menuId: 5,
-          name: "Tomato & Basil Pizza",
-          photo: images.pizza,
-          description: "Fresh tomatoes, aromatic basil pesto and melted bocconcini",
-          calories: 250,
-          price: 20
-        },
-        {
-          menuId: 6,
-          name: "Tomato Pasta",
-          photo: images.tomato_pasta,
-          description: "Pasta with fresh tomatoes",
-          calories: 100,
-          price: 10
-        },
-        {
-          menuId: 7,
-          name: "Mediterranean Chopped Salad ",
-          photo: images.salad,
-          description: "Finely chopped lettuce, tomatoes, cucumbers",
-          calories: 100,
-          price: 10
-        }
+      categoryName: "The Latest",
+      books: [
+        bookTheMetropolis
       ]
     },
     {
       id: 3,
-      name: "ByProgrammers Hotdogs",
-      rating: 4.8,
-      categories: [3],
-      priceRating: expensive,
-      photo: images.hot_dog_restaurant,
-      duration: "20 - 25 min",
-      location: {
-        latitude: 1.5238753474714375,
-        longitude: 110.34261833833622,
-      },
-      courier: {
-        avatar: images.avatar_3,
-        name: "James"
-      },
-      menu: [
-        {
-          menuId: 8,
-          name: "Chicago Style Hot Dog",
-          photo: images.chicago_hot_dog,
-          description: "Fresh tomatoes, all beef hot dogs",
-          calories: 100,
-          price: 20
-        }
+      categoryName: "Coming Soon",
+      books: [
+        bookTheTinyDragon
       ]
     },
-    {
-      id: 4,
-      name: "ByProgrammers Sushi",
-      rating: 4.8,
-      categories: [8],
-      priceRating: expensive,
-      photo: images.japanese_restaurant,
-      duration: "10 - 15 min",
-      location: {
-        latitude: 1.5578068150528928,
-        longitude: 110.35482523764315,
-      },
-      courier: {
-        avatar: images.avatar_4,
-        name: "Ahmad"
-      },
-      menu: [
-        {
-          menuId: 9,
-          name: "Sushi sets",
-          photo: images.sushi,
-          description: "Fresh salmon, sushi rice, fresh juicy avocado",
-          calories: 100,
-          price: 50
-        }
-      ]
-    },
-    {
-      id: 5,
-      name: "ByProgrammers Cuisine",
-      rating: 4.8,
-      categories: [1, 2],
-      priceRating: affordable,
-      photo: images.noodle_shop,
-      duration: "15 - 20 min",
-      location: {
-        latitude: 1.558050496260768,
-        longitude: 110.34743759630511,
-      },
-      courier: {
-        avatar: images.avatar_4,
-        name: "Muthu"
-      },
-      menu: [
-        {
-          menuId: 10,
-          name: "Kolo Mee",
-          photo: images.kolo_mee,
-          description: "Noodles with char siu",
-          calories: 200,
-          price: 5
-        },
-        {
-          menuId: 11,
-          name: "Sarawak Laksa",
-          photo: images.sarawak_laksa,
-          description: "Vermicelli noodles, cooked prawns",
-          calories: 300,
-          price: 8
-        },
-        {
-          menuId: 12,
-          name: "Nasi Lemak",
-          photo: images.nasi_lemak,
-          description: "A traditional Malay rice dish",
-          calories: 300,
-          price: 8
-        },
-        {
-          menuId: 13,
-          name: "Nasi Briyani with Mutton",
-          photo: images.nasi_briyani_mutton,
-          description: "A traditional Indian rice dish with mutton",
-          calories: 300,
-          price: 8
-        },
-
-      ]
-    },
-    {
-
-      id: 6,
-      name: "ByProgrammers Dessets",
-      rating: 4.9,
-      categories: [9, 10],
-      priceRating: affordable,
-      photo: images.kek_lapis_shop,
-      duration: "35 - 40 min",
-      location: {
-        latitude: 1.5573478487252896,
-        longitude: 110.35568783282145,
-      },
-      courier: {
-        avatar: images.avatar_1,
-        name: "Jessie"
-      },
-      menu: [
-        {
-          menuId: 12,
-          name: "Teh C Peng",
-          photo: images.teh_c_peng,
-          description: "Three Layer Teh C Peng",
-          calories: 100,
-          price: 2
-        },
-        {
-          menuId: 13,
-          name: "ABC Ice Kacang",
-          photo: images.ice_kacang,
-          description: "Shaved Ice with red beans",
-          calories: 100,
-          price: 3
-        },
-        {
-          menuId: 14,
-          name: "Kek Lapis",
-          photo: images.kek_lapis,
-          description: "Layer cakes",
-          calories: 300,
-          price: 20
-        }
-      ]
-
-    }
-
-
   ]
+  useEffect(() => {
+    const fetchData = async () => {
+      const result = await axios(
+        'http://192.168.1.16:4000/api/missions',
+      );
+      console.log("affichage des missions!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+      console.log(result.data);
+      setData(result.data);
+    };
 
-  const [categories, setCategories] = React.useState(categoryData)
-  const [selectedCategory, setSelectedCategory] = React.useState(null)
-  const [restaurants, setRestaurants] = React.useState(restaurantData)
-  const [currentLocation, setCurrentLocation] = React.useState(initialCurrentLocation)
+    fetchData();
+  }, []);
+  const [data, setData] = React.useState({ hits: [] });
+  const [myBooks, setMyBooks] = React.useState(myBooksData);
+  const [categories, setCategories] = React.useState(categoriesData);
+  const [selectedCategory, setSelectedCategory] = React.useState(1);
 
 
-  function onSelectCategory(category) {
-    //filter restaurant
-    let restaurantList = restaurantData.filter(a => a.categories.includes(category.id))
 
-    setRestaurants(restaurantList)
 
-    setSelectedCategory(category)
-  }
 
-  function getCategoryNameById(id) {
-    let category = categories.filter(a => a.id == id)
+  function renderMyBookSection(myBooks) {
 
-    if (category.length > 0)
-      return category[0].name
-
-    return ""
-  }
-
-  function renderHeader() {
-    return (
-      <View style={{ flexDirection: 'row', height: 50 }}>
-        <TouchableOpacity
-          style={{
-            width: 50,
-            paddingLeft: SIZES.padding * 2,
-            justifyContent: 'center'
-          }}
-        >
-          <Image
-            source={icons.nearby}
-            resizeMode="contain"
-            style={{
-              width: 30,
-              height: 30
-            }}
-          />
-        </TouchableOpacity>
-
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-          <View
-            style={{
-              width: '70%',
-              height: "100%",
-              backgroundColor: COLORS.lightGray,
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRadius: SIZES.radius
-            }}
-          >
-            <Text style={{ ...FONTS.h3 }}>{currentLocation.streetName}</Text>
-          </View>
-        </View>
-
-        <TouchableOpacity
-          style={{
-            width: 50,
-            paddingRight: SIZES.padding * 2,
-            justifyContent: 'center'
-          }}
-        >
-          <Image
-            source={icons.basket}
-            resizeMode="contain"
-            style={{
-              width: 30,
-              height: 30
-            }}
-          />
-        </TouchableOpacity>
-      </View>
-    )
-  }
-
-  function renderMainCategories() {
-    const renderItem = ({ item }) => {
+    const renderItem = ({ item, index }) => {
       return (
         <TouchableOpacity
           style={{
-            padding: SIZES.padding,
-            paddingBottom: SIZES.padding * 2,
-            backgroundColor: (selectedCategory?.id == item.id) ? COLORS.primary : COLORS.white,
-            borderRadius: SIZES.radius,
-            alignItems: "center",
-            justifyContent: "center",
-            marginRight: SIZES.padding,
-            ...styles.shadow
+            flex: 1,
+            marginLeft: index == 0 ? SIZES.padding : 0,
+            marginRight: SIZES.radius
           }}
-          onPress={() => onSelectCategory(item)}
+          onPress={() => navigation.navigate("TaskDetailsScreen", {
+            book: item
+          })}
         >
-          <View
+          {/* Book Cover */}
+          <Image
+            source={item.bookCover}
+            resizeMode="cover"
             style={{
-              width: 50,
-              height: 50,
-              borderRadius: 25,
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: (selectedCategory?.id == item.id) ? COLORS.white : COLORS.lightGray
+              width: 180,
+              height: 250,
+              borderRadius: 20
             }}
-          >
+          />
+
+          {/* Book Info */}
+          <View style={{ marginTop: SIZES.radius, flexDirection: 'row', alignItems: 'center' }}>
             <Image
-              source={item.icon}
-              resizeMode="contain"
+              source={icons.clock_icon}
               style={{
-                width: 30,
-                height: 30
+                width: 20,
+                height: 20,
+                tintColor: COLORS.lightGray
               }}
             />
-          </View>
+            <Text style={{ marginLeft: 5, ...FONTS.body3, color: COLORS.lightGray }}>{item.lastRead}</Text>
 
-          <Text
-            style={{
-              marginTop: SIZES.padding,
-              color: (selectedCategory?.id == item.id) ? COLORS.white : COLORS.black,
-              ...FONTS.body
-            }}
-          >
-            {item.name}
-          </Text>
+            <Image
+              source={icons.page_icon}
+              style={{
+                marginLeft: SIZES.radius,
+                width: 20,
+                height: 20,
+                tintColor: COLORS.lightGray
+              }}
+            />
+            <Text style={{ marginLeft: 5, ...FONTS.body3, color: COLORS.lightGray }}>{item.completion}</Text>
+          </View>
         </TouchableOpacity>
       )
     }
 
     return (
-      <View style={{ padding: SIZES.padding * 2 }}>
+      <View style={{ flex: 1 }}>
+        {/* Header */}
+        <View style={{ paddingHorizontal: SIZES.padding, flexDirection: 'row', justifyContent: 'space-between' }}>
+          <Text style={{ ...FONTS.h2, color: COLORS.white }}>My Tasks</Text>
 
+          <TouchableOpacity
+            onPress={() => navigation.navigate('Root', { screen: 'CalenderTaskScreen' })}
+          >
+            <Text style={{ ...FONTS.body3, color: COLORS.lightGray, alignSelf: 'flex-start', textDecorationLine: 'underline' }}>see more</Text>
+          </TouchableOpacity>
+        </View>
 
+        {/* Books */}
+        <View style={{ flex: 1, marginTop: SIZES.padding }}>
+          <FlatList
+            data={myBooks}
+            renderItem={renderItem}
+            keyExtractor={item => `${item.id}`}
+            horizontal
+            showsHorizontalScrollIndicator={false}
+          />
+        </View>
+      </View>
+    )
+  }
+
+  function renderCategoryHeader() {
+
+    const renderItem = ({ item }) => {
+      return (
+        <TouchableOpacity
+          style={{ flex: 1, marginRight: SIZES.padding }}
+          onPress={() => setSelectedCategory(item.id)}
+        >
+          {
+            selectedCategory == item.id &&
+            <Text style={{ ...FONTS.h2, color: COLORS.white }}>{item.categoryName}</Text>
+          }
+          {
+            selectedCategory != item.id &&
+            <Text style={{ ...FONTS.h2, color: COLORS.lightGray }}>{item.categoryName}</Text>
+          }
+        </TouchableOpacity>
+      )
+    }
+
+    return (
+      <View style={{ flex: 1, paddingLeft: SIZES.padding }}>
         <FlatList
           data={categories}
-          horizontal
           showsHorizontalScrollIndicator={false}
-          keyExtractor={item => `${item.id}`}
           renderItem={renderItem}
-          contentContainerStyle={{ paddingVertical: SIZES.padding * 2 }}
+          keyExtractor={item => `${item.id}`}
+          horizontal
         />
       </View>
     )
   }
 
-  function renderRestaurantList() {
-    const renderItem = ({ item }) => (
-      <TouchableOpacity
-        style={{ marginBottom: SIZES.padding * 2 }}
-        onPress={() => navigation.navigate("TaskDetailsScreen", {
-          item,
-          currentLocation
-        })}
-      >
-        {/* Image */}
-        <View
-          style={{
-            marginBottom: SIZES.padding
-          }}
-        >
-          <Image
-            source={item.photo}
-            resizeMode="cover"
-            style={{
-              width: "100%",
-              height: 200,
-              borderRadius: SIZES.radius
-            }}
-          />
+  function renderCategoryData() {
+    var books = []
 
-          <View
-            style={{
-              position: 'absolute',
-              bottom: 0,
-              height: 50,
-              width: SIZES.width * 0.3,
-              backgroundColor: COLORS.white,
-              borderTopRightRadius: SIZES.radius,
-              borderBottomLeftRadius: SIZES.radius,
-              alignItems: 'center',
-              justifyContent: 'center',
-              ...styles.shadow
-            }}
+    let selectedCategoryBooks = categories.filter(a => a.id == selectedCategory)
+
+    if (selectedCategoryBooks.length > 0) {
+      books = selectedCategoryBooks[0].books
+    }
+
+    const renderItem = ({ item }) => {
+      return (
+        <View style={{ marginVertical: SIZES.base }}>
+          <TouchableOpacity
+            style={{ flex: 1, flexDirection: 'row' }}
+            onPress={() => navigation.navigate("TaskDetailsScreen", {
+              book: item
+            })}
           >
-            <Text style={{ ...FONTS.h4 }}>{item.duration}</Text>
-          </View>
-        </View>
+            {/* Book Cover */}
+            <Image
+              source={item.bookCover}
+              resizeMode="cover"
+              style={{ width: 100, height: 150, borderRadius: 10 }}
+            />
 
-        {/* Restaurant Info */}
-        <Text style={{ ...FONTS.body2 }}>{item.name}</Text>
+            <View style={{ flex: 1, marginLeft: SIZES.radius }}>
+              {/* Book name and author */}
+              <View>
+                <Text style={{ paddingRight: SIZES.padding, ...FONTS.h2, color: COLORS.white }}>{item.title}</Text>
+                <Text style={{ ...FONTS.h3, color: COLORS.lightGray }}>{item.summary}</Text>
+              </View>
 
-        <View
-          style={{
-            marginTop: SIZES.padding,
-            flexDirection: 'row'
-          }}
-        >
-          {/* Rating */}
-          <Image
-            source={icons.star}
-            style={{
-              height: 20,
-              width: 20,
-              tintColor: COLORS.primary,
-              marginRight: 10
-            }}
-          />
-          <Text style={{ ...FONTS.body3 }}>{item.rating}</Text>
-
-          {/* Categories */}
-          <View
-            style={{
-              flexDirection: 'row',
-              marginLeft: 10
-            }}
-          >
-            {
-              item.categories.map((categoryId) => {
-                return (
-                  <View
-                    style={{ flexDirection: 'row' }}
-                    key={categoryId}
-                  >
-                    <Text style={{ ...FONTS.body3 }}>{getCategoryNameById(categoryId)}</Text>
-                    <Text style={{ ...FONTS.h3, color: COLORS.darkgray }}> . </Text>
-                  </View>
-                )
-              })
-            }
-
-            {/* Price */}
-            {
-              [1, 2, 3].map((priceRating) => (
-                <Text
-                  key={priceRating}
+              {/* Book Info */}
+              <View style={{ flexDirection: 'row', marginTop: SIZES.radius }}>
+                <Image
+                  source={icons.page_filled_icon}
+                  resizeMode="contain"
                   style={{
-                    ...FONTS.body3,
-                    color: (priceRating <= item.priceRating) ? COLORS.black : COLORS.darkgray
+                    width: 20,
+                    height: 20,
+                    tintColor: COLORS.lightGray
                   }}
-                >$</Text>
-              ))
-            }
-          </View>
+                />
+                <Text style={{ ...FONTS.body4, color: COLORS.lightGray, paddingHorizontal: SIZES.radius }}>{item.type}</Text>
+
+                <Image
+                  source={icons.read_icon}
+                  resizeMode="contain"
+                  style={{
+                    width: 20,
+                    height: 20,
+                    tintColor: COLORS.lightGray
+                  }}
+                />
+                <Text style={{ ...FONTS.body4, color: COLORS.lightGray, paddingHorizontal: SIZES.radius }}>{item.readed}</Text>
+              </View>
+
+              {/* Genre */}
+
+            </View>
+          </TouchableOpacity>
+
+          {/* Bookmark Button */}
+          <TouchableOpacity
+            style={{ position: 'absolute', top: 5, right: 15 }}
+            onPress={() => console.log("Bookmark")}
+          >
+            <Image
+              source={icons.bookmark_icon}
+              resizeMode="contain"
+              style={{
+                width: 25,
+                height: 25,
+                tintColor: COLORS.lightGray
+              }}
+            />
+          </TouchableOpacity>
         </View>
-      </TouchableOpacity>
-    )
+      )
+    }
 
     return (
-      <FlatList
-        data={restaurants}
-        keyExtractor={item => `${item.id}`}
-        renderItem={renderItem}
-        contentContainerStyle={{
-          paddingHorizontal: SIZES.padding * 2,
-          paddingBottom: 30
-        }}
-      />
+      <View style={{ flex: 1, marginTop: SIZES.radius, paddingLeft: SIZES.padding }}>
+        <FlatList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={item => `${item.id}`}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
     )
   }
 
   return (
-    <SafeAreaView style={styles.container}>
-      {renderHeader()}
-      {renderMainCategories()}
-      {renderRestaurantList()}
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.black }}>
+
+
+      {/* Body Section */}
+      <ScrollView style={{ marginTop: SIZES.radius }}>
+        {/* Books Section */}
+        <View>
+          {renderMyBookSection(myBooks)}
+        </View>
+
+        {/* Categories Section */}
+        <View style={{ marginTop: SIZES.padding }}>
+          <View>
+            {renderCategoryHeader()}
+          </View>
+          <View>
+            {renderCategoryData()}
+          </View>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   )
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.lightGray
-  },
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 3,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
-    elevation: 1,
-  }
-})
 
 export default ViewTask;

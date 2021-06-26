@@ -25,7 +25,10 @@ import MissionScreen from './TaskManagementScreen'
 import ViewTask from './ViewTaskScreen'
 import TaskDetailsScreen from './TaskDetailsScreen'
 import TaskMapsScreen from './ViewTaskInMpasScreen'
-
+import AllCarsScreen from './AllCarsScreen'
+import Card from  '../Components/Card'
+import SingleCarDetailScreen from './SingleCarDetailScreen'
+import CalenderTaskScreen from './CalenderTaskScreen'
 
 
 
@@ -102,6 +105,18 @@ const MainAppNavigator = ({navigation}) => (
       <Stack.Screen name={"TaskMapsScreen"} component={TaskMapsScreen}   options={{
         headerShown: false,
       }} />
+      <Stack.Screen name={"AllCarsScreen"} component={AllCarsScreen}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"Card"} component={Card}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"SingleCarDetailScreen"} component={SingleCarDetailScreen}   options={{
+        headerShown: false,
+      }} />
+      <Stack.Screen name={"CalenderTaskScreen"} component={CalenderTaskScreen}
+       />
+
 
     </Stack.Navigator>
 

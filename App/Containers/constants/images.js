@@ -41,7 +41,10 @@ export const sarawak_laksa = require("../../Assets/images/sarawak-laksa.jpg");
 export const sushi = require("../../Assets/images/sushi.jpg");
 export const teh_c_peng = require("../../Assets/images/teh-c-peng.jpg");
 export const tomato_pasta = require("../../Assets/images/tomato-pasta.jpg");
-
+export const otherWordsForHome = require("../../Assets/images/other_words_for_home.jpg");
+export const theMetropolist = require("../../Assets/images/the_metropolist.jpg");
+export const theTinyDragon = require("../../Assets/images/the_tiny_dragon.jpg");
+export const underland = require("../../Assets/images/underland.jpg");
 export default {
   plant1,
   plant2,
@@ -87,4 +90,8 @@ export default {
   sushi,
   teh_c_peng,
   tomato_pasta,
+  otherWordsForHome,
+  theMetropolist,
+  theTinyDragon,
+  underland
 }

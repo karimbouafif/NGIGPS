@@ -9,60 +9,9 @@ import {
 import { icons, images, COLORS, SIZES, FONTS } from '../Containers/constants';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 
-const RequirementBar = ({ icon, barPercentage }) => {
-  return (
-    <View style={{ height: 60, alignItems: 'center' }}>
-      <View
-        style={{
-          width: 50,
-          height: 50,
-          alignItems: 'center',
-          justifyContent: 'center',
-          borderRadius: 10,
-          borderWidth: 1,
-          borderColor: COLORS.gray
-        }}
-      >
-        <Image
-          source={icon}
-          resizeMode="cover"
-          style={{
-            tintColor: COLORS.secondary,
-            width: 30,
-            height: 30
-          }}
-        />
-      </View>
 
-      {/* Bar */}
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          width: '100%',
-          height: 3,
-          marginTop: SIZES.base,
-          backgroundColor: COLORS.gray
-        }}
-      ></View>
 
-      <View
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          width: barPercentage,
-          height: 3,
-          marginTop: SIZES.base,
-          backgroundColor: COLORS.primary
-        }}
-      ></View>
-    </View>
-  )
-}
-
-const RequirementDetail = ({ icon, label, detail }) => {
+const RequirementDetail = ({ icon, label, item }) => {
   return (
     <View style={{ flexDirection: 'row' }}>
       <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
@@ -79,7 +28,7 @@ const RequirementDetail = ({ icon, label, detail }) => {
         <Text style={{ marginLeft: SIZES.base, color: COLORS.secondary, ...FONTS.h2 }}>{label}</Text>
       </View>
       <View style={{ flex: 1, alignItems: 'flex-end' }}>
-        <Text style={{ marginLeft: SIZES.base, color: COLORS.gray, ...FONTS.h2 }}>{detail}</Text>
+        <Text style={{ marginLeft: SIZES.base, color: COLORS.gray, ...FONTS.h2 }}>{item}</Text>
       </View>
     </View>
   )
@@ -130,42 +79,12 @@ const CarDetails = ({ navigation }) => {
           </TouchableOpacity>
         </View>
 
-        <View style={{ flexDirection: 'row', marginTop: "10%" }}>
-          <View style={{ flex: 1 }}>
-            <Text style={{ color: COLORS.white, ...FONTS.largeTitle }}>Glory Mantas</Text>
-          </View>
-          <View style={{ flex: 1 }}></View>
-        </View>
+
       </View>
     )
   }
 
-  function renderRequirementsBar() {
-    return (
-      <View style={{ flexDirection: 'row', marginTop: SIZES.padding, paddingHorizontal: SIZES.padding, justifyContent: 'space-between' }}>
-        <RequirementBar
-          icon={icons.sun}
-          barPercentage="50%"
-        />
-        <RequirementBar
-          icon={icons.drop}
-          barPercentage="25%"
-        />
-        <RequirementBar
-          icon={icons.temperature}
-          barPercentage="80%"
-        />
-        <RequirementBar
-          icon={icons.garden}
-          barPercentage="30%"
-        />
-        <RequirementBar
-          icon={icons.seed}
-          barPercentage="50%"
-        />
-      </View>
-    )
-  }
+
 
   function renderRequirements() {
     return (
@@ -173,7 +92,7 @@ const CarDetails = ({ navigation }) => {
         <RequirementDetail
           icon={icons.sun}
           label="Sunlight"
-          detail="15°C"
+
         />
         <RequirementDetail
           icon={icons.drop}
@@ -250,11 +169,11 @@ const CarDetails = ({ navigation }) => {
       {/* Banner Photo */}
       <View style={{ height: "35%" }}>
         <Image
-          source={images.bannerBg}
+          source={images.Logo}
           resizeMode="cover"
           style={{
             width: '100%',
-            height: '100%'
+            height: '30%'
           }}
         />
       </View>
@@ -270,9 +189,9 @@ const CarDetails = ({ navigation }) => {
           paddingVertical: SIZES.padding
         }}
       >
-        <Text style={{ paddingHorizontal: SIZES.padding, color: COLORS.secondary, ...FONTS.h1 }}>Requirements</Text>
+        <Text style={{ paddingHorizontal: SIZES.padding, color: COLORS.secondary, ...FONTS.h1 }}>Details</Text>
 
-        {renderRequirementsBar()}
+
 
         {renderRequirements()}
 

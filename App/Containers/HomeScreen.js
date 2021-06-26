@@ -172,7 +172,7 @@ const Home = () => {
     const [email,setEmail] = useState("loading")
     const Boiler = async ()=>{
         const token = await AsyncStorage.getItem("token")
-        fetch('http://110.40.20.46:4s000/api/',{
+        fetch('http://110.40.20.46:4000/api/',{
             headers:new Headers({
                 Authorization:"Bearer "+token
             })

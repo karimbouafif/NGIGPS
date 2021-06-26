@@ -11,6 +11,7 @@ export const COLORS = {
     white: "#FFFFFF",
     lightGray: "#F5F7F9",
     lightGray2: '#FAFBFD',
+    lightGray4: '#7D7E84',
     gray: "#BEC1D2",
     blue: '#42B0FF',
     darkgray: '#898C95',
@@ -20,6 +21,11 @@ export const COLORS = {
     peach: '#FF615F',
     purple: '#8e44ad',
     red: '#FF0000',
+    darkRed: "#31262F",
+    lightRed: "#C5505E",
+    darkBlue: "#22273B",
+    darkGreen: "#213432",
+    lightGreen: "#31Ad66",
 };
 
 export const SIZES = {
